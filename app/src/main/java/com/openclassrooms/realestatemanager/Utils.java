@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
 import java.text.DateFormat;
@@ -44,8 +45,10 @@ public class Utils {
      * @param context
      * @return
      */
-    public static Boolean isInternetAvailable(Context context){
-        WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        return wifi.isWifiEnabled();
+    public static Boolean isInternetAvailable(final Context context){
+//        WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        return wifi.isWifiEnabled();
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }
