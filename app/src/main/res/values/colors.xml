@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- APP BASE -->
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorAccent">#FFC107</color>
+
+    <!-- BACKGROUND -->
+    <color name="background_light">#fafafa</color>
+    <color name="background_gray">#eeeeee</color>
+
+    <!-- TEXTVIEW -->
+    <color name="text_primary_dark">#8a000000</color>
+    <color name="text_secondary_dark">#757575</color>
+    <color name="text_divider">#BDBDBD</color>
+
+    <!-- BUTTON -->
+    <color name="button_favorite">#FFC107</color>
 </resources>
