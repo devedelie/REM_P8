@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--edit icon-->
+    <item
+        android:id="@+id/menu_sort_icon"
+        android:icon="@drawable/ic_add_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title=""
+        android:orderInCategory="0"
+        android:visible="true">
+    </item>
+
+    <!--edit icon-->
+    <item
+        android:id="@+id/menu_edit_icon"
+        android:icon="@drawable/ic_edit_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title=""
+        android:orderInCategory="0"
+        android:visible="true">
+    </item>
+
+    <!--Search icon-->
+    <item
+        android:id="@+id/menu_search_icon"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="always"
+        android:title=""
+        android:orderInCategory="1"
+        android:visible="true">
+    </item>
+
+</menu>

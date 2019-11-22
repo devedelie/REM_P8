@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
     <string name="register_message">Le premier bien immobilier enregistré vaut </string>
+
+    <!--Used in navigation drawer-->
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 </resources>

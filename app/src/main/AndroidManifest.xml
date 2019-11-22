@@ -10,7 +10,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/REMTheme">
 
         <activity
@@ -24,7 +24,7 @@
         </activity>
 
         <activity android:name="com.openclassrooms.realestatemanager.controllers.SecondActivity"
-            android:theme="@style/REMTheme.Home"/>
+            android:theme="@style/REMTheme.Detail"/>
 
     </application>
 
