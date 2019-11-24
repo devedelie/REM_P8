@@ -23,7 +23,10 @@ public class MainFragment extends Fragment  implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // Set onClickListener to buttons
         result.findViewById(R.id.fragment_main_button).setOnClickListener(this);
+
         return result;
     }
 

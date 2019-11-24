@@ -102,9 +102,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onButtonClicked(View view) {
         Log.d(TAG, "onButtonClicked: ");
-        // Check if detail fragment is not created or if not visible
-        if (detailFragment == null || !detailFragment.isVisible()) {
-            startActivity(new Intent(this, DetailActivity.class));
+        // Check if detail fragment is visible(Tablet)
+        if (detailFragment != null && detailFragment.isVisible()) {
+            // Tablet display
+
+        }else{
+            // Smartphone display
         }
     }
 
