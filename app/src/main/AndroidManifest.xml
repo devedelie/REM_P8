@@ -12,20 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/REMTheme">
-
+        <activity android:name=".controllers.activities.DetailActivity"></activity>
         <activity
-            android:name="com.openclassrooms.realestatemanager.controllers.MainActivity"
+            android:name=".controllers.activities.MainActivity"
             android:theme="@style/REMTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.openclassrooms.realestatemanager.controllers.SecondActivity"
-            android:theme="@style/REMTheme.Detail"/>
-
+        <activity
+            android:name=".controllers.fragments.MainFragment"
+            android:theme="@style/REMTheme.Detail" />
     </application>
 
 </manifest>

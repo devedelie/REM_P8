@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.controllers;
+package com.openclassrooms.realestatemanager.controllers.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
+import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
@@ -24,13 +27,16 @@ import butterknife.ButterKnife;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OnButtonClickedListener {
 
-    private TextView textViewMain;
-    private TextView textViewQuantity;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.drawer_main_activity) NavigationView navigationView;
+
+    // Declare main fragment
+    private MainFragment mainFragment;
+    // Declare detail fragment
+    private DetailFragment detailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +44,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this); //Configure Butterknife
 
-        this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
-        this.textViewQuantity = findViewById(R.id.activity_main_activity_text_view_quantity);
-
         this.configureToolbar();
         this.configureDrawerLayoutAndNavigationView();
-        this.configureTextViewMain();
-        this.configureTextViewQuantity();
-    }
+        // Configure and show home fragment
+        this.configureAndShowMainFragment();
+        // Configure and show detail fragment
+        this.configureAndShowDetailFragment();
 
-    private void configureTextViewMain(){
-        this.textViewMain.setTextSize(15);
-        this.textViewMain.setText(getString(R.string.register_message));
-    }
-
-    private void configureTextViewQuantity(){
-        int quantity = Utils.convertDollarToEuro(100);
-        this.textViewQuantity.setTextSize(20);
-        this.textViewQuantity.setText(String.valueOf(quantity));
     }
 
     @Override
@@ -102,5 +97,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         this.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onButtonClicked(View view) {
+        Log.d(TAG, "onButtonClicked: ");
+        // Check if detail fragment is not created or if not visible
+        if (detailFragment == null || !detailFragment.isVisible()) {
+            startActivity(new Intent(this, DetailActivity.class));
+        }
+    }
+
+    private void configureAndShowMainFragment(){
+        // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
+        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
+
+        if (mainFragment == null) {
+            // Create new main fragment
+            mainFragment = new MainFragment();
+            // Add it to FrameLayout container
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_layout_main, mainFragment)
+                    .commit();
+        }
+    }
+
+    private void configureAndShowDetailFragment(){
+        detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail);
+
+        // We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+        if (detailFragment == null && findViewById(R.id.frame_layout_detail) != null) {
+            detailFragment = new DetailFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_layout_detail, detailFragment)
+                    .commit();
+        }
     }
 }
