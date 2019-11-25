@@ -20,19 +20,12 @@ public class Poi {
         this.poiName = poiName;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
-    public String getPoiName() {
-        return poiName;
-    }
+    public String getPoiName() { return poiName; }
 
-    public void setPoiName(String poiName) {
-        this.poiName = poiName;
-    }
+    public void setPoiName(String poiName) { this.poiName = poiName; }
+
 }
