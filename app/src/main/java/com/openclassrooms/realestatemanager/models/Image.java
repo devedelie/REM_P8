@@ -19,8 +19,7 @@ public class Image {
 
     public Image() { }
 
-    public Image(long id, long propertyId, String imageUrl, String imageUri) {
-        this.id = id;
+    public Image(long propertyId, String imageUrl, String imageUri) {
         this.propertyId = propertyId;
         this.imageUrl = imageUrl;
         this.imageUri = imageUri;

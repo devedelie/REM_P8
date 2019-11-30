@@ -34,9 +34,7 @@ public class Property {
 
     public Property(){}
 
-    public Property(long id, long typeId, int propertyPrice, int propertySurface, int propertyRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, String agentInCharge) {
-        this.id = id;
-        this.typeId = typeId;
+    public Property(int propertyPrice, int propertySurface, int propertyRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, String agentInCharge) {
         this.propertyPrice = propertyPrice;
         this.propertySurface = propertySurface;
         this.propertyRooms = propertyRooms;
