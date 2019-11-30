@@ -29,6 +29,7 @@ tools:openDrawer="start">
             android:id="@+id/frame_layout_main"
             android:layout_weight="30"
             android:layout_width="0px"
+            android:background="@color/background_gray"
             android:layout_height="match_parent" />
 
         <FrameLayout

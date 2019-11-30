@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/REMTheme">
-        <activity android:name=".controllers.activities.DetailActivity"></activity>
+        <activity
+            android:name=".controllers.activities.DetailActivity"
+            android:screenOrientation="sensor"></activity>
         <activity
             android:name=".controllers.activities.MainActivity"
+            android:screenOrientation="sensor"
             android:theme="@style/REMTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +25,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".controllers.fragments.MainFragment"
