@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.openclassrooms.realestatemanager.controllers.fragments.MainFragment"
     android:gravity="center"
+    android:orientation="vertical"
     android:background="@color/background_gray">
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_main_recyclerView"

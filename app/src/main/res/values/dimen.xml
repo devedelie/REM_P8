@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="recyclerView_padding">3dp</dimen>
+
+    <!-- Item Texts -->
+    <dimen name="item_title_size">17sp</dimen>
+    <dimen name="item_location_size">15sp</dimen>
+    <dimen name="item_price_size">20sp</dimen>
 </resources>
