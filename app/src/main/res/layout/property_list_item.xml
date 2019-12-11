@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/property_list_item_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    app:cardCornerRadius="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/property_list_guideline_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <FrameLayout
+        android:id="@+id/item_image_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <!-- Property Image -->
+        <ImageView
+            android:id="@+id/item_property_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="start"
+            android:scaleType="fitXY" />
+        <!-- Sold Icon -->
+        <ImageView
+            android:id="@+id/item_sold_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_sold"
+            android:visibility="invisible"/>
+    </FrameLayout>
+
+        <!-- Type -->
+        <TextView
+            android:id="@+id/item_type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/item_location_text"
+            app:layout_constraintStart_toStartOf="@id/property_list_guideline_30"
+            android:hint="@string/item_type_text"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/item_title_size"
+            android:textStyle="bold" />
+
+        <!-- Location -->
+        <TextView
+            android:id="@+id/item_location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/item_type_text"
+            app:layout_constraintBottom_toTopOf="@+id/item_price_text"
+            app:layout_constraintStart_toStartOf="@id/property_list_guideline_30"
+            android:hint="@string/item_location_text"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/item_location_size" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/item_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/item_location_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/property_list_guideline_30"
+            android:hint="@string/item_price_text"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/item_price_size"
+            android:textColor="@color/colorAccent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
