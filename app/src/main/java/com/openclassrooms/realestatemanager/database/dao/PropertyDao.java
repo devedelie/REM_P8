@@ -20,6 +20,6 @@ public interface PropertyDao {
     void createProperty(Property property);
 
     // Get the list of all properties
-    @Query("SELECT * FROM Property")
+    @Query("SELECT * FROM property")
     LiveData<List<Property>> getProperties();
 }

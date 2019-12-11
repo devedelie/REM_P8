@@ -2,12 +2,14 @@ package com.openclassrooms.realestatemanager.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
@@ -17,11 +19,15 @@ import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.PoiProperty;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Type;
+import com.openclassrooms.realestatemanager.utils.Converters;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Eliran Elbaz on 25-Nov-19.
  */
 @Database(entities = {Type.class, Property.class, Poi.class, Image.class, PoiProperty.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class RealEstateManagerDatabase extends RoomDatabase {
 
     // Singleton
@@ -53,7 +59,6 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
 
-                // Dummy data
                 ContentValues contentValues = new ContentValues();
 
                 contentValues.put("id", 1);
@@ -61,6 +66,8 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
                 // Insert
                 db.insert("Type", OnConflictStrategy.IGNORE, contentValues);
 
+                // Clear ContentValue before re-use
+                contentValues.clear();
 
                 contentValues.put("id", 1);
                 contentValues.put("typeId", 1);
