@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -50,5 +52,11 @@ public class Utils {
 //        return wifi.isWifiEnabled();
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public static String moneyValueFormatter (double value){
+        NumberFormat formatter = new DecimalFormat("#,###");
+        String formattedNumber = formatter.format(value);
+        return formattedNumber;
     }
 }
