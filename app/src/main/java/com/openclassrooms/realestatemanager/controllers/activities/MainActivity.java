@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
@@ -105,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check if detail fragment is visible(Tablet)
         if (detailFragment != null && detailFragment.isVisible()) {
             // Tablet display
-
         }else{
             // Smartphone display
         }
