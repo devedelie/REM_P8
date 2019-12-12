@@ -11,14 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
-import com.openclassrooms.realestatemanager.models.Type;
-import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
@@ -33,12 +31,20 @@ public class MainFragment extends Fragment  implements View.OnClickListener, Pro
     private PropertyViewModel mPropertyViewModel;
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
     private PropertyAdapter adapter;
+    private static int USER_ID = 1;
+    public static long position;
 
     // Declare callback
     private OnButtonClickedListener mCallback;
 
     @Override
-    public void onClickDeleteButton(int position) { this.deleteProperty(this.adapter.getProperty(position)); }
+    public void onClickListItem(int position) { this.onItemClickAction(this.adapter.getProperty(position)); }
+
+    private void onItemClickAction(Property property) {
+        Toast.makeText(getActivity().getApplicationContext(), "Clicked" + (property.getId()-1), Toast.LENGTH_SHORT).show();
+        position = property.getId();
+    }
+
 
     private void deleteProperty(Property property){
 
@@ -73,26 +79,29 @@ public class MainFragment extends Fragment  implements View.OnClickListener, Pro
         this.adapter = new PropertyAdapter(this);
         this.recyclerView.setAdapter(this.adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main)
-                .setOnItemClickListener((recyclerView1, position, v) -> this.updateItem(this.adapter.getProperty(position)));
+//        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main)
+//                .setOnItemClickListener((recyclerView1, position, v) -> this.onItemClick(this.adapter.getProperty(position)));
     }
 
     //  Configuring ViewModel
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
         this.mPropertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+        this.mPropertyViewModel.init(USER_ID);
     }
-
 
     //  Get all properties
     private void getProperties(){
         this.mPropertyViewModel.getProperties().observe(this, this::updatePropertiesList);
     }
 
-    private void updateItem(Property property){
+    private void onItemClick(Property property){
 //        property.setSelected(!item.getSelected());
-//        this.itemViewModel.updateItem(item);
+//        this.itemViewModel.onItemClick(item);
+//        Toast.makeText(getActivity().getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+
     }
+
 
     // --------------
     // ACTIONS
