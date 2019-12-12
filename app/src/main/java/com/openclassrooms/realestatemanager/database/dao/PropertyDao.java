@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.openclassrooms.realestatemanager.models.Property;
 
@@ -22,4 +23,13 @@ public interface PropertyDao {
     // Get the list of all properties
     @Query("SELECT * FROM property")
     LiveData<List<Property>> getProperties();
+
+    @Insert
+    long insertProperty(Property property);
+
+    @Update
+    int updateProperty(Property property);
+
+    @Query("DELETE FROM Property WHERE id = :itemId")
+    int deleteProperty(long itemId);
 }
