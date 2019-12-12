@@ -4,7 +4,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Eliran Elbaz on 24-Nov-19.
@@ -21,20 +23,32 @@ public class Property {
     @PrimaryKey(autoGenerate = true)
     private long id; // [PK]
     private long typeId; // [FK]
+    private String type;
+    private String location;
     private int propertyPrice;
     private int propertySurface;
     private int propertyRooms;
+    private ArrayList<String> photos;
+    private ArrayList<String> photosDescription;
+    private String video;
+    private Map<String,String> pointOfInterest;
     private String propertyDescription;
     private int imageId; // [FK]
     private String propertyAddress;
     private int poiId; // [FK]
     private boolean propertyStatus;
     private Date sellDate;
-    private String agentInCharge;
+    private long agentInCharge;
 
     public Property(){}
 
-    public Property(int propertyPrice, int propertySurface, int propertyRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, String agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest,  int propertyPrice, int propertySurface, int propertyRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
+        this.type = type;
+        this.location = location;
+        this.photos = photos;
+        this.video = video;
+        this.pointOfInterest = pointOfInterest;
+        this.photosDescription = photosDescription;
         this.propertyPrice = propertyPrice;
         this.propertySurface = propertySurface;
         this.propertyRooms = propertyRooms;
@@ -46,6 +60,30 @@ public class Property {
         this.sellDate = sellDate;
         this.agentInCharge = agentInCharge;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
+
+    public ArrayList<String> getPhotos() { return photos; }
+
+    public void setPhotos(ArrayList<String> photos) { this.photos = photos; }
+
+    public ArrayList<String> getPhotosDescription() { return photosDescription; }
+
+    public void setPhotosDescription(ArrayList<String> photosDescription) { this.photosDescription = photosDescription; }
+
+    public String getVideo() { return video; }
+
+    public void setVideo(String video) { this.video = video; }
+
+    public Map<String, String> getPointOfInterest() { return pointOfInterest; }
+
+    public void setPointOfInterest(Map<String, String> pointOfInterest) { this.pointOfInterest = pointOfInterest; }
 
     public long getId() { return id; }
 
@@ -91,7 +129,7 @@ public class Property {
 
     public void setSellDate(Date sellDate) { this.sellDate = sellDate; }
 
-    public String getAgentInCharge() { return agentInCharge; }
+    public long getAgentInCharge() { return agentInCharge; }
 
-    public void setAgentInCharge(String agentInCharge) { this.agentInCharge = agentInCharge; }
+    public void setAgentInCharge(long agentInCharge) { this.agentInCharge = agentInCharge; }
 }
