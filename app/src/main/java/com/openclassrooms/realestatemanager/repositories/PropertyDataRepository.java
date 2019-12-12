@@ -26,9 +26,9 @@ public class PropertyDataRepository {
 
     // --- CREATE ---
 
-//    public void createProperty(Property property){ itemDao.insertItem(item); }
+    public void createProperty(Property property){ mPropertyDao.createProperty(property); }
 
     // --- UPDATE ---
-//    public void updateItem(Property property){ itemDao.updateItem(item); }
+    public void updateProperty(Property property){ mPropertyDao.updateProperty(property); }
 
 }
