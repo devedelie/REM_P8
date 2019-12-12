@@ -19,7 +19,7 @@ import java.util.List;
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
 
     // CALLBACK
-    public interface Listener { void onClickDeleteButton(int position); }
+    public interface Listener { void onClickListItem(int position); }
     private final Listener callback;
 
     // FOR DATA
@@ -58,4 +58,5 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
         this.mProperties = properties;
         this.notifyDataSetChanged();
     }
+
 }
