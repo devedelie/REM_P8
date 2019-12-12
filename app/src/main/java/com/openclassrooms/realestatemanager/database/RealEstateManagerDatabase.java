@@ -98,6 +98,8 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
                 // Insert dummy data
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyOne());
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyTwo());
+                db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyThree());
+                db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyFour());
 
             }
         };
