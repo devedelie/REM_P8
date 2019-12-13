@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -20,6 +21,7 @@ import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,33 +29,16 @@ import butterknife.ButterKnife;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class MainFragment extends Fragment  implements View.OnClickListener, PropertyAdapter.Listener {
+public class MainFragment extends Fragment  {
     private PropertyViewModel mPropertyViewModel;
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
     private PropertyAdapter adapter;
     private static int USER_ID = 1;
     public static long position;
+    private List<Property> mProperties;
+    // Declare OnPropertyClick Interface
+    private PropertyAdapter.OnPropertyClick mOnPropertyClick;
 
-    // Declare callback
-    private OnButtonClickedListener mCallback;
-
-    @Override
-    public void onClickListItem(int position) { this.onItemClickAction(this.adapter.getProperty(position)); }
-
-    private void onItemClickAction(Property property) {
-        Toast.makeText(getActivity().getApplicationContext(), "Clicked" + (property.getId()-1), Toast.LENGTH_SHORT).show();
-        position = property.getId();
-    }
-
-
-    private void deleteProperty(Property property){
-
-    }
-
-    // Declare our interface that will be implemented by any container activity
-    public interface OnButtonClickedListener {
-        void onButtonClicked(View view);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,15 +55,14 @@ public class MainFragment extends Fragment  implements View.OnClickListener, Pro
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        // Call the method that creating callback after being attached to parent activity
-        this.createCallbackToParentActivity();
+        mOnPropertyClick = (PropertyAdapter.OnPropertyClick)context;
     }
 
     private void configureRecyclerView(){
-        this.adapter = new PropertyAdapter(this);
+        this.mProperties = new ArrayList<>();
+        this.adapter = new PropertyAdapter(mProperties, Glide.with(this), mOnPropertyClick);
         this.recyclerView.setAdapter(this.adapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main)
 //                .setOnItemClickListener((recyclerView1, position, v) -> this.onItemClick(this.adapter.getProperty(position)));
     }
@@ -95,37 +79,18 @@ public class MainFragment extends Fragment  implements View.OnClickListener, Pro
         this.mPropertyViewModel.getProperties().observe(this, this::updatePropertiesList);
     }
 
-    private void onItemClick(Property property){
-//        property.setSelected(!item.getSelected());
-//        this.itemViewModel.onItemClick(item);
-//        Toast.makeText(getActivity().getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
-
-    }
 
 
     // --------------
     // ACTIONS
     // --------------
 
-    @Override
-    public void onClick(View v) {
-        // Spread the click to the parent activity
-        mCallback.onButtonClicked(v);
-    }
 
     // --------------
     // FRAGMENT SUPPORT
     // --------------
 
-    // Create callback to parent activity
-    private void createCallbackToParentActivity(){
-        try {
-            //Parent activity will automatically subscribe to callback
-            mCallback = (OnButtonClickedListener) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListener");
-        }
-    }
+
 
     // -------------------
     // UI

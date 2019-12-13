@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.models.Property;
 
@@ -18,17 +19,19 @@ import java.util.List;
  */
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
 
-    // CALLBACK
-    public interface Listener { void onClickListItem(int position); }
-    private final Listener callback;
 
     // FOR DATA
     private List<Property> mProperties;
+    // Declaring a Glide object
+    private RequestManager mGlide;
+    // CALLBACK
+    private final OnPropertyClick mCallback;
 
     // CONSTRUCTOR
-    public PropertyAdapter(Listener callback) {
-        this.mProperties = new ArrayList<>();
-        this.callback = callback;
+    public PropertyAdapter(List<Property> properties, RequestManager glide, OnPropertyClick callback) {
+        this.mProperties = properties;
+        this.mGlide = glide;
+        this.mCallback = callback;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
 
     @Override
     public void onBindViewHolder(PropertyViewHolder viewHolder, int position) {
-        viewHolder.updateWithProperty(this.mProperties.get(position), this.callback);
+        viewHolder.updateWithProperty(mProperties.get(position), mGlide, mCallback);
     }
 
     @Override
@@ -57,6 +60,10 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
     public void updateData(List<Property> properties){
         this.mProperties = properties;
         this.notifyDataSetChanged();
+    }
+
+    public interface OnPropertyClick{
+        void onPropertyClick(Property property);
     }
 
 }

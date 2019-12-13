@@ -21,14 +21,16 @@ import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
+import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainFragment.OnButtonClickedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
@@ -100,16 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public void onButtonClicked(View view) {
-        Log.d(TAG, "onButtonClicked: ");
-        // Check if detail fragment is visible(Tablet)
-        if (detailFragment != null && detailFragment.isVisible()) {
-            // Tablet display
-        }else{
-            // Smartphone display
-        }
-    }
 
     private void configureAndShowMainFragment(){
         // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
@@ -136,4 +128,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
         }
     }
+
+    //-----------
+    // Actions
+    //-----------
+    @Override
+    public void onPropertyClick(Property property) {
+        Log.d(TAG, "onPropertyClick: " + property.getId());
+        // Check if detail fragment is visible(Tablet)
+        if (detailFragment != null && detailFragment.isVisible()) {
+            // Tablet display
+            Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
+        }else{
+            // Smartphone display
+            Toast.makeText(this, "Smartphone ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    @Override
+//    public void onClickListItem(int position) {
+//        Log.d(TAG, "onClickListItem: ");
+//        // Check if detail fragment is visible(Tablet)
+//        if (detailFragment != null && detailFragment.isVisible()) {
+//            // Tablet display
+//            Toast.makeText(this, "Tablet " + position, Toast.LENGTH_SHORT).show();
+//        }else{
+//            // Smartphone display
+//            Toast.makeText(this, "Smartphone "+ position, Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+
 }
