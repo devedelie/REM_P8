@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -30,12 +32,11 @@ import butterknife.ButterKnife;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainFragment extends Fragment  {
-    private PropertyViewModel mPropertyViewModel;
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
     private PropertyAdapter adapter;
     private static int USER_ID = 1;
-    public static long position;
     private List<Property> mProperties;
+    private PropertyViewModel mPropertyViewModel;
     // Declare OnPropertyClick Interface
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
 
@@ -46,10 +47,16 @@ public class MainFragment extends Fragment  {
         ButterKnife.bind(this, result);
 
         this.configureRecyclerView();
-        this.configureViewModel();
-        this.getProperties();
+
 
         return result;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.configureViewModel();
+        this.getProperties();
     }
 
     @Override
@@ -70,13 +77,15 @@ public class MainFragment extends Fragment  {
     //  Configuring ViewModel
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
-        this.mPropertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+        this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
         this.mPropertyViewModel.init(USER_ID);
     }
 
+
+
     //  Get all properties
     private void getProperties(){
-        this.mPropertyViewModel.getProperties().observe(this, this::updatePropertiesList);
+        mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updatePropertiesList);
     }
 
 

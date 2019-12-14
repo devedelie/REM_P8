@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +22,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
 import butterknife.BindView;
@@ -35,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.drawer_main_activity) NavigationView navigationView;
-
+    public static int currentProperty = 1;
+    private PropertyViewModel mPropertyViewModel;
+    private static int USER_ID = 1;
     // Declare main fragment
     private MainFragment mainFragment;
     // Declare detail fragment
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureToolbar();
         this.configureDrawerLayoutAndNavigationView();
+        this.configureViewModel();
         // Configure and show home fragment
         this.configureAndShowMainFragment();
         // Configure and show detail fragment
@@ -67,6 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureToolbar(){
         // Sets the Toolbar
         setSupportActionBar(toolbar);
+    }
+
+    //  Configuring ViewModel
+    private void configureViewModel(){
+//        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+//        this.mPropertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+//        this.mPropertyViewModel.init(USER_ID);
     }
 
     // Navigation drawer config
@@ -134,29 +149,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //-----------
     @Override
     public void onPropertyClick(Property property) {
-        Log.d(TAG, "onPropertyClick: " + property.getId());
+        Log.d(TAG, "onPropertyClick: " + property.getId() );
+        currentProperty = (int) property.getId();
+        Log.d(TAG, "onPropertyClick: current:" + currentProperty);
+        // Set current id in ViewModel
+//        mPropertyViewModel.setCurrentPropertyId(currentProperty);
+        CurrentPropertyDataRepository.getInstance().setCurrentProperty(currentProperty);
+
         // Check if detail fragment is visible(Tablet)
         if (detailFragment != null && detailFragment.isVisible()) {
             // Tablet display
             Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
+            // Call DetailFragment
+
         }else{
             // Smartphone display
             Toast.makeText(this, "Smartphone ", Toast.LENGTH_SHORT).show();
+            // Launch DetailActivity
+            Intent intent = new Intent(this, DetailActivity.class);
+            startActivity(intent);
         }
     }
-
-//    @Override
-//    public void onClickListItem(int position) {
-//        Log.d(TAG, "onClickListItem: ");
-//        // Check if detail fragment is visible(Tablet)
-//        if (detailFragment != null && detailFragment.isVisible()) {
-//            // Tablet display
-//            Toast.makeText(this, "Tablet " + position, Toast.LENGTH_SHORT).show();
-//        }else{
-//            // Smartphone display
-//            Toast.makeText(this, "Smartphone "+ position, Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
 
 }
