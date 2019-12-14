@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.viewmodel;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.models.Property;
@@ -11,6 +14,8 @@ import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * Created by Eliran Elbaz on 30-Nov-19.
@@ -64,6 +69,19 @@ public class PropertyViewModel extends ViewModel {
         });
     }
 
+    //------------
+    // Current ID
+    //------------
+    private MutableLiveData<Integer> mCurrentPropertyId = new MutableLiveData<>();
 
+    public void setCurrentPropertyId(Integer id){
+        mCurrentPropertyId.setValue(id);
+        Log.d(TAG, "LiveDataTest setResult: "+ id);
+    }
+
+    public LiveData<Integer> getCurrentPropertyId(){
+        Log.d(TAG, "LiveDataTest getResult: " + mCurrentPropertyId);
+        return mCurrentPropertyId;
+    }
 
 }
