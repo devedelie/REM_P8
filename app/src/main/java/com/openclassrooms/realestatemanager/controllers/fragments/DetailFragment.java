@@ -48,13 +48,10 @@ public class DetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Property ID - LiveData
 
         this.configureViewModel();
         this.getCurrentPropertyId();
         this.getProperties();
-
-//        MainActivity.mPropertyViewModel.getCurrentPropertyId().observe(this, this::updatePropertyUI);
     }
 
     //  Configuring ViewModel

@@ -30,7 +30,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.item_price_text) TextView propertyPriceText;
     @BindView(R.id.item_property_image) ImageView propertyImage;
     @BindView(R.id.item_sold_image) ImageView propertySoldImage;
-    @BindView(R.id.item) ConstraintLayout mConstraintLayout;
+//    @BindView(R.id.item) ConstraintLayout mConstraintLayout;
 
     private Property mProperty;
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
