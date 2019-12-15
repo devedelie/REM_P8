@@ -4,16 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.fragments.DetailFragment"
-    android:gravity="center"
-    android:background="@color/text_divider">
+    android:background="@color/text_divider"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/testText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Details will be placed here"
-        android:textColor="#000"
-        android:textSize="20sp"/>
+        android:orientation="vertical">
+
+    <!-- Property image recyclerView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_main_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:padding="@dimen/recyclerView_padding">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+        <!-- Description text -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_marginStart="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
 
