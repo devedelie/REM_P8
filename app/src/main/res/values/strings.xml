@@ -15,4 +15,12 @@
     <string name="item_type_text">Type</string>
     <string name="item_location_text">Location</string>
     <string name="item_price_text">Price</string>
+
+    <!--DetailFragment -->
+    <string name="detail_title_description">Description</string>
+    <string name="detail_title_surface">Surface</string>
+    <string name="detail_title_n_of_rooms">Number of rooms</string>
+    <string name="detail_title_n_of_bedrooms">Number of Bedrooms</string>
+    <string name="detail_title_n_of_bathrooms">Number of Bathrooms</string>
+    <string name="detail_location">Location</string>
 </resources>

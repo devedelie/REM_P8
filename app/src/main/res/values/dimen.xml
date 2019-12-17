@@ -6,4 +6,14 @@
     <dimen name="item_title_size">17sp</dimen>
     <dimen name="item_location_size">15sp</dimen>
     <dimen name="item_price_size">20sp</dimen>
+
+    <!-- Fragment Detail-->
+    <dimen name="text_margin_top">10dp</dimen>
+    <dimen name="text_margin_start">15dp</dimen>
+    <dimen name="text_margin_start_with_icon">75dp</dimen>
+    <dimen name="text_margin_end">15dp</dimen>
+    <dimen name="text_padding_for_icon_top">3dp</dimen>
+    <dimen name="text_space_between_title_and_content">1dp</dimen>
+    <dimen name="icon_width_and_height">25dp</dimen>
+
 </resources>
