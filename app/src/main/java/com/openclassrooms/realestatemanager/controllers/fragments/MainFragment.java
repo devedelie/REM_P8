@@ -20,6 +20,7 @@ import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
@@ -57,6 +58,7 @@ public class MainFragment extends Fragment  {
         super.onActivityCreated(savedInstanceState);
         this.configureViewModel();
         this.getProperties();
+        CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updatePropertiesList);
     }
 
     @Override
@@ -109,6 +111,11 @@ public class MainFragment extends Fragment  {
     private void updatePropertiesList(List<Property> properties){
         Log.d(TAG, "updatePropertiesList: DB" + properties);
         this.adapter.updateData(properties);
+    }
+
+    // Update the list of properties - (when property is selected/clicked)
+    private void updatePropertiesList(Long id){
+        adapter.notifyDataSetChanged();
     }
 
 }

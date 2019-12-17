@@ -1,17 +1,23 @@
 package com.openclassrooms.realestatemanager.views;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.lang.ref.WeakReference;
@@ -30,7 +36,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.item_price_text) TextView propertyPriceText;
     @BindView(R.id.item_property_image) ImageView propertyImage;
     @BindView(R.id.item_sold_image) ImageView propertySoldImage;
-//    @BindView(R.id.item) ConstraintLayout mConstraintLayout;
+    @BindView(R.id.property_list_item_layout) CardView mCardView;
 
     private Property mProperty;
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
@@ -44,6 +50,16 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
     public void updateWithProperty(Property property, RequestManager glide, PropertyAdapter.OnPropertyClick callback){
+
+        // Set background color for selected item
+        Resources res = itemView.getResources();
+        Log.d(TAG, "updateWithProperty: data   " + property.getId() + "   " + CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue());
+        if(property.getId() == CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue()){
+            mCardView.setCardBackgroundColor(res.getColorStateList(R.color.colorPrimaryLight));
+        }else {
+            mCardView.setCardBackgroundColor(res.getColorStateList(R.color.text_secondary_white));
+        }
+
         this.mOnPropertyClick = callback;
         this.mProperty = property;
         propertyImage.setImageResource(R.drawable.apart_one); // Testing

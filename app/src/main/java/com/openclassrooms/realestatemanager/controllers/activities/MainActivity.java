@@ -149,18 +149,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //-----------
     @Override
     public void onPropertyClick(Property property) {
-        Log.d(TAG, "onPropertyClick: " + property.getId() );
         currentProperty = (int) property.getId();
         Log.d(TAG, "onPropertyClick: current:" + currentProperty);
-        // Set current id in ViewModel
-//        mPropertyViewModel.setCurrentPropertyId(currentProperty);
+        // Set current id in LiveData
         CurrentPropertyDataRepository.getInstance().setCurrentProperty(currentProperty);
 
         // Check if detail fragment is visible(Tablet)
         if (detailFragment != null && detailFragment.isVisible()) {
             // Tablet display
             Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
-            // Call DetailFragment
+            // Update DetailFragment
 
         }else{
             // Smartphone display
