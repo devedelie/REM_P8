@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class DetailFragment extends Fragment {
-    @BindView(R.id.testText) TextView mTextView;
+    @BindView(R.id.detail_property_location) TextView mLocationText;
     private PropertyViewModel mPropertyViewModel;
     private List<Property> mProperties;
     private static int USER_ID = 1;
@@ -64,7 +64,7 @@ public class DetailFragment extends Fragment {
     // Get current property ID
     private void getCurrentPropertyId(){
 //        mPropertyViewModel.getCurrentPropertyId().observe(getViewLifecycleOwner(), this::updatePropertyUI);
-        CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateUiWithCurrentItem);
+        CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateCurrentPropertyId);
     }
 
     //  Get all properties
@@ -83,23 +83,25 @@ public class DetailFragment extends Fragment {
         this.mProperties = new ArrayList<>();
         this.mProperties= properties;
 
-        // Set the first property in the list as default on display (1-1=0)
-        mTextView.setText(properties.get(currentId-1).getLocation());
+        updatePropertyUI();
     }
 
-    public void updatePropertyUI(Integer id){
-        Log.d(TAG, "updatePropertyUI: detailFragment" + id);
-        this.currentId = id;
-        mTextView.setText(mProperties.get(currentId-1).getLocation());
-    }
 
-    public void updateUiWithCurrentItem(long id){
-        Log.d(TAG, "updateUiWithCurrentItem: " + id);
+
+    public void updateCurrentPropertyId(long id){
+        Log.d(TAG, "updateCurrentPropertyId: " + id);
         this.currentId = (int) id;
         if(mProperties != null){
-            mTextView.setText(mProperties.get(currentId-1).getLocation());
+            // Update UI when other property is selected
+            updatePropertyUI();
         }
 
+    }
+
+    public void updatePropertyUI(){
+        Log.d(TAG, "updatePropertyUI: detailFragment" + currentId);
+        // Set the property ID in the list #-1 (ArrayList)
+        mLocationText.setText(mProperties.get(currentId-1).getLocation());
     }
 
 
