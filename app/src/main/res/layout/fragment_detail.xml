@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.fragments.DetailFragment"
-    android:background="@color/text_divider"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <LinearLayout
@@ -45,7 +45,8 @@
                 android:textStyle="bold"
                 android:layout_marginStart="@dimen/text_margin_start"
                 android:layout_marginTop="@dimen/text_margin_top"
-                android:layout_marginEnd="@dimen/text_margin_end"/>
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_title"/>
 
             <!-- Property Description -->
             <TextView
@@ -55,7 +56,8 @@
                 android:textStyle="bold"
                 android:layout_marginStart="@dimen/text_margin_start"
                 android:layout_marginTop="@dimen/text_margin_top"
-                android:layout_marginEnd="@dimen/text_margin_end"/>
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_title"/>
             <TextView
                 android:id="@+id/detail_fragment_property_description"
                 android:layout_width="match_parent"
@@ -63,7 +65,8 @@
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 android:layout_marginStart="@dimen/text_margin_start"
                 android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                android:layout_marginEnd="@dimen/text_margin_end"/>
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_body"/>
 
             <!-- Property Surface-->
             <LinearLayout
@@ -79,7 +82,8 @@
                         android:layout_width="@dimen/icon_width_and_height"
                         android:layout_height="@dimen/icon_width_and_height"
                         android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_settings_overscan_black_48dp" />
+                        android:src="@drawable/ic_settings_overscan_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,7 +91,8 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/text_margin_start"
                         android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end" />
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/property_surface_text"
@@ -96,7 +101,8 @@
                     android:text="@string/detail_title_surface"
                     android:layout_marginStart="@dimen/text_margin_start_with_icon"
                     android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"/>
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
 
             </LinearLayout>
 
@@ -113,7 +119,8 @@
                         android:layout_width="@dimen/icon_width_and_height"
                         android:layout_height="@dimen/icon_width_and_height"
                         android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_home_black_48dp"/>
+                        android:src="@drawable/ic_home_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -121,7 +128,8 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/text_margin_start"
                         android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end"/>
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/property_n_of_rooms_text"
@@ -130,7 +138,8 @@
                     android:text="@string/detail_title_n_of_rooms"
                     android:layout_marginStart="@dimen/text_margin_start_with_icon"
                     android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"/>
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
 
             </LinearLayout>
 
@@ -147,7 +156,8 @@
                         android:layout_width="@dimen/icon_width_and_height"
                         android:layout_height="@dimen/icon_width_and_height"
                         android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_airline_seat_individual_suite_black_48dp"/>
+                        android:src="@drawable/ic_airline_seat_individual_suite_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -155,7 +165,8 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/text_margin_start"
                         android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end"/>
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/property_n_of_bedrooms_text"
@@ -164,7 +175,8 @@
                     android:text="@string/detail_title_n_of_bedrooms"
                     android:layout_marginStart="@dimen/text_margin_start_with_icon"
                     android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"/>
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
 
             </LinearLayout>
 
@@ -181,7 +193,8 @@
                         android:layout_width="@dimen/icon_width_and_height"
                         android:layout_height="@dimen/icon_width_and_height"
                         android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_hot_tub_black_48dp"/>
+                        android:src="@drawable/ic_hot_tub_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -189,7 +202,8 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/text_margin_start"
                         android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end"/>
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/property_n_of_bathrooms_text"
@@ -198,7 +212,8 @@
                     android:text="@string/detail_title_n_of_bathrooms"
                     android:layout_marginStart="@dimen/text_margin_start_with_icon"
                     android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"/>
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
 
             </LinearLayout>
 
@@ -215,7 +230,8 @@
                         android:layout_width="@dimen/icon_width_and_height"
                         android:layout_height="@dimen/icon_width_and_height"
                         android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_pin_drop_black_48dp"/>
+                        android:src="@drawable/ic_pin_drop_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -223,7 +239,8 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/text_margin_start"
                         android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end"/>
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/property_location_and_address_text"
@@ -232,7 +249,8 @@
                     android:text="@string/detail_location"
                     android:layout_marginStart="@dimen/text_margin_start_with_icon"
                     android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"/>
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
 
             </LinearLayout>
 

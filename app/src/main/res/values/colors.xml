@@ -18,4 +18,7 @@
 
     <!-- BUTTON -->
     <color name="button_favorite">#FFC107</color>
+
+    <!-- Icon color-->
+    <color name="detail_fragment_icon_color">#757575</color>
 </resources>

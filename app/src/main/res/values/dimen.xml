@@ -15,5 +15,7 @@
     <dimen name="text_padding_for_icon_top">3dp</dimen>
     <dimen name="text_space_between_title_and_content">1dp</dimen>
     <dimen name="icon_width_and_height">25dp</dimen>
+    <dimen name="detail_fragment_text_title">18sp</dimen>
+    <dimen name="detail_fragment_text_body">16sp</dimen>
 
 </resources>
