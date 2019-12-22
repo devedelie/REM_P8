@@ -37,6 +37,8 @@ public class Property {
     private String propertyDescription;
     private int imageId; // [FK]
     private String propertyAddress;
+    private double addressLat;
+    private double addressLng;
     private int poiId; // [FK]
     private boolean propertyStatus;
     private Date sellDate;
@@ -44,7 +46,7 @@ public class Property {
 
     public Property(){}
 
-    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest,  int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
         this.type = type;
         this.location = location;
         this.photos = photos;
@@ -59,11 +61,21 @@ public class Property {
         this.propertyDescription = propertyDescription;
         this.imageId = imageId;
         this.propertyAddress = propertyAddress;
+        this.addressLat = addressLat;
+        this.addressLng = addressLng;
         this.poiId = poiId;
         this.propertyStatus = propertyStatus;
         this.sellDate = sellDate;
         this.agentInCharge = agentInCharge;
     }
+
+    public double getAddressLng() { return addressLng; }
+
+    public void setAddressLng(double addressLng) { this.addressLng = addressLng; }
+
+    public double getAddressLat() { return addressLat; }
+
+    public void setAddressLat(double addressLat) { this.addressLat = addressLat; }
 
     public int getPropertyBedRooms() { return propertyBedRooms; }
 

@@ -28,6 +28,8 @@ public class DummyData {
         contentValues.put("propertyDescription", "Nice and comfortable studio in center of NYC");
         contentValues.put("imageId", 1);
         contentValues.put("propertyAddress", "425 Lafayette St, New York, NY 10003, United States");
+        contentValues.put("addressLat", 40.729210 );
+        contentValues.put("addressLng", -73.991770 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
         contentValues.put("agentInCharge", 1);
@@ -51,6 +53,8 @@ public class DummyData {
         contentValues.put("propertyDescription", "Nice and comfortable apartment in center of Bronx neighborhood");
         contentValues.put("imageId", 2);
         contentValues.put("propertyAddress", "900 Intervale Ave #4240, The Bronx, NY 10459, United States");
+        contentValues.put("addressLat", 40.819620 );
+        contentValues.put("addressLng", -73.896540 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
         contentValues.put("agentInCharge", 1);
@@ -74,6 +78,8 @@ public class DummyData {
         contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
         contentValues.put("imageId", 3);
         contentValues.put("propertyAddress", "4716 7th Ave, Brooklyn, NY 11220, United States");
+        contentValues.put("addressLat", 40.644000 );
+        contentValues.put("addressLng", -74.004710 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
         contentValues.put("agentInCharge", 1);
@@ -97,6 +103,8 @@ public class DummyData {
         contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
         contentValues.put("imageId", 4);
         contentValues.put("propertyAddress", "700 Myrtle Ave, Brooklyn, NY 11205, United States");
+        contentValues.put("addressLat", 40.694510 );
+        contentValues.put("addressLng", -73.955750 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
         contentValues.put("agentInCharge", 1);

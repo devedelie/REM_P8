@@ -141,6 +141,8 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
+        // Move to property location
+        moveCamera(new LatLng( mProperties.get(currentId-1).getAddressLat(), mProperties.get(currentId-1).getAddressLng()), DEFAULT_ZOOM);
     }
 
 
@@ -157,9 +159,6 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
         // Map configurations
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
-        // Move to property location
-        moveCamera(new LatLng(48.831212,2.329754), DEFAULT_ZOOM);
-
     }
 
     // A method to move the camera(map) to specific location by passing LatLng and Zoom
