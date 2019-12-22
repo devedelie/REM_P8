@@ -28,6 +28,8 @@ public class Property {
     private int propertyPrice;
     private int propertySurface;
     private int propertyRooms;
+    private int propertyBedRooms;
+    private int propertyBathRooms;
     private ArrayList<String> photos;
     private ArrayList<String> photosDescription;
     private String video;
@@ -42,7 +44,7 @@ public class Property {
 
     public Property(){}
 
-    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest,  int propertyPrice, int propertySurface, int propertyRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest,  int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
         this.type = type;
         this.location = location;
         this.photos = photos;
@@ -52,6 +54,8 @@ public class Property {
         this.propertyPrice = propertyPrice;
         this.propertySurface = propertySurface;
         this.propertyRooms = propertyRooms;
+        this.propertyBedRooms = propertyBedRooms;
+        this.propertyBathRooms = propertyBathRooms;
         this.propertyDescription = propertyDescription;
         this.imageId = imageId;
         this.propertyAddress = propertyAddress;
@@ -60,6 +64,14 @@ public class Property {
         this.sellDate = sellDate;
         this.agentInCharge = agentInCharge;
     }
+
+    public int getPropertyBedRooms() { return propertyBedRooms; }
+
+    public void setPropertyBedRooms(int propertyBedRooms) { this.propertyBedRooms = propertyBedRooms; }
+
+    public int getPropertyBathRooms() { return propertyBathRooms; }
+
+    public void setPropertyBathRooms(int propertyBathRooms) { this.propertyBathRooms = propertyBathRooms; }
 
     public String getType() { return type; }
 
