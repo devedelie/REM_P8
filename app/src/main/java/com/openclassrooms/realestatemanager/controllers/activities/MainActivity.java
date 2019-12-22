@@ -22,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
+import com.openclassrooms.realestatemanager.controllers.fragments.MapsActivity;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Declare main fragment
     private MainFragment mainFragment;
     // Declare detail fragment
-    private DetailFragment detailFragment;
+    public static DetailFragment detailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

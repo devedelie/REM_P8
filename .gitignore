@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+/gradle.properties
+google_maps_key.xml
