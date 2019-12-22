@@ -11,7 +11,7 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
 
-<!--  List item  -->
+    <!--  List item  -->
     <string name="item_type_text">Type</string>
     <string name="item_location_text">Location</string>
     <string name="item_price_text">Price</string>
@@ -23,4 +23,6 @@
     <string name="detail_title_n_of_bedrooms">Number of Bedrooms</string>
     <string name="detail_title_n_of_bathrooms">Number of Bathrooms</string>
     <string name="detail_location">Location</string>
+    <string name="detail_price">Price</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

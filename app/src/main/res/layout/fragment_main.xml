@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/fragment_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,7 @@
     tools:context="com.openclassrooms.realestatemanager.controllers.fragments.MainFragment"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/background_gray">
+    android:background="@color/background_bright">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_main_recyclerView"
