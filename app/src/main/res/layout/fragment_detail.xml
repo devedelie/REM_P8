@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.fragments.DetailFragment"
-    android:background="@color/background_gray"
+    android:background="@color/background_bright"
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +20,7 @@
         android:layout_gravity="top">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_main_recyclerView"
+            android:id="@+id/fragment_detail_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="horizontal"
@@ -254,9 +254,62 @@
 
             </LinearLayout>
 
+            <!-- Property Price-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/icon_width_and_height"
+                        android:layout_height="@dimen/icon_width_and_height"
+                        android:layout_marginStart="@dimen/text_margin_start"
+                        android:src="@drawable/ic_attach_money_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_price"
+                        android:textStyle="bold"
+                        android:layout_marginStart="@dimen/text_margin_start"
+                        android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/property_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_price"
+                    android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                    android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
+
+            </LinearLayout>
+
+            <!--Map view -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shadow_frame"
+                tools:context=".controllers.fragments.DetailFragment">
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                tools:context=".controllers.activities.MainActivity" />
+            </FrameLayout>
+
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
 
