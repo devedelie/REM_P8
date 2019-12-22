@@ -49,7 +49,6 @@ public class MainFragment extends Fragment  {
 
         this.configureRecyclerView();
 
-
         return result;
     }
 
@@ -60,6 +59,7 @@ public class MainFragment extends Fragment  {
         this.getProperties();
         CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updatePropertiesList);
     }
+
 
     @Override
     public void onAttach(Context context) {
