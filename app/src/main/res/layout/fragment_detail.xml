@@ -20,7 +20,7 @@
         android:layout_gravity="top">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_detail_recyclerView"
+            android:id="@+id/fragment_detail_images_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="horizontal"
@@ -299,12 +299,16 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/shadow_frame"
                 tools:context=".controllers.fragments.DetailFragment">
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+<!--            <fragment-->
+<!--                android:id="@+id/map"-->
+<!--                android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="300dp"-->
+<!--                tools:context=".controllers.activities.MainActivity" />-->
+            <ImageView
+                android:id="@+id/map_image"
                 android:layout_width="300dp"
-                android:layout_height="300dp"
-                tools:context=".controllers.activities.MainActivity" />
+                android:layout_height="300dp"/>
             </FrameLayout>
 
         </LinearLayout>

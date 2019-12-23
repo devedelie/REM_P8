@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,12 +27,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
+import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +43,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_ADDRESS;
+import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART1;
+import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART2;
+import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART3;
 import static com.openclassrooms.realestatemanager.models.Constants.MAXIMUM_ZOOM_PREFERENCE;
 import static com.openclassrooms.realestatemanager.models.Constants.MINIMUM_ZOOM_PREFERENCE;
 
-public class DetailFragment extends Fragment implements OnMapReadyCallback {
+public class DetailFragment extends Fragment  {
+    @BindView(R.id.fragment_detail_images_recyclerView) RecyclerView mImageRecyclerView;
     @BindView(R.id.detail_property_location) TextView mLocationText;
     @BindView(R.id.detail_fragment_property_description) TextView mDescription;
     @BindView(R.id.property_surface_text) TextView mSurface;
@@ -50,8 +60,10 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
     @BindView(R.id.property_n_of_bathrooms_text) TextView mBathrooms;
     @BindView(R.id.property_location_and_address_text) TextView mLocationAndAddress;
     @BindView(R.id.property_price) TextView mPrice;
+    @BindView(R.id.map_image) ImageView mImageMap;
     private PropertyViewModel mPropertyViewModel;
     private List<Property> mProperties;
+    private ImagesAdapter mImagesAdapter;
     private GoogleMap mMap;
     private static final float DEFAULT_ZOOM = 15f ;
     private static int USER_ID = 1;
@@ -75,13 +87,20 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
         this.configureViewModel();
         this.getCurrentPropertyId();
         this.getProperties();
-        this.initMap();
+
+//        this.initMap();
+    }
+
+    private void initImageRecyclerView() {
+        this.mImagesAdapter = new ImagesAdapter(mProperties, Glide.with(this));
+        this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
+        this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
     }
 
     // Initialise Google Map
     private void initMap(){
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
     }
 
     //  Configuring ViewModel
@@ -113,7 +132,9 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
         this.mProperties = new ArrayList<>();
         this.mProperties= properties;
 
+        // Update UI & Images on recyclerView only when data is ready
         updatePropertyUI();
+        initImageRecyclerView();
     }
 
 
@@ -141,25 +162,39 @@ public class DetailFragment extends Fragment implements OnMapReadyCallback {
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
-        // Move to property location
-        moveCamera(new LatLng( mProperties.get(currentId-1).getAddressLat(), mProperties.get(currentId-1).getAddressLng()), DEFAULT_ZOOM);
+        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+        // Move camera to property location & add a marker
+//        moveCamera(new LatLng( mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng()), DEFAULT_ZOOM);
+//        LatLng marker = new LatLng(mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng());
+//        mMap.addMarker(new MarkerOptions().position(marker).title(mProperties.get(id).getPropertyAddress()));
+    }
+
+    private String fabricateURL(int id){
+        // Get & Trim property LatLng
+        String latLng = (mProperties.get(id).getAddressLat() + "," + mProperties.get(id).getAddressLng());
+        // Address fixing
+        String address = mProperties.get(id).getPropertyAddress().replaceAll("[#%@!&*]","");
+        // Create url
+        String url = (IMAGE_URL_PART1 + address + IMAGE_URL_PART2 + latLng + IMAGE_URL_PART3 + BuildConfig.GOOGLE_API_KEY);
+        Log.d(TAG, "fabricateURL: "+ url);
+        return url;
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        // Set Lite Mode Map
-        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-        options.mapType(GoogleMap.MAP_TYPE_NORMAL);
-        googleMap.setMapType(options.getMapType());
-
-        mMap.setMinZoomPreference(MINIMUM_ZOOM_PREFERENCE);
-        mMap.setMaxZoomPreference(MAXIMUM_ZOOM_PREFERENCE);
-        // Map configurations
-        mMap.setBuildingsEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-    }
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mMap = googleMap;
+//        // Set Lite Mode Map
+//        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+//        options.mapType(GoogleMap.MAP_TYPE_NORMAL);
+//        googleMap.setMapType(options.getMapType());
+//
+//        mMap.setMinZoomPreference(MINIMUM_ZOOM_PREFERENCE);
+//        mMap.setMaxZoomPreference(MAXIMUM_ZOOM_PREFERENCE);
+//        // Map configurations
+//        mMap.setBuildingsEnabled(true);
+//        mMap.getUiSettings().setCompassEnabled(true);
+//    }
 
     // A method to move the camera(map) to specific location by passing LatLng and Zoom
     private void moveCamera(LatLng latLng, float zoom){
