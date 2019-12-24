@@ -27,6 +27,14 @@ public class DummyData {
         contentValues.put("propertyBathRooms", 1);
         contentValues.put("propertyDescription", "Nice and comfortable studio in center of NYC");
         contentValues.put("imageId", 1);
+        contentValues.put("photos", "[" +
+                        "\"/storage/emulated/0/Download/1-1.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-2.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-3.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-4.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-5.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-6.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-7.jpg\" ]");
         contentValues.put("propertyAddress", "425 Lafayette St, New York, NY 10003, United States");
         contentValues.put("addressLat", 40.729210 );
         contentValues.put("addressLng", -73.991770 );
@@ -52,6 +60,12 @@ public class DummyData {
         contentValues.put("propertyBathRooms", 1);
         contentValues.put("propertyDescription", "Nice and comfortable apartment in center of Bronx neighborhood");
         contentValues.put("imageId", 2);
+        contentValues.put("photos", "[" +
+                "\"/storage/emulated/0/Download/2-1.jpg\"," +
+                "\"/storage/emulated/0/Download/2-2.jpg\"," +
+                "\"/storage/emulated/0/Download/2-3.jpg\"," +
+                "\"/storage/emulated/0/Download/2-4.jpg\"," +
+                "\"/storage/emulated/0/Download/2-5.jpg\" ]");
         contentValues.put("propertyAddress", "900 Intervale Ave #4240, The Bronx, NY 10459, United States");
         contentValues.put("addressLat", 40.819620 );
         contentValues.put("addressLng", -73.896540 );
@@ -77,6 +91,13 @@ public class DummyData {
         contentValues.put("propertyBathRooms", 2);
         contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
         contentValues.put("imageId", 3);
+        contentValues.put("photos", "[" +
+                "\"/storage/emulated/0/Download/3-1.jpg\"," +
+                "\"/storage/emulated/0/Download/3-2.jpg\"," +
+                "\"/storage/emulated/0/Download/3-3.jpg\"," +
+                "\"/storage/emulated/0/Download/3-4.jpg\"," +
+                "\"/storage/emulated/0/Download/3-5.jpg\"," +
+                "\"/storage/emulated/0/Download/3-6.jpg\" ]");
         contentValues.put("propertyAddress", "4716 7th Ave, Brooklyn, NY 11220, United States");
         contentValues.put("addressLat", 40.644000 );
         contentValues.put("addressLng", -74.004710 );
@@ -102,6 +123,13 @@ public class DummyData {
         contentValues.put("propertyBathRooms", 1);
         contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
         contentValues.put("imageId", 4);
+        contentValues.put("photos", "[" +
+                "\"/storage/emulated/0/Download/4-1.jpg\"," +
+                "\"/storage/emulated/0/Download/4-2.jpg\"," +
+                "\"/storage/emulated/0/Download/4-3.jpg\"," +
+                "\"/storage/emulated/0/Download/4-4.jpg\"," +
+                "\"/storage/emulated/0/Download/4-5.jpg\"," +
+                "\"/storage/emulated/0/Download/4-6.jpg\" ]");
         contentValues.put("propertyAddress", "700 Myrtle Ave, Brooklyn, NY 11205, United States");
         contentValues.put("addressLat", 40.694510 );
         contentValues.put("addressLng", -73.955750 );
