@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -43,12 +44,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
-import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_ADDRESS;
 import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART1;
 import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART2;
 import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART3;
-import static com.openclassrooms.realestatemanager.models.Constants.MAXIMUM_ZOOM_PREFERENCE;
-import static com.openclassrooms.realestatemanager.models.Constants.MINIMUM_ZOOM_PREFERENCE;
 
 public class DetailFragment extends Fragment  {
     @BindView(R.id.fragment_detail_images_recyclerView) RecyclerView mImageRecyclerView;
@@ -133,8 +131,9 @@ public class DetailFragment extends Fragment  {
         this.mProperties= properties;
 
         // Update UI & Images on recyclerView only when data is ready
-        updatePropertyUI();
         initImageRecyclerView();
+        updatePropertyUI();
+
     }
 
 
@@ -151,9 +150,11 @@ public class DetailFragment extends Fragment  {
 
 
     public void updatePropertyUI(){
-        int id = currentId -1;
-        Log.d(TAG, "updatePropertyUI: detailFragment" + currentId);
         // Set the property ID in the list #-1 (ArrayList)
+        int id = currentId -1;
+        // Set images in recyclerView
+        mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos());
+
         mLocationText.setText(mProperties.get(id).getLocation());
 //        mDescription.setText(mProperties.get(id).getPropertyDescription());
         mSurface.setText(String.valueOf(mProperties.get(id).getPropertySurface()));
@@ -162,19 +163,20 @@ public class DetailFragment extends Fragment  {
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
-        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+//        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+
+        //-------------GoogleMap-------------------------
         // Move camera to property location & add a marker
 //        moveCamera(new LatLng( mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng()), DEFAULT_ZOOM);
 //        LatLng marker = new LatLng(mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng());
 //        mMap.addMarker(new MarkerOptions().position(marker).title(mProperties.get(id).getPropertyAddress()));
+        //-----------------------------------------------
     }
 
     private String fabricateURL(int id){
-        // Get & Trim property LatLng
+        // Get & Trim property LatLng -> Then create a url for the API
         String latLng = (mProperties.get(id).getAddressLat() + "," + mProperties.get(id).getAddressLng());
-        // Address fixing
         String address = mProperties.get(id).getPropertyAddress().replaceAll("[#%@!&*]","");
-        // Create url
         String url = (IMAGE_URL_PART1 + address + IMAGE_URL_PART2 + latLng + IMAGE_URL_PART3 + BuildConfig.GOOGLE_API_KEY);
         Log.d(TAG, "fabricateURL: "+ url);
         return url;
@@ -200,8 +202,6 @@ public class DetailFragment extends Fragment  {
     private void moveCamera(LatLng latLng, float zoom){
         // Move map
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-        // Add marker
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(latLng.latitude, latLng.longitude)).title("Marker"));
     }
 
 
