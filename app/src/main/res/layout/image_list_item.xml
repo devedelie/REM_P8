@@ -29,7 +29,7 @@
             android:alpha="0.8"
             android:src="@color/text_primary_dark"/>
         <!-- Description -->
-        <EditText
+        <TextView
             android:id="@+id/property_description_in_image_list"
             android:layout_width="140dp"
             android:layout_height="40dp"
