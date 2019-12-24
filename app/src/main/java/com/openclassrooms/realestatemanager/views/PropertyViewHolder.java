@@ -60,9 +60,11 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
             mCardView.setCardBackgroundColor(res.getColorStateList(R.color.text_secondary_white));
         }
 
+        // Set details
         this.mOnPropertyClick = callback;
         this.mProperty = property;
-        propertyImage.setImageResource(R.drawable.apart_one); // Testing
+        String imageUri = mProperty.getPhotos().get(0);
+        if(imageUri != null) glide.load(imageUri).into(propertyImage);
         propertyTypeText.setText(property.getType());
         propertyLocationText.setText(property.getLocation());
         propertyPriceText.setText(String.valueOf(Utils.moneyValueFormatter(property.getPropertyPrice())));
