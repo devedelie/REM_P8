@@ -29,7 +29,7 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by Eliran Elbaz on 25-Nov-19.
  */
-@Database(entities = {User.class, Type.class, Property.class, Poi.class, Image.class, PoiProperty.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Type.class, Property.class, Poi.class, Image.class, PoiProperty.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class RealEstateManagerDatabase extends RoomDatabase {
 
