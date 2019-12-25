@@ -25,4 +25,7 @@
     <string name="detail_location">Location</string>
     <string name="detail_price">Price</string>
     <string name="title_activity_maps">Map</string>
+
+    <!-- Permissions-->
+    <string name="popup_title_permission_disk_access">This application requires authorization to read from the storage on this device</string>
 </resources>
