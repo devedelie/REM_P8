@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.openclassrooms.realestatemanager.R;
-import com.openclassrooms.realestatemanager.models.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +24,11 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
     // Declaring a Glide object
     private RequestManager mGlide;
 
-    public void setPropertyImagesList(List<String> imagesUriList){
+    public void setPropertyImagesList(List<String> imagesUriList, List<String> photoDescription){
         this.mPhotos.clear();
         this.mPhotos.addAll(imagesUriList);
+        this.mPhotosDescription.clear();
+        this.mPhotosDescription.addAll(photoDescription);
         notifyDataSetChanged();
     }
 
@@ -47,7 +48,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ImagesViewHolder holder, int position) {
-        holder.updatePropertyImages(mPhotos.get(position), mGlide);
+        holder.updatePropertyImages(mPhotos.get(position), mPhotosDescription.get(position), mGlide);
     }
 
     @Override

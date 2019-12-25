@@ -35,6 +35,7 @@ public class DummyData {
                         "\"/storage/emulated/0/Download/1-5.jpg\"," +
                         "\"/storage/emulated/0/Download/1-6.jpg\"," +
                         "\"/storage/emulated/0/Download/1-7.jpg\" ]");
+        contentValues.put("photosDescription","[\"Dining room\",\"Living room\",\"Outside\",\"Living room\",\"TV-Area\",\"Office\",\"Kitchen\"]");
         contentValues.put("propertyAddress", "425 Lafayette St, New York, NY 10003, United States");
         contentValues.put("addressLat", 40.729210 );
         contentValues.put("addressLng", -73.991770 );
@@ -66,6 +67,7 @@ public class DummyData {
                 "\"/storage/emulated/0/Download/2-3.jpg\"," +
                 "\"/storage/emulated/0/Download/2-4.jpg\"," +
                 "\"/storage/emulated/0/Download/2-5.jpg\" ]");
+        contentValues.put("photosDescription","[\"Living room\",\"Bedroom\",\"Kitchen\",\"Dining room\",\"Shower\"]");
         contentValues.put("propertyAddress", "900 Intervale Ave #4240, The Bronx, NY 10459, United States");
         contentValues.put("addressLat", 40.819620 );
         contentValues.put("addressLng", -73.896540 );
@@ -98,6 +100,7 @@ public class DummyData {
                 "\"/storage/emulated/0/Download/3-4.jpg\"," +
                 "\"/storage/emulated/0/Download/3-5.jpg\"," +
                 "\"/storage/emulated/0/Download/3-6.jpg\" ]");
+        contentValues.put("photosDescription","[\"Dining room\",\"Skyscape view\",\"Kitchen\",\"Bedroom\",\"Kids-Bedroom\",\"Swimming-pool\"]");
         contentValues.put("propertyAddress", "4716 7th Ave, Brooklyn, NY 11220, United States");
         contentValues.put("addressLat", 40.644000 );
         contentValues.put("addressLng", -74.004710 );
@@ -130,6 +133,7 @@ public class DummyData {
                 "\"/storage/emulated/0/Download/4-4.jpg\"," +
                 "\"/storage/emulated/0/Download/4-5.jpg\"," +
                 "\"/storage/emulated/0/Download/4-6.jpg\" ]");
+        contentValues.put("photosDescription","[\"Dining room\",\"Living room\",\"Outside\",\"Shower\",\"GYM\",\"Outside\"]");
         contentValues.put("propertyAddress", "700 Myrtle Ave, Brooklyn, NY 11205, United States");
         contentValues.put("addressLat", 40.694510 );
         contentValues.put("addressLng", -73.955750 );
