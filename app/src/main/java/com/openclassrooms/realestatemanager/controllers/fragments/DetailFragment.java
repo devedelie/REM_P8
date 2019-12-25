@@ -90,7 +90,7 @@ public class DetailFragment extends Fragment  {
     }
 
     private void initImageRecyclerView() {
-        this.mImagesAdapter = new ImagesAdapter(mProperties, Glide.with(this));
+        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
         this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
         this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
     }
@@ -153,7 +153,7 @@ public class DetailFragment extends Fragment  {
         // Set the property ID in the list #-1 (ArrayList)
         int id = currentId -1;
         // Set images in recyclerView
-        mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos());
+        mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
 
         mLocationText.setText(mProperties.get(id).getLocation());
 //        mDescription.setText(mProperties.get(id).getPropertyDescription());
