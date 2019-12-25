@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureAndShowMainFragment();
         // Configure and show detail fragment
         this.configureAndShowDetailFragment();
-
     }
 
     @Override

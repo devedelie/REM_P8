@@ -44,11 +44,11 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //EASY PERMISSIONS
-    implementation 'pub.devrel:easypermissions:2.0.0'
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
     // Room
-    implementation "androidx.room:room-runtime:2.2.2"
-    annotationProcessor "androidx.room:room-compiler:2.2.2"
+    implementation "androidx.room:room-runtime:2.2.3"
+    annotationProcessor "androidx.room:room-compiler:2.2.3"
 
     //MultiDex support 64K commands
     implementation "androidx.multidex:multidex:2.0.1"
