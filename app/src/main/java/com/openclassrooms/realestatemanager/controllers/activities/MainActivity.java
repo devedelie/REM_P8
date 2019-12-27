@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -32,7 +34,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick, AddPropertyBottomSheet.BottomSheetListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
@@ -59,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Configure and show detail fragment
         this.configureAndShowDetailFragment();
     }
+
+    //-------------------
+    // Configurations
+    //-------------------
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,6 +119,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: " + item.getOrder());
+        int itemId = item.getOrder();
+        switch (itemId){
+            case 0:
+                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
+                break;
+            case 1:
+//                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
+                break;
+            case 2:
+//                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void configureAndShowMainFragment(){
         // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
@@ -166,4 +190,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void onClosedAddFragment(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        // action from bottomSheet
+    }
 }
