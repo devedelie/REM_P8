@@ -68,6 +68,11 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
         propertyTypeText.setText(property.getType());
         propertyLocationText.setText(property.getLocation());
         propertyPriceText.setText(String.valueOf(Utils.moneyValueFormatter(property.getPropertyPrice())));
+        if(mProperty.isPropertyStatus()){
+            propertySoldImage.setVisibility(View.VISIBLE);
+        }else {
+            propertySoldImage.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
