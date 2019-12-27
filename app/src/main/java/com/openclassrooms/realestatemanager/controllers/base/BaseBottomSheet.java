@@ -38,6 +38,10 @@ public abstract class BaseBottomSheet extends BottomSheetDialogFragment {
 
     protected abstract Dialog onCreateDialog();
 
+    public interface BottomSheetListener {
+        void onClosedBottomSheet(String text, String data);
+    }
+
     // --------------------
     // UTILS
     // --------------------

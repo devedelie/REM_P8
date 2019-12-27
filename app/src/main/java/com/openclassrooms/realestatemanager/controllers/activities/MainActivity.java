@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
@@ -33,8 +34,11 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.ContentValues.TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_ADD_TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_EDIT_TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_SEARCH_TAG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick, AddPropertyBottomSheet.BottomSheetListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick, BaseBottomSheet.BottomSheetListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
@@ -189,10 +193,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
+    // Manage the callbacks from bottomSheets
     @Override
-    public void onClosedAddFragment(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-        // action from bottomSheet
+    public void onClosedBottomSheet(String tag, String data) {
+        // action to manage from bottomSheet
+        switch (tag){
+            case BOTTOM_SHEET_ADD_TAG:
+                Log.d(TAG, "onClosedBottomSheet: ADD");
+                break;
+            case BOTTOM_SHEET_EDIT_TAG:
+                Log.d(TAG, "onClosedBottomSheet: EDIT");
+                break;
+            case BOTTOM_SHEET_SEARCH_TAG:
+                Log.d(TAG, "onClosedBottomSheet: SEARCH");
+                break;
+        }
     }
 }

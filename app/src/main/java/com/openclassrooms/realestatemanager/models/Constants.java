@@ -7,8 +7,9 @@ import java.util.List;
  * Created by Eliran Elbaz on 21-Dec-19.
  */
 public class Constants {
-    public static final float MINIMUM_ZOOM_PREFERENCE = 14.5f;
-    public static final float MAXIMUM_ZOOM_PREFERENCE = 18.0f;
+    public static final String BOTTOM_SHEET_ADD_TAG = "AddProperty";
+    public static final String BOTTOM_SHEET_EDIT_TAG = "EditProperty";
+    public static final String BOTTOM_SHEET_SEARCH_TAG = "SearchProperty";
     public static final List<String> PROPERTY_TYPE = Arrays.asList("Studio", "Apartment", "Penthouse Apartment", "Loft", "House", "Duplex", "Flat", "Private Villa", "Mansion", "Farm House");
     // URL Example:  https://maps.googleapis.com/maps/api/staticmap?center=425+Lafayette+St,+New+York,+NY+10003&zoom=15&size=300x300&maptype=roadmap
     //&markers=color:blue%7Clabel:S%7C40.702147,-74.015794

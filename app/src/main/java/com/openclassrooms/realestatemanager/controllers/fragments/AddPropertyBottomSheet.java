@@ -1,26 +1,16 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 
@@ -29,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.android.volley.VolleyLog.TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_ADD_TAG;
 
 /**
  * Created by Eliran Elbaz on 26-Dec-19.
@@ -75,10 +66,6 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     // Interface implementation
     //--------------------------
 
-    public interface BottomSheetListener {
-        void onClosedAddFragment(String text);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -91,14 +78,13 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         }
     }
 
-
     //---------------
     // Actions
     //---------------
 
     @OnClick(R.id.x_button)
     public void onClickXButton(){
-        mListener.onClosedAddFragment("Message from bottomSheet");
+        mListener.onClosedBottomSheet(BOTTOM_SHEET_ADD_TAG, "some data");
         dismiss();
     }
 
