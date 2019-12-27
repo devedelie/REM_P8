@@ -1,9 +1,7 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
 
+import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,19 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -35,7 +23,6 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
-import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 
@@ -68,16 +55,12 @@ public class DetailFragment extends Fragment  {
     @BindView(R.id.property_status) TextView mPropertyStatus;
     @BindView(R.id.property_agent) TextView mPropertyAgent;
     private PropertyViewModel mPropertyViewModel;
-    private PropertyViewModel mUserViewModel;
     private List<Property> mProperties;
     private ImagesAdapter mImagesAdapter;
-    private GoogleMap mMap;
-    private static final float DEFAULT_ZOOM = 15f ;
     private static int USER_ID = 1;
     private int currentId=1;
 
     public DetailFragment() { }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,7 +79,6 @@ public class DetailFragment extends Fragment  {
         this.getProperties();
         this.getCurrentUser(USER_ID);
 
-//        this.initMap();
     }
 
     private void initImageRecyclerView() {
@@ -134,7 +116,6 @@ public class DetailFragment extends Fragment  {
         this.mPropertyViewModel.getUser(userId).observe(this, this::updateAgent);
     }
 
-
     //----------
     // UI
     //----------
@@ -162,9 +143,7 @@ public class DetailFragment extends Fragment  {
             // Update UI when other property is selected
             updatePropertyUI();
         }
-
     }
-
 
     public void updatePropertyUI(){
         // Set the property ID in the list #-1 (ArrayList)
@@ -187,13 +166,6 @@ public class DetailFragment extends Fragment  {
             Date date = mProperties.get(id).getEntryDate();
             mPropertyStatus.setText(getString(R.string.detail_available) + " " + dateConverter(mProperties.get(id).getEntryDate()));
         }
-
-        //-------------GoogleMap-------------------------
-        // Move camera to property location & add a marker
-//        moveCamera(new LatLng( mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng()), DEFAULT_ZOOM);
-//        LatLng marker = new LatLng(mProperties.get(id).getAddressLat(), mProperties.get(id).getAddressLng());
-//        mMap.addMarker(new MarkerOptions().position(marker).title(mProperties.get(id).getPropertyAddress()));
-        //-----------------------------------------------
     }
 
     private String fabricateURL(int id){
@@ -209,29 +181,6 @@ public class DetailFragment extends Fragment  {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         return formatter.format(date);
     }
-
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        // Set Lite Mode Map
-//        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-//        options.mapType(GoogleMap.MAP_TYPE_NORMAL);
-//        googleMap.setMapType(options.getMapType());
-//
-//        mMap.setMinZoomPreference(MINIMUM_ZOOM_PREFERENCE);
-//        mMap.setMaxZoomPreference(MAXIMUM_ZOOM_PREFERENCE);
-//        // Map configurations
-//        mMap.setBuildingsEnabled(true);
-//        mMap.getUiSettings().setCompassEnabled(true);
-//    }
-
-    // A method to move the camera(map) to specific location by passing LatLng and Zoom
-    private void moveCamera(LatLng latLng, float zoom){
-        // Move map
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-    }
-
 
 }
 
