@@ -5,6 +5,14 @@ import android.content.ContentValues;
 import androidx.room.OnConflictStrategy;
 
 import com.openclassrooms.realestatemanager.models.Constants;
+import com.openclassrooms.realestatemanager.utils.Converters;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Eliran Elbaz on 11-Dec-19.
@@ -41,6 +49,10 @@ public class DummyData {
         contentValues.put("addressLng", -73.991770 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        contentValues.put("sellDate","");
         contentValues.put("agentInCharge", 1);
 
         return contentValues;
@@ -73,6 +85,10 @@ public class DummyData {
         contentValues.put("addressLng", -73.896540 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        contentValues.put("sellDate", "");
         contentValues.put("agentInCharge", 1);
 
         return contentValues;
@@ -105,7 +121,12 @@ public class DummyData {
         contentValues.put("addressLat", 40.644000 );
         contentValues.put("addressLng", -74.004710 );
         contentValues.put("PoiId", 1);
-        contentValues.put("propertyStatus", false);
+        contentValues.put("propertyStatus", true);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        Date sellDate = new GregorianCalendar(2019, Calendar.DECEMBER, 24).getTime();
+        contentValues.put("sellDate", Converters.dateToTimestamp(sellDate) );
         contentValues.put("agentInCharge", 1);
 
         return contentValues;
@@ -139,6 +160,10 @@ public class DummyData {
         contentValues.put("addressLng", -73.955750 );
         contentValues.put("PoiId", 1);
         contentValues.put("propertyStatus", false);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        contentValues.put("sellDate", "" );
         contentValues.put("agentInCharge", 1);
 
         return contentValues;

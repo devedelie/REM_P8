@@ -41,12 +41,13 @@ public class Property {
     private double addressLng;
     private int poiId; // [FK]
     private boolean propertyStatus;
+    private Date entryDate;
     private Date sellDate;
     private long agentInCharge;
 
     public Property(){}
 
-    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date sellDate, long agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date entryDate, Date sellDate, long agentInCharge) {
         this.type = type;
         this.location = location;
         this.photos = photos;
@@ -67,7 +68,12 @@ public class Property {
         this.propertyStatus = propertyStatus;
         this.sellDate = sellDate;
         this.agentInCharge = agentInCharge;
+        this.entryDate = entryDate;
     }
+
+    public Date getEntryDate() { return entryDate; }
+
+    public void setEntryDate(Date entryDate) { this.entryDate = entryDate; }
 
     public double getAddressLng() { return addressLng; }
 

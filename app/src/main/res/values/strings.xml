@@ -24,8 +24,15 @@
     <string name="detail_title_n_of_bathrooms">Number of Bathrooms</string>
     <string name="detail_location">Location</string>
     <string name="detail_price">Price</string>
+    <string name="detail_agent">Agent in charge</string>
+    <string name="detail_status">Property status</string>
+    <string name="detail_poi">Points of interest</string>
+    <string name="detail_sold">Sold since: </string>
+    <string name="detail_available">Available since: </string>
     <string name="title_activity_maps">Map</string>
 
     <!-- Permissions-->
-    <string name="popup_title_permission_disk_access">This application requires authorization to read from the storage on this device</string>
+    <string name="popup_title_permission_disk_access">This application requires authorization to read/write the storage on this device</string>
+
+    <string name="splash_loading_text">Loading&#8230;</string>
 </resources>

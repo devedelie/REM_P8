@@ -33,12 +33,17 @@ import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +64,11 @@ public class DetailFragment extends Fragment  {
     @BindView(R.id.property_location_and_address_text) TextView mLocationAndAddress;
     @BindView(R.id.property_price) TextView mPrice;
     @BindView(R.id.map_image) ImageView mImageMap;
+    @BindView(R.id.property_poi) TextView mPOI;
+    @BindView(R.id.property_status) TextView mPropertyStatus;
+    @BindView(R.id.property_agent) TextView mPropertyAgent;
     private PropertyViewModel mPropertyViewModel;
+    private PropertyViewModel mUserViewModel;
     private List<Property> mProperties;
     private ImagesAdapter mImagesAdapter;
     private GoogleMap mMap;
@@ -85,6 +94,7 @@ public class DetailFragment extends Fragment  {
         this.configureViewModel();
         this.getCurrentPropertyId();
         this.getProperties();
+        this.getCurrentUser(USER_ID);
 
 //        this.initMap();
     }
@@ -119,6 +129,11 @@ public class DetailFragment extends Fragment  {
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::setPropertyViews);
     }
 
+    // Get current user
+    private void getCurrentUser(int userId){
+        this.mPropertyViewModel.getUser(userId).observe(this, this::updateAgent);
+    }
+
 
     //----------
     // UI
@@ -133,9 +148,11 @@ public class DetailFragment extends Fragment  {
         // Update UI & Images on recyclerView only when data is ready
         initImageRecyclerView();
         updatePropertyUI();
-
     }
 
+    private void updateAgent(User user) {
+        this.mPropertyAgent.setText(user.getUsername());
+    }
 
     // Update the ArrayList with properties
     public void updateCurrentPropertyId(long id){
@@ -151,7 +168,7 @@ public class DetailFragment extends Fragment  {
 
     public void updatePropertyUI(){
         // Set the property ID in the list #-1 (ArrayList)
-        int id = currentId -1;
+        int id = currentId - 1;
         // Set images in recyclerView
         mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
 
@@ -164,6 +181,12 @@ public class DetailFragment extends Fragment  {
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
 //        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+        if(mProperties.get(id).isPropertyStatus()){
+            mPropertyStatus.setText(getString(R.string.detail_sold) +" "+ dateConverter(mProperties.get(id).getSellDate()));
+        }else {
+            Date date = mProperties.get(id).getEntryDate();
+            mPropertyStatus.setText(getString(R.string.detail_available) + " " + dateConverter(mProperties.get(id).getEntryDate()));
+        }
 
         //-------------GoogleMap-------------------------
         // Move camera to property location & add a marker
@@ -180,6 +203,11 @@ public class DetailFragment extends Fragment  {
         String url = (IMAGE_URL_PART1 + address + IMAGE_URL_PART2 + latLng + IMAGE_URL_PART3 + BuildConfig.GOOGLE_API_KEY);
         Log.d(TAG, "fabricateURL: "+ url);
         return url;
+    }
+
+    private String dateConverter(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return formatter.format(date);
     }
 
 
