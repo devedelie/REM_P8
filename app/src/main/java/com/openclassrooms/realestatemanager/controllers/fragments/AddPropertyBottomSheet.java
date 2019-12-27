@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ import static com.android.volley.VolleyLog.TAG;
 /**
  * Created by Eliran Elbaz on 26-Dec-19.
  */
-public class AddPropertyBottomSheet extends BottomSheetDialogFragment {
+public class AddPropertyBottomSheet extends BaseBottomSheet {
     @BindView(R.id.test_bottom_sheet) TextView test;
     // Bundle
     private static final String CURRENT_PROPERTY_ID = "CURRENT_PROPERTY_ID";
@@ -52,12 +53,22 @@ public class AddPropertyBottomSheet extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View result = inflater.inflate(R.layout.bottom_sheet_add_property, container, false);
+        View result = inflater.inflate(getFragmentLayout(), container, false);
         ButterKnife.bind(this, result);
 
         currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
         setUiElements();
         return result;
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.bottom_sheet_add_property;
+    }
+
+    @Override
+    protected Dialog onCreateDialog() {
+        return null;
     }
 
     //--------------------------
@@ -80,54 +91,6 @@ public class AddPropertyBottomSheet extends BottomSheetDialogFragment {
         }
     }
 
-    //-----------------------
-    // Configure BottomSheet
-    // ----------------------
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override public void onShow(DialogInterface dialogInterface) {
-                BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialogInterface;
-                setupFullHeight(bottomSheetDialog);
-            }
-        });
-        return  dialog;
-    }
-
-    // Launch bottomSheet on full height & covers the activity
-    private void setupFullHeight(BottomSheetDialog bottomSheetDialog) {
-        FrameLayout bottomSheet = (FrameLayout) bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-        ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
-
-        int windowHeight = getWindowHeight();
-        if (layoutParams != null) {
-            layoutParams.height = windowHeight;
-        }
-        bottomSheet.setLayoutParams(layoutParams);
-        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-        // Disable fragment Dragging
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
-    }
-
-    private int getWindowHeight() {
-        // Calculate window height for fullscreen use
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.heightPixels;
-    }
 
     //---------------
     // Actions
