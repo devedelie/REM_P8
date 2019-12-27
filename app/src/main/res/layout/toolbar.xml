@@ -16,11 +16,13 @@
         android:background="?attr/colorPrimaryDark"
         android:theme="@style/REMTheme.Toolbar" />
 
-    <FrameLayout android:layout_width="match_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--DropShadow-->
-        <View android:layout_width="match_parent"
-            android:layout_height="3dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
             android:background="@drawable/toolbar_dropshadow"/>
 
     </FrameLayout>

@@ -8,11 +8,34 @@
     android:background="@color/colorPrimaryDark">
 
     <ImageView
+        android:id="@+id/app_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_rem_logo_dark"/>
+        android:src="@drawable/ic_rem_logo"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@id/app_logo">
+        <ProgressBar
+            android:id="@+id/mapView_loading_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/mapView_loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_loading_text"
+            android:textColor="@color/text_secondary_white"
+            android:layout_gravity="center"
+            android:layout_below="@+id/mapView_loading_animation"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
