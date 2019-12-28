@@ -33,7 +33,7 @@ public class Property {
     private ArrayList<String> photos;
     private ArrayList<String> photosDescription;
     private String video;
-    private Map<String,String> pointOfInterest;
+    private ArrayList<String> pointOfInterest;
     private String propertyDescription;
     private int imageId; // [FK]
     private String propertyAddress;
@@ -47,7 +47,7 @@ public class Property {
 
     public Property(){}
 
-    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, Map<String,String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date entryDate, Date sellDate, long agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, ArrayList<String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date entryDate, Date sellDate, long agentInCharge) {
         this.type = type;
         this.location = location;
         this.photos = photos;
@@ -111,9 +111,9 @@ public class Property {
 
     public void setVideo(String video) { this.video = video; }
 
-    public Map<String, String> getPointOfInterest() { return pointOfInterest; }
+    public ArrayList<String> getPointOfInterest() { return pointOfInterest; }
 
-    public void setPointOfInterest(Map<String, String> pointOfInterest) { this.pointOfInterest = pointOfInterest; }
+    public void setPointOfInterest(ArrayList<String> pointOfInterest) { this.pointOfInterest = pointOfInterest; }
 
     public long getId() { return id; }
 

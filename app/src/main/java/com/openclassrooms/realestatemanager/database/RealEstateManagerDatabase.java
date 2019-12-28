@@ -13,6 +13,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.openclassrooms.realestatemanager.database.dao.PoiDao;
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.database.dao.TypeDao;
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
@@ -61,6 +62,7 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
     // DAO
     public abstract PropertyDao mPropertyDao();
     public abstract UserDao mUserDao();
+    public abstract PoiDao mPoiDao();
 
     // --- INSTANCE ---
     public static RealEstateManagerDatabase getInstance(Context context) {
@@ -85,21 +87,54 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
                 super.onCreate(db);
 
                 ContentValues contentValues = new ContentValues();
-
+                // User
                 contentValues.put("id", 1);
                 contentValues.put("username", "Eliran Elbaz");
                 contentValues.put("urlPicture", "https://media.licdn.com/dms/image/C4D03AQG7Y9spxLaZ1g/profile-displayphoto-shrink_200_200/0?e=1581552000&v=beta&t=tfzRkP2T3z6QEIzaXszpRZFaWNy8b1f-gSlfLq5WBfY");
-
                 db.insert("User", OnConflictStrategy.IGNORE, contentValues);
 
-                // Clear ContentValue before re-use
+                // Properties
                 contentValues.clear();
-
                 // Insert dummy data
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyOne());
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyTwo());
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyThree());
                 db.insert("Property", OnConflictStrategy.IGNORE, DummyData.propertyFour());
+
+
+                // POIs
+                contentValues.clear();
+                contentValues.put("id", 1);
+                contentValues.put("poiName", "Subway");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 2);
+                contentValues.put("poiName", "GYM");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 3);
+                contentValues.put("poiName", "Supermarket");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 4);
+                contentValues.put("poiName", "Swimming Pool");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 5);
+                contentValues.put("poiName", "Shopping mall");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 6);
+                contentValues.put("poiName", "Library");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 7);
+                contentValues.put("poiName", "Public Bus station");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                contentValues.clear();
+                contentValues.put("id", 8);
+                contentValues.put("poiName", "Public Parking");
+                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
 
             }
         };

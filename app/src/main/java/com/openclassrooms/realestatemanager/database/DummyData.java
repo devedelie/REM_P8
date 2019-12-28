@@ -19,6 +19,13 @@ import java.util.GregorianCalendar;
  */
 public class DummyData {
 
+    static ContentValues poi(){
+        ContentValues contentValues = new ContentValues();
+
+
+
+        return contentValues;
+    }
 
     static ContentValues propertyOne(){
         ContentValues contentValues = new ContentValues();
@@ -27,7 +34,7 @@ public class DummyData {
         contentValues.put("typeId", 1);
         contentValues.put("type", Constants.PROPERTY_TYPE.get(3));
         contentValues.put("location", "Lower Manhattan");
-        contentValues.put("pointOfInterest", "{\"Subway\":\"Swimming Pool\",\"Library\":\"GYM\"}");
+        contentValues.put("pointOfInterest", "[\"1\",\"3\",\"5\",\"7\"]");
         contentValues.put("propertyPrice", 1800000);
         contentValues.put("propertySurface", 35);
         contentValues.put("propertyRooms", 1);
@@ -65,7 +72,7 @@ public class DummyData {
         contentValues.put("typeId", 2);
         contentValues.put("type", Constants.PROPERTY_TYPE.get(1));
         contentValues.put("location", "Bronx New-York city");
-        contentValues.put("pointOfInterest", "{\"GYM\":\"Shopping mall\",\"Restaurants\":\"Library\"}");
+        contentValues.put("pointOfInterest", "[\"2\",\"3\",\"5\",\"6\",\"7\"]");
         contentValues.put("propertyPrice", 900000);
         contentValues.put("propertySurface", 90);
         contentValues.put("propertyRooms", 5);
@@ -101,7 +108,7 @@ public class DummyData {
         contentValues.put("typeId", 2);
         contentValues.put("type", Constants.PROPERTY_TYPE.get(2));
         contentValues.put("location", "Brooklyn NY");
-        contentValues.put("pointOfInterest", "{\"GYM\":\"Shopping mall\",\"Restaurants\":\"Library\"}");
+        contentValues.put("pointOfInterest", "[\"1\",\"4\",\"5\",\"6\"]");
         contentValues.put("propertyPrice", 3000000);
         contentValues.put("propertySurface", 190);
         contentValues.put("propertyRooms", 6);
@@ -139,7 +146,7 @@ public class DummyData {
         contentValues.put("typeId", 2);
         contentValues.put("type", Constants.PROPERTY_TYPE.get(1));
         contentValues.put("location", "Brooklyn NY");
-        contentValues.put("pointOfInterest", "{\"GYM\":\"Shopping mall\",\"Restaurants\":\"Library\"}");
+        contentValues.put("pointOfInterest", "[\"3\",\"4\",\"5\",\"6\"]");
         contentValues.put("propertyPrice", 2000000);
         contentValues.put("propertySurface", 160);
         contentValues.put("propertyRooms", 4);

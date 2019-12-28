@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
@@ -56,6 +58,8 @@ public class DetailFragment extends Fragment  {
     @BindView(R.id.property_agent) TextView mPropertyAgent;
     private PropertyViewModel mPropertyViewModel;
     private List<Property> mProperties;
+    private List<Poi> mPois;
+    String finalPoiString="";
     private ImagesAdapter mImagesAdapter;
     private static int USER_ID = 1;
     private int currentId=1;
@@ -76,6 +80,7 @@ public class DetailFragment extends Fragment  {
 
         this.configureViewModel();
         this.getCurrentPropertyId();
+        this.getPOI();
         this.getProperties();
         this.getCurrentUser(USER_ID);
 
@@ -92,12 +97,18 @@ public class DetailFragment extends Fragment  {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
         this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
         this.mPropertyViewModel.init(USER_ID);
+        this.mPropertyViewModel.poiInit();
     }
 
     // Get current property ID
     private void getCurrentPropertyId(){
 //        mPropertyViewModel.getCurrentPropertyId().observe(getViewLifecycleOwner(), this::updatePropertyUI);
         CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateCurrentPropertyId);
+    }
+
+    // Get POIs
+    private void getPOI(){
+        this.mPropertyViewModel.getPois().observe(this, this::setPois);
     }
 
     //  Get all properties
@@ -144,7 +155,9 @@ public class DetailFragment extends Fragment  {
         int id = currentId - 1;
         // Set images in recyclerView
         mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
-
+        // Set static map
+//        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+        // Set TextViews
         mLocationText.setText(mProperties.get(id).getLocation());
 //        mDescription.setText(mProperties.get(id).getPropertyDescription());
         mSurface.setText(String.valueOf(mProperties.get(id).getPropertySurface()));
@@ -153,13 +166,25 @@ public class DetailFragment extends Fragment  {
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
-//        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+
         if(mProperties.get(id).isPropertyStatus()){
-            mPropertyStatus.setText(getString(R.string.detail_sold) +" "+ dateConverter(mProperties.get(id).getSellDate()));
+            mPropertyStatus.setText(getString(R.string.detail_sold) + dateConverter(mProperties.get(id).getSellDate()));
         }else {
-            Date date = mProperties.get(id).getEntryDate();
-            mPropertyStatus.setText(getString(R.string.detail_available) + " " + dateConverter(mProperties.get(id).getEntryDate()));
+            mPropertyStatus.setText(getString(R.string.detail_available) + dateConverter(mProperties.get(id).getEntryDate()));
         }
+        // Set POIs
+        for( int i = mProperties.get(id).getPointOfInterest().size()-1 ; i>=0 ; i-- ){
+            int poiNum = Integer.parseInt(mProperties.get(id).getPointOfInterest().get(i));
+            finalPoiString +=  mPois.get(poiNum-1).getPoiName() +", ";
+        }
+        mPOI.setText(finalPoiString);
+        finalPoiString = ""; //clear
+    }
+
+    private void setPois(List<Poi> pois) {
+        this.mPois = new ArrayList<>();
+        this.mPois.clear();
+        this.mPois.addAll(pois);
     }
 
     private String fabricateURL(int id){
