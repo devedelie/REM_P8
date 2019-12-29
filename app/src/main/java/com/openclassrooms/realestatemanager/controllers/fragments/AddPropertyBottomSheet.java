@@ -30,6 +30,7 @@ import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYP
  * Created by Eliran Elbaz on 26-Dec-19.
  */
 public class AddPropertyBottomSheet extends BaseBottomSheet {
+    @BindView(R.id.top_bar_title) TextView mTopTitle;
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView autocompleteDropDownMenu;
     // Bundle
     private static final String CURRENT_PROPERTY_ID = "CURRENT_PROPERTY_ID";
@@ -64,10 +65,10 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         return R.layout.bottom_sheet_add_property;
     }
 
-    @Override
-    protected Dialog onCreateDialog() {
-        return null;
-    }
+//    @Override
+//    protected Dialog onCreateDialog() {
+//        return null;
+//    }
 
     //--------------------------
     // Configurations
@@ -85,6 +86,9 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
                     + " must implement BottomSheetListener");
         }
     }
+
+    @Override
+    protected int setTitle() { return R.string.add_property_bottom_sheet_title; }
 
     private void configureDropDownMenu() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.drop_down_layout, PROPERTY_TYPE );
@@ -127,13 +131,14 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     //---------------
 
     private void setUiElements(){
+        mTopTitle.setText(setTitle());
 
     }
 
     private void alertDialogXButton(){
-        new MaterialAlertDialogBuilder(getActivity())
-                .setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete this entry?")
+        new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                .setTitle(getString(R.string.alert_dialog_title))
+                .setMessage(getString(R.string.alert_dialog_message))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with canceling the entry
@@ -142,7 +147,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
                 })
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_dialog_alert_dark)
                 .show();
     }
 

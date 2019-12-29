@@ -31,12 +31,16 @@ public abstract class BaseBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(this.getFragmentLayout(), container, false);
         ButterKnife.bind(this, view);
+
+        setTitle();
         return view;
     }
 
     protected abstract int getFragmentLayout();
 
-    protected abstract Dialog onCreateDialog();
+//    protected abstract Dialog onCreateDialog();
+
+    protected abstract int setTitle();
 
     public interface BottomSheetListener {
         void onClosedBottomSheet(String text, String data);
