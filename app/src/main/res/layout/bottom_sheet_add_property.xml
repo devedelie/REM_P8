@@ -7,63 +7,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.openclassrooms.realestatemanager.controllers.activities.MainActivity"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="com.openclassrooms.realestatemanager.utils.LockableBottomSheetBehavior">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Bar -->
-        <LinearLayout
-            android:id="@+id/top_bar_layout"
+        <!-- Top bar -->
+        <include
+            layout="@layout/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/colorPrimaryDark">
-            <View
-                android:id="@+id/top_bar"
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+            android:layout_margin="15dp">
 
-            <ImageView
-                android:id="@+id/x_button"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="15dp"
-                android:layout_gravity="end"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:tint="@color/quantum_white_100"
-                android:src="@drawable/ic_close_black_48dp"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Include Base details layout-->
+        <include
+            layout="@layout/property_base_detail_layout"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="asdasdasdasd"/>
+            android:layout_width="match_parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="asdasdasdasd"/>
-            <TextView
-                android:id="@+id/test_bottom_sheet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="asdasdasdasd"/>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-
-
+        <!-- Add Button-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Property"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
