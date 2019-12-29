@@ -41,5 +41,10 @@
 
     <style name="REMTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Text Fields style-->
+    <style name="TextFieldTheme" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
 
 </resources>

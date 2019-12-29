@@ -23,12 +23,11 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-
+                <!--Type of Property-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/property_type_dropdown"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -39,13 +38,119 @@
                             android:hint="Type of property"
                             app:helperText="*Required"
                             app:helperTextEnabled="true">
-
                             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/property_type_autocomplete"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:nextFocusDown="@id/property_description"
                                 android:focusable="false" />
                         </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Description-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_description"
+                        android:layout_marginTop="10dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="Description"
+                        app:helperText="*Required"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_description_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_surface"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Surface (m²)-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_surface"
+                        android:layout_marginTop="10dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="Surface (m²)"
+                        app:helperText="*Required"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_surface_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_rooms"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Rooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_rooms"
+                        android:layout_marginTop="10dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="Number of Rooms"
+                        app:helperText="*Required"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_rooms_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_bedrooms"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Bedrooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_bedrooms"
+                        android:layout_marginTop="10dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="Number of Rooms"
+                        app:helperText="*Required"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_bedrooms_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_bathrooms"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Bathrooms -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_bathrooms"
+                        android:layout_marginTop="10dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="Number of Rooms"
+                        app:helperText="*Required"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_bathrooms_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_description"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                 </LinearLayout>
 
