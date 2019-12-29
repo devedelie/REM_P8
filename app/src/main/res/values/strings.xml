@@ -35,4 +35,12 @@
     <string name="popup_title_permission_disk_access">This application requires authorization to read/write the storage on this device</string>
 
     <string name="splash_loading_text">Loading&#8230;</string>
+
+    <!-- BottomSheets-->
+    <string name="add_property_bottom_sheet_title">Add Property</string>
+    <string name="edit_property_bottom_sheet_title">Add Property</string>
+    <string name="search_property_bottom_sheet_title">Add Property</string>
+
+    <string name="alert_dialog_title">Delete entry</string>
+    <string name="alert_dialog_message">Are you sure you want to delete this entry?</string>
 </resources>
