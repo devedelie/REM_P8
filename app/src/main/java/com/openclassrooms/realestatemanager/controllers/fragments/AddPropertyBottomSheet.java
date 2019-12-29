@@ -13,12 +13,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
-import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 
 import butterknife.BindView;
@@ -134,10 +131,9 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     }
 
     private void alertDialogXButton(){
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle("Delete entry")
                 .setMessage("Are you sure you want to delete this entry?")
-                // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with canceling the entry
@@ -149,6 +145,5 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
 
 }
