@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,12 +27,13 @@ import butterknife.OnClick;
 
 import static com.android.volley.VolleyLog.TAG;
 import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_ADD_TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYPE;
 
 /**
  * Created by Eliran Elbaz on 26-Dec-19.
  */
 public class AddPropertyBottomSheet extends BaseBottomSheet {
-//    @BindView(R.id.test_bottom_sheet) TextView test;
+    @BindView(R.id.property_type_autocomplete) AutoCompleteTextView autocompleteDropDownMenu;
     // Bundle
     private static final String CURRENT_PROPERTY_ID = "CURRENT_PROPERTY_ID";
     // DATA
@@ -54,6 +57,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         ButterKnife.bind(this, result);
 
         currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
+        configureDropDownMenu();
         setUiElements();
         return result;
     }
@@ -69,19 +73,25 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     }
 
     //--------------------------
-    // Interface implementation
+    // Configurations
     //--------------------------
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
+        //Interface implementation
         try {
             mListener = (BottomSheetListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement BottomSheetListener");
         }
+    }
+
+    private void configureDropDownMenu() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.drop_down_layout, PROPERTY_TYPE );
+        autocompleteDropDownMenu.setAdapter(adapter);
     }
 
     //---------------
