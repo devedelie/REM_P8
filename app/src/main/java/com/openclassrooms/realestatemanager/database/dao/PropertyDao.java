@@ -17,15 +17,17 @@ import java.util.List;
 @Dao
 public interface PropertyDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void createProperty(Property property);
+
 
     // Get the list of all properties
     @Query("SELECT * FROM property")
     LiveData<List<Property>> getProperties();
 
-    @Insert
-    long insertProperty(Property property);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void createProperty(Property property);
+
+//    @Insert
+//    long insertProperty(Property property);
 
     @Update
     int updateProperty(Property property);
