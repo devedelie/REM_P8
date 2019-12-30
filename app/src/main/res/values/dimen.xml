@@ -7,7 +7,7 @@
     <dimen name="item_location_size">15sp</dimen>
     <dimen name="item_price_size">20sp</dimen>
 
-    <!-- Fragment Detail-->
+    <!-- Fragment Details-->
     <dimen name="text_margin_top">10dp</dimen>
     <dimen name="text_margin_start">15dp</dimen>
     <dimen name="text_margin_start_with_icon">75dp</dimen>
@@ -17,5 +17,8 @@
     <dimen name="icon_width_and_height">25dp</dimen>
     <dimen name="detail_fragment_text_title">18sp</dimen>
     <dimen name="detail_fragment_text_body">16sp</dimen>
+
+    <!-- BottomSheet Details-->
+    <dimen name="text_box_margin_start_end">15dp</dimen>
 
 </resources>

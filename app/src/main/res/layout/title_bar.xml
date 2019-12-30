@@ -40,4 +40,15 @@
             android:layout_weight="0.1"/>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--DropShadow-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/toolbar_dropshadow"/>
+
+    </FrameLayout>
+
 </LinearLayout>
