@@ -191,8 +191,6 @@
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- POI-->
-
                     <!-- Price-->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/property_price"
