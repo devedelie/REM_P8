@@ -164,12 +164,33 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/property_description"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:focusable="false"
+                            android:clickable="false"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
-                    <!-- Location-->
+                    <!-- Address-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_address"
+                        android:layout_marginTop="15dp"
+                        style="@style/TextFieldTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/text_box_margin_start_end"
+                        android:layout_marginEnd="@dimen/text_box_margin_start_end"
+                        android:hint="Address"
+                        app:helperTextEnabled="true">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_address_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/property_description"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <!-- POI-->
 
                     <!-- Price-->
@@ -182,7 +203,6 @@
                         android:layout_marginStart="@dimen/text_box_margin_start_end"
                         android:layout_marginEnd="@dimen/text_box_margin_start_end"
                         android:hint="Price"
-
                         app:helperTextEnabled="true">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/property_price_text"
@@ -193,8 +213,58 @@
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Agent in charge-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/property_agent"
+                        android:layout_marginTop="15dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/text_box_margin_start_end"
+                        android:layout_marginEnd="@dimen/text_box_margin_start_end"
+                        android:hint="Agent in Charge"
+                        app:helperTextEnabled="true">
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/property_agent_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        layout="@layout/poi_chips_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="@dimen/text_box_margin_start_end"
+                        android:layout_marginEnd="@dimen/text_box_margin_start_end"
+                        android:layout_marginBottom="15dp"/>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <!-- Action Button-->
+                    <Button
+                        android:id="@+id/property_action_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Button"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:background="@color/background_gray"
+                        android:elevation="8dp"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 

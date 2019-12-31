@@ -20,5 +20,7 @@
 
     <!-- BottomSheet Details-->
     <dimen name="text_box_margin_start_end">15dp</dimen>
+    <!-- Chips-->
+    <dimen name="chip_margin_start">10dp</dimen>
 
 </resources>
