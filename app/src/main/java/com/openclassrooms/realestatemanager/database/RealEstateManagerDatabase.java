@@ -17,6 +17,7 @@ import com.openclassrooms.realestatemanager.database.dao.PoiDao;
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.database.dao.TypeDao;
 import com.openclassrooms.realestatemanager.database.dao.UserDao;
+import com.openclassrooms.realestatemanager.models.Constants;
 import com.openclassrooms.realestatemanager.models.Image;
 import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.PoiProperty;
@@ -33,28 +34,6 @@ import static android.content.ContentValues.TAG;
 @Database(entities = {User.class, Type.class, Property.class, Poi.class, Image.class, PoiProperty.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class RealEstateManagerDatabase extends RoomDatabase {
-
-//    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-//        @Override
-//        public void migrate(SupportSQLiteDatabase database) {
-//            database.execSQL("CREATE TABLE `User` (`id` INTEGER NOT NULL, " + " `username` TEXT, " + " `urlPicture` TEXT, PRIMARY KEY(`id`))");
-//        }
-//    };
-//
-//    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
-//        @Override
-//        public void migrate(SupportSQLiteDatabase database) {
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN type TEXT");
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN location TEXT");
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN photos TEXT");
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN photosDescription TEXT");
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN video TEXT");
-//            database.execSQL("ALTER TABLE Property " + " ADD COLUMN pointOfInterest TEXT");
-//
-//        }
-//    };
-
-
 
     // Singleton
     private static volatile RealEstateManagerDatabase INSTANCE;
@@ -103,38 +82,13 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
 
 
                 // POIs
-                contentValues.clear();
-                contentValues.put("id", 1);
-                contentValues.put("poiName", "Subway");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 2);
-                contentValues.put("poiName", "GYM");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 3);
-                contentValues.put("poiName", "Supermarket");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 4);
-                contentValues.put("poiName", "Swimming Pool");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 5);
-                contentValues.put("poiName", "Shopping mall");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 6);
-                contentValues.put("poiName", "Library");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 7);
-                contentValues.put("poiName", "Public Bus station");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
-                contentValues.clear();
-                contentValues.put("id", 8);
-                contentValues.put("poiName", "Public Parking");
-                db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                Log.d(TAG, "onCreate poi: "+Constants.POI_LIST.size());
+                for(int i = 0 ;  i < Constants.POI_LIST.size() ; i++){
+                    contentValues.clear();
+                    contentValues.put("id", i);
+                    contentValues.put("poiName", Constants.POI_LIST.get(i));
+                    db.insert("Poi", OnConflictStrategy.IGNORE, contentValues);
+                }
 
             }
         };

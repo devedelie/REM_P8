@@ -11,6 +11,7 @@ public class Constants {
     public static final String BOTTOM_SHEET_EDIT_TAG = "EditProperty";
     public static final String BOTTOM_SHEET_SEARCH_TAG = "SearchProperty";
     public static final List<String> PROPERTY_TYPE = Arrays.asList("Studio", "Apartment", "Penthouse Apartment", "Loft", "House", "Duplex", "Flat", "Private Villa", "Mansion", "Farm House");
+    public static final List<String> POI_LIST = Arrays.asList("Subway", "GYM", "Supermarket", "Swimming Pool", "Shopping mall", "Library", "Public Bus station", "Public Parking", "Private Parking");
     // URL Example:  https://maps.googleapis.com/maps/api/staticmap?center=425+Lafayette+St,+New+York,+NY+10003&zoom=15&size=300x300&maptype=roadmap
     //&markers=color:blue%7Clabel:S%7C40.702147,-74.015794
     //&key=YOUR_API_KEY
