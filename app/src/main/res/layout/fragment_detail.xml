@@ -217,42 +217,6 @@
 
             </LinearLayout>
 
-            <!-- Property Location-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/icon_width_and_height"
-                        android:layout_height="@dimen/icon_width_and_height"
-                        android:layout_marginStart="@dimen/text_margin_start"
-                        android:src="@drawable/ic_pin_drop_black_48dp"
-                        android:tint="@color/text_secondary_dark"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/detail_location"
-                        android:textStyle="bold"
-                        android:layout_marginStart="@dimen/text_margin_start"
-                        android:layout_marginTop="@dimen/text_padding_for_icon_top"
-                        android:layout_marginEnd="@dimen/text_margin_end"
-                        android:textSize="@dimen/detail_fragment_text_title"/>
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/property_location_and_address_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detail_location"
-                    android:layout_marginStart="@dimen/text_margin_start_with_icon"
-                    android:layout_marginTop="@dimen/text_space_between_title_and_content"
-                    android:layout_marginEnd="@dimen/text_margin_end"
-                    android:textSize="@dimen/detail_fragment_text_body"/>
-            </LinearLayout>
-
             <!-- POI-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -325,6 +289,42 @@
                     android:layout_marginEnd="@dimen/text_margin_end"
                     android:textSize="@dimen/detail_fragment_text_body"/>
 
+            </LinearLayout>
+
+            <!-- Property Location-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/icon_width_and_height"
+                        android:layout_height="@dimen/icon_width_and_height"
+                        android:layout_marginStart="@dimen/text_margin_start"
+                        android:src="@drawable/ic_pin_drop_black_48dp"
+                        android:tint="@color/text_secondary_dark"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_location"
+                        android:textStyle="bold"
+                        android:layout_marginStart="@dimen/text_margin_start"
+                        android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_title"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/property_location_and_address_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_location"
+                    android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                    android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                    android:layout_marginEnd="@dimen/text_margin_end"
+                    android:textSize="@dimen/detail_fragment_text_body"/>
             </LinearLayout>
 
             <!--Map view -->
