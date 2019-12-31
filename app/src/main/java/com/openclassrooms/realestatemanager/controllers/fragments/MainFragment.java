@@ -20,6 +20,7 @@ import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
@@ -40,6 +41,7 @@ public class MainFragment extends Fragment  {
     private PropertyViewModel mPropertyViewModel;
     // Declare OnPropertyClick Interface
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
+    public static List<String> username;
 
 
     @Override
@@ -57,6 +59,7 @@ public class MainFragment extends Fragment  {
         super.onActivityCreated(savedInstanceState);
         this.configureViewModel();
         this.getProperties();
+        this.getCurrentUser(USER_ID);
         CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updatePropertiesList);
     }
 
@@ -88,6 +91,17 @@ public class MainFragment extends Fragment  {
     //  Get all properties
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updatePropertiesList);
+    }
+
+    // Get current user
+    private void getCurrentUser(int userId){
+        this.mPropertyViewModel.getUser(userId).observe(this, this::updateAgent);
+    }
+
+    // Get Agent
+    private void updateAgent(User user){
+        username = new ArrayList<>();
+        username.add(user.getUsername());
     }
 
 

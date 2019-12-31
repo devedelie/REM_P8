@@ -61,7 +61,6 @@ public class DetailFragment extends Fragment  {
     private List<Poi> mPois;
     String finalPoiString="";
     private ImagesAdapter mImagesAdapter;
-    private static int USER_ID = 1;
     private int currentId=1;
 
     public DetailFragment() { }
@@ -82,8 +81,6 @@ public class DetailFragment extends Fragment  {
         this.getCurrentPropertyId();
         this.getPOI();
         this.getProperties();
-        this.getCurrentUser(USER_ID);
-
     }
 
     private void initImageRecyclerView() {
@@ -96,13 +93,11 @@ public class DetailFragment extends Fragment  {
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
         this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
-        this.mPropertyViewModel.init(USER_ID);
         this.mPropertyViewModel.poiInit();
     }
 
     // Get current property ID
     private void getCurrentPropertyId(){
-//        mPropertyViewModel.getCurrentPropertyId().observe(getViewLifecycleOwner(), this::updatePropertyUI);
         CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateCurrentPropertyId);
     }
 
@@ -114,11 +109,6 @@ public class DetailFragment extends Fragment  {
     //  Get all properties
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::setPropertyViews);
-    }
-
-    // Get current user
-    private void getCurrentUser(int userId){
-        this.mPropertyViewModel.getUser(userId).observe(this, this::updateAgent);
     }
 
     //----------
@@ -134,10 +124,6 @@ public class DetailFragment extends Fragment  {
         // Update UI & Images on recyclerView only when data is ready
         initImageRecyclerView();
         updatePropertyUI();
-    }
-
-    private void updateAgent(User user) {
-        this.mPropertyAgent.setText(user.getUsername());
     }
 
     // Update the ArrayList with properties
@@ -166,6 +152,7 @@ public class DetailFragment extends Fragment  {
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
         mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
+        mPropertyAgent.setText(MainFragment.username.get(0));
 
         if(mProperties.get(id).isPropertyStatus()){
             mPropertyStatus.setText(getString(R.string.detail_sold) + dateConverter(mProperties.get(id).getSellDate()));
@@ -173,7 +160,7 @@ public class DetailFragment extends Fragment  {
             mPropertyStatus.setText(getString(R.string.detail_available) + dateConverter(mProperties.get(id).getEntryDate()));
         }
         // Set POIs
-        for( int i = mProperties.get(id).getPointOfInterest().size()-1 ; i>=0 ; i-- ){
+        for( int i = 0 ; i < mProperties.get(id).getPointOfInterest().size() ; i++ ){
             int poiNum = Integer.parseInt(mProperties.get(id).getPointOfInterest().get(i));
             finalPoiString +=  mPois.get(poiNum-1).getPoiName() +", ";
         }
