@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -25,13 +23,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.BuildConfig;
@@ -51,7 +45,6 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static com.android.volley.VolleyLog.TAG;
-import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_ADD_TAG;
 import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYPE;
 
 /**
@@ -59,8 +52,9 @@ import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYP
  */
 public class AddPropertyBottomSheet extends BaseBottomSheet {
     @BindView(R.id.top_bar_title) TextView mTopTitle;
-    @BindView(R.id.property_type_autocomplete) AutoCompleteTextView autocompleteDropDownMenu;
-    @BindView(R.id.add_property_button) Button addPropertyButton;
+    @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
+    @BindView(R.id.property_agent_text) AutoCompleteTextView agentDropDownMenu;
+    @BindView(R.id.property_action_button) Button propertyActionButton;
     @BindView(R.id.property_address_text) EditText mAddressAutocomplete;
 
     // Bundle
@@ -145,8 +139,11 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     protected int setTitle() { return R.string.add_property_bottom_sheet_title; }
 
     private void configureDropDownMenu() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.drop_down_layout, PROPERTY_TYPE );
-        autocompleteDropDownMenu.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
+        typeDropDownMenu.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), R.layout.agent_drop_down_layout, MainFragment.username );
+        agentDropDownMenu.setAdapter(adapter2);
     }
 
     //---------------
@@ -167,8 +164,8 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
 //        this.createItem();
 //    }
 
-    @OnClick(R.id.add_property_button)
-    public void onClickAddButton(){
+    @OnClick(R.id.property_action_button)
+    public void onClickActionButton(){
 //        createProperty();
     }
 
@@ -177,6 +174,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
 //        this.editText.setText("");
 //        this.mPropertyViewModel.createProperty(property);
 
+        String todaysDate = Utils.getTodayDate();
         // Dismiss the fragment when finished
         dismiss();
     }
