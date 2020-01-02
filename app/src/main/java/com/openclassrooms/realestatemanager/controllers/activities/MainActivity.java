@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,8 +23,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyBottomSheet;
+import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
+import com.openclassrooms.realestatemanager.controllers.fragments.MapViewBottomSheet;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MainFragment mainFragment;
     // Declare detail fragment
     public static DetailFragment detailFragment;
+    public AddPropertyFragment mAddPropertyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,41 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int order = menuItem.getOrder();
-        Log.d(TAG, "Test onNavigationItemSelected: "+ order);
-        switch (order){
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-        }
-        this.drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "onOptionsItemSelected: " + item.getOrder());
-        int itemId = item.getOrder();
-        switch (itemId){
-            case 0:
-                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
-                break;
-            case 1:
-//                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
-                break;
-            case 2:
-//                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void configureAndShowMainFragment(){
         // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
         mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
@@ -171,10 +140,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //-----------
     // Actions
     //-----------
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int order = menuItem.getOrder();
+        Log.d(TAG, "Test onNavigationItemSelected: "+ order);
+        switch (order){
+            case 0:
+                MapViewBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "mapView");
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+        this.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: " + item.getOrder());
+        int itemId = item.getOrder();
+        switch (itemId){
+            case 0:
+//                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
+//                replaceFragments();
+                break;
+            case 1:
+//                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
+                break;
+            case 2:
+//                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public void onPropertyClick(Property property) {
         currentProperty = (int) property.getId();
-        Log.d(TAG, "onPropertyClick: current:" + currentProperty);
         // Set current id in LiveData
         CurrentPropertyDataRepository.getInstance().setCurrentProperty(currentProperty);
 
@@ -183,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Tablet display
             Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
             // Update DetailFragment
-
         }else{
             // Smartphone display
             Toast.makeText(this, "Smartphone ", Toast.LENGTH_SHORT).show();
@@ -209,4 +215,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
     }
+
+//    private void replaceFragments(){
+//
+//        // Add fragment into DetailFragment if the view is Tablet-Mode
+//        if (findViewById(R.id.frame_layout_detail) != null && detailFragment.isVisible()) {
+//            mAddPropertyFragment = new AddPropertyFragment();
+//
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.frame_layout_detail, mAddPropertyFragment);
+//            transaction.addToBackStack(null);
+//
+//            transaction.commit();
+//        }
+//    }
 }
