@@ -31,11 +31,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".controllers.activities.DetailActivity"
             android:screenOrientation="sensor">
@@ -45,7 +44,7 @@
             android:name=".controllers.activities.MainActivity"
             android:screenOrientation="sensor"
             android:theme="@style/REMTheme.Home">
-
+            
         </activity>
         <activity
             android:name=".controllers.fragments.MainFragment"

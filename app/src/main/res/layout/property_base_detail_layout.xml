@@ -11,10 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="false">
 
             <!-- Entire layout under the top-bar-->
             <LinearLayout
@@ -181,6 +177,7 @@
                         android:layout_marginStart="@dimen/text_box_margin_start_end"
                         android:layout_marginEnd="@dimen/text_box_margin_start_end"
                         android:hint="Address"
+                        app:helperText="*Required"
                         app:helperTextEnabled="true">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/property_address_text"
@@ -201,6 +198,7 @@
                         android:layout_marginStart="@dimen/text_box_margin_start_end"
                         android:layout_marginEnd="@dimen/text_box_margin_start_end"
                         android:hint="Price"
+                        app:helperText="*Required"
                         app:helperTextEnabled="true">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/property_price_text"
@@ -221,6 +219,7 @@
                         android:layout_marginStart="@dimen/text_box_margin_start_end"
                         android:layout_marginEnd="@dimen/text_box_margin_start_end"
                         android:hint="Agent in Charge"
+                        app:helperText="*Required"
                         app:helperTextEnabled="true">
                         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/property_agent_text"
@@ -232,6 +231,7 @@
 
                 </LinearLayout>
 
+                <!-- Poi layout-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -245,13 +245,26 @@
                         android:layout_marginBottom="15dp"/>
                 </LinearLayout>
 
+                <!-- Add photos layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        layout="@layout/add_photos_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="@dimen/text_box_margin_start_end"
+                        android:layout_marginEnd="@dimen/text_box_margin_start_end"
+                        android:layout_marginBottom="15dp" />
+                </LinearLayout>
+
+                <!-- Action Button-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
-
-                    <!-- Action Button-->
                     <Button
                         android:id="@+id/property_action_button"
                         android:layout_width="wrap_content"
@@ -265,8 +278,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
-        </ScrollView>
 
     </LinearLayout>
 

@@ -40,6 +40,9 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
+    // GridLayout
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
     // CardView
     implementation 'androidx.cardview:cardview:1.0.0'
 
