@@ -14,10 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,8 +33,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
+import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
+import com.openclassrooms.realestatemanager.views.AddImageGridAdapter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +58,11 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     @BindView(R.id.top_bar_title) TextView mTopTitle;
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
     @BindView(R.id.property_agent_text) AutoCompleteTextView agentDropDownMenu;
-    @BindView(R.id.property_action_button) Button propertyActionButton;
     @BindView(R.id.property_address_text) EditText mAddressAutocomplete;
+    @BindView(R.id.property_action_button) Button propertyActionButton;
+//    @BindView(R.id.add_images_grid_view) GridView mImageGridView;
+//    @BindView(R.id.add_images_grid_view) RecyclerView mImageRecyclerView;
+
 
     // Bundle
     private static final String CURRENT_PROPERTY_ID = "CURRENT_PROPERTY_ID";
@@ -85,6 +92,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
         configureDropDownMenu();
         configureAddressViewType();
+//        configurePhotosGridView();
         setUiElements();
         return result;
     }
@@ -146,6 +154,10 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         agentDropDownMenu.setAdapter(adapter2);
     }
 
+//    private void configurePhotosGridView() {
+//        mImageGridView.setAdapter(new AddImageGridAdapter(getActivity().getApplicationContext()));
+//    }
+
     //---------------
     // Actions
     //---------------
@@ -166,15 +178,17 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
 
     @OnClick(R.id.property_action_button)
     public void onClickActionButton(){
-//        createProperty();
+        createProperty();
     }
 
     private void createProperty(){
-//        Property property = new Property(this.editText.getText().toString(), this.spinner.getSelectedItemPosition(), USER_ID);
-//        this.editText.setText("");
+        String todaysDate = Utils.getTodayDate();
+        // Create Property Object
+//        Property property = new Property(typeDropDownMenu.getText().toString(), "sdsf", );
+        // Set data into ViewModel
 //        this.mPropertyViewModel.createProperty(property);
 
-        String todaysDate = Utils.getTodayDate();
+
         // Dismiss the fragment when finished
         dismiss();
     }

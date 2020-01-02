@@ -62,7 +62,7 @@
                 android:id="@+id/detail_fragment_property_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                android:text="Description"
                 android:layout_marginStart="@dimen/text_margin_start"
                 android:layout_marginTop="@dimen/text_space_between_title_and_content"
                 android:layout_marginEnd="@dimen/text_margin_end"
@@ -336,7 +336,7 @@
                 android:background="@drawable/shadow_frame"
                 tools:context=".controllers.fragments.DetailFragment">
 <!--            <fragment-->
-<!--                android:id="@+id/map"-->
+<!--                android:id="@+id/map_view_fragment"-->
 <!--                android:name="com.google.android.gms.maps.SupportMapFragment"-->
 <!--                android:layout_width="300dp"-->
 <!--                android:layout_height="300dp"-->
