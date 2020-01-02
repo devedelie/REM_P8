@@ -25,6 +25,7 @@ import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.User;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 
@@ -145,13 +146,13 @@ public class DetailFragment extends Fragment  {
 //        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
         // Set TextViews
         mLocationText.setText(mProperties.get(id).getLocation());
-//        mDescription.setText(mProperties.get(id).getPropertyDescription());
+        mDescription.setText(mProperties.get(id).getPropertyDescription());
         mSurface.setText(String.valueOf(mProperties.get(id).getPropertySurface()));
         mRooms.setText(String.valueOf(mProperties.get(id).getPropertyRooms()));
         mBedrooms.setText(String.valueOf(mProperties.get(id).getPropertyBedRooms()));
         mBathrooms.setText(String.valueOf(mProperties.get(id).getPropertyBathRooms()));
         mLocationAndAddress.setText(mProperties.get(id).getPropertyAddress());
-        mPrice.setText(String.valueOf(mProperties.get(id).getPropertyPrice()));
+        mPrice.setText((Utils.moneyValueFormatter(mProperties.get(id).getPropertyPrice())));
         mPropertyAgent.setText(MainFragment.username.get(0));
 
         if(mProperties.get(id).isPropertyStatus()){
