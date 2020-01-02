@@ -14,6 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static com.openclassrooms.realestatemanager.models.Constants.LOREM_IPSUM;
+
 /**
  * Created by Eliran Elbaz on 11-Dec-19.
  */
@@ -40,7 +42,7 @@ public class DummyData {
         contentValues.put("propertyRooms", 1);
         contentValues.put("propertyBedRooms", 1);
         contentValues.put("propertyBathRooms", 1);
-        contentValues.put("propertyDescription", "Nice and comfortable studio in center of NYC");
+        contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 1);
         contentValues.put("photos", "[" +
                         "\"/storage/emulated/0/Download/1-1.jpg\"," +
@@ -78,7 +80,7 @@ public class DummyData {
         contentValues.put("propertyRooms", 5);
         contentValues.put("propertyBedRooms", 3);
         contentValues.put("propertyBathRooms", 1);
-        contentValues.put("propertyDescription", "Nice and comfortable apartment in center of Bronx neighborhood");
+        contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 2);
         contentValues.put("photos", "[" +
                 "\"/storage/emulated/0/Download/2-1.jpg\"," +
@@ -114,7 +116,7 @@ public class DummyData {
         contentValues.put("propertyRooms", 6);
         contentValues.put("propertyBedRooms", 3);
         contentValues.put("propertyBathRooms", 2);
-        contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
+        contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 3);
         contentValues.put("photos", "[" +
                 "\"/storage/emulated/0/Download/3-1.jpg\"," +
@@ -152,7 +154,7 @@ public class DummyData {
         contentValues.put("propertyRooms", 4);
         contentValues.put("propertyBedRooms", 1);
         contentValues.put("propertyBathRooms", 1);
-        contentValues.put("propertyDescription", "Big and comfortable apartment in center of Brooklyn neighborhood");
+        contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 4);
         contentValues.put("photos", "[" +
                 "\"/storage/emulated/0/Download/4-1.jpg\"," +

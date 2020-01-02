@@ -56,7 +56,7 @@ public class Utils {
 
     public static String moneyValueFormatter (double value){
         NumberFormat formatter = new DecimalFormat("#,###");
-        String formattedNumber = formatter.format(value);
+        String formattedNumber = ("$ "+ formatter.format(value));
         return formattedNumber;
     }
 }
