@@ -45,13 +45,13 @@ public class DummyData {
         contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 1);
         contentValues.put("photos", "[" +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-1.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-2.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-3.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-4.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-5.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-6.jpg\"," +
-                        "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/1-7.jpg\" ]");
+                        "\"/storage/emulated/0/Download/1-1.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-2.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-3.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-4.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-5.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-6.jpg\"," +
+                        "\"/storage/emulated/0/Download/1-7.jpg\" ]");
         contentValues.put("photosDescription","[\"Dining room\",\"Living room\",\"Outside\",\"Living room\",\"TV-Area\",\"Office\",\"Kitchen\"]");
         contentValues.put("propertyAddress", "425 Lafayette St, New York, NY 10003, United States");
         contentValues.put("addressLat", 40.729210 );
@@ -83,11 +83,11 @@ public class DummyData {
         contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 2);
         contentValues.put("photos", "[" +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/2-1.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/2-2.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/2-3.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/2-4.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/2-5.jpg\" ]");
+                "\"/storage/emulated/0/Download/2-1.jpg\"," +
+                "\"/storage/emulated/0/Download/2-2.jpg\"," +
+                "\"/storage/emulated/0/Download/2-3.jpg\"," +
+                "\"/storage/emulated/0/Download/2-4.jpg\"," +
+                "\"/storage/emulated/0/Download/2-5.jpg\" ]");
         contentValues.put("photosDescription","[\"Living room\",\"Bedroom\",\"Kitchen\",\"Dining room\",\"Shower\"]");
         contentValues.put("propertyAddress", "900 Intervale Ave #4240, The Bronx, NY 10459, United States");
         contentValues.put("addressLat", 40.819620 );
@@ -119,12 +119,12 @@ public class DummyData {
         contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 3);
         contentValues.put("photos", "[" +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-1.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-2.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-3.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-4.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-5.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/3-6.jpg\" ]");
+                "\"/storage/emulated/0/Download/3-1.jpg\"," +
+                "\"/storage/emulated/0/Download/3-2.jpg\"," +
+                "\"/storage/emulated/0/Download/3-3.jpg\"," +
+                "\"/storage/emulated/0/Download/3-4.jpg\"," +
+                "\"/storage/emulated/0/Download/3-5.jpg\"," +
+                "\"/storage/emulated/0/Download/3-6.jpg\" ]");
         contentValues.put("photosDescription","[\"Dining room\",\"Skyscape view\",\"Kitchen\",\"Bedroom\",\"Kids-Bedroom\",\"Swimming-pool\"]");
         contentValues.put("propertyAddress", "4716 7th Ave, Brooklyn, NY 11220, United States");
         contentValues.put("addressLat", 40.644000 );
@@ -157,12 +157,12 @@ public class DummyData {
         contentValues.put("propertyDescription", LOREM_IPSUM);
         contentValues.put("imageId", 4);
         contentValues.put("photos", "[" +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-1.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-2.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-3.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-4.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-5.jpg\"," +
-                "\"/sdcard/Android/data/com.openclassrooms.realestatemanager/files/Pictures/4-6.jpg\" ]");
+                "\"/storage/emulated/0/Download/4-1.jpg\"," +
+                "\"/storage/emulated/0/Download/4-2.jpg\"," +
+                "\"/storage/emulated/0/Download/4-3.jpg\"," +
+                "\"/storage/emulated/0/Download/4-4.jpg\"," +
+                "\"/storage/emulated/0/Download/4-5.jpg\"," +
+                "\"/storage/emulated/0/Download/4-6.jpg\" ]");
         contentValues.put("photosDescription","[\"Dining room\",\"Living room\",\"Outside\",\"Shower\",\"GYM\",\"Outside\"]");
         contentValues.put("propertyAddress", "700 Myrtle Ave, Brooklyn, NY 11205, United States");
         contentValues.put("addressLat", 40.694510 );
