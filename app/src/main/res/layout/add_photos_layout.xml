@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:showIn="@layout/bottom_sheet_add_property">
+    tools:showIn="@layout/fragment_add_property">
 
 <!--<com.google.android.material.card.MaterialCardView-->
 <!--    android:orientation="vertical"-->
@@ -51,6 +51,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
+                    android:id="@+id/take_photo_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_add_a_photo_black_24dp"
@@ -72,6 +73,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
+                    android:id="@+id/select_photo_button"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:src="@drawable/ic_attach_file_black_24dp"
