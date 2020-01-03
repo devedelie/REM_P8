@@ -8,13 +8,13 @@
 
                 <item
                     android:id="@+id/activity_main_drawer_btn1"
-                    android:icon="@drawable/ic_check"
-                    android:title="@string/app_name"
+                    android:icon="@drawable/ic_map_gray_24dp"
+                    android:title="@string/drawer_map_activity_link"
                     android:orderInCategory="0" />
                 <item
                     android:id="@+id/activity_main_drawer_btn2"
-                    android:icon="@drawable/ic_check"
-                    android:title="@string/app_name"
+                    android:icon="@drawable/ic_monetization_on_black_24dp"
+                    android:title="@string/drawer_loan_simulator_link"
                     android:orderInCategory="1"/>
                 <item
                     android:id="@+id/activity_main_drawer_btn3"
