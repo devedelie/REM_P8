@@ -87,7 +87,6 @@ public class MainFragment extends Fragment  {
     }
 
 
-
     //  Get all properties
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updatePropertiesList);
