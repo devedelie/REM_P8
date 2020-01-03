@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.viewmodel;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.models.Poi;
@@ -11,8 +14,11 @@ import com.openclassrooms.realestatemanager.repositories.PoiDataRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyDataRepository;
 import com.openclassrooms.realestatemanager.repositories.UserDataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
+
+import static com.android.volley.VolleyLog.TAG;
 
 /**
  * Created by Eliran Elbaz on 30-Nov-19.
@@ -61,6 +67,21 @@ public class PropertyViewModel extends ViewModel {
     // -------------
 
     public LiveData<List<Poi>> getPois() { return this.poiList;}
+
+    // ----------------
+    // FOR Taking Photos
+    // ----------------
+    private MutableLiveData<ArrayList<String>> mTakenPhotos = new MutableLiveData<>();
+
+    public void setPhotos(ArrayList<String> photos) {
+        this.mTakenPhotos.setValue(photos);
+        Log.d(TAG, "setPhotos: " + photos);
+    }
+
+    public LiveData<ArrayList<String>> getPhotos() {
+        return mTakenPhotos;
+    }
+
 
     // -------------
     // For Property

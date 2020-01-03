@@ -1,10 +1,8 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,9 +21,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -38,11 +39,16 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
+import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -65,16 +71,19 @@ public class AddPropertyFragment extends BaseFragment {
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
     @BindView(R.id.property_agent_text) AutoCompleteTextView agentDropDownMenu;
     @BindView(R.id.property_address_text) EditText mAddressAutocomplete;
+    @BindView(R.id.add_images_recyclerView) RecyclerView mImageRecyclerView;
     @BindView(R.id.property_action_button) Button propertyActionButton;
     @BindView(R.id.take_photo_button) ImageView addPhotoButton;
     @BindView(R.id.select_photo_button) ImageView selectPhotoButton;
     // For Data
+    private PropertyViewModel mPropertyViewModel;
     private String finalAddressString;
     private String currentPhotoPath;
-    private int AUTOCOMPLETE_REQUEST_CODE = 1;
+    private int AUTOCOMPLETE_REQUEST_CODE = 10;
     private List<Place.Field> mFields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME,Place.Field.LAT_LNG); // Set the fields to specify which types of place data to return after the user has made a selection.
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_TAKE_PHOTO = 10 ;
+    private ImagesAdapter mImagesAdapter;
+    ArrayList<String> photoUris = new ArrayList<>();
 
 
     public static AddPropertyFragment newInstance(int currentPropertyID) {
@@ -96,13 +105,25 @@ public class AddPropertyFragment extends BaseFragment {
         configureDropDownMenu();
         configureAddressViewType();
         configurePhotoRecyclerView();
+        configurePropertyViewModel();
         setUiElements();
         return result;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     // ---------------
     // Configuration
     // ---------------
+
+    private void configurePropertyViewModel() {
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
+        this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
+    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -121,7 +142,8 @@ public class AddPropertyFragment extends BaseFragment {
                         "com.openclassrooms.realestatemanager.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                Log.d(TAG, "dispatchTakePictureIntent: photoUri 1234XX" + photoURI);
             }
         }
 
@@ -137,15 +159,17 @@ public class AddPropertyFragment extends BaseFragment {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
+        Log.d(TAG, "createImageFile: " +currentPhotoPath);
         return image;
     }
 
 
-
     private void configurePhotoRecyclerView() {
+        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
+        this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
+        this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
     }
 
@@ -247,8 +271,13 @@ public class AddPropertyFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         // Camera Result
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Log.d(TAG, "onActivityResult: picture 1234XX");
+            //If picture saved, add its URI into viewModel
+            photoUris.add(currentPhotoPath);
+            mPropertyViewModel.setPhotos(photoUris);
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            // Set thumbnail image
 //            imageView.setImageBitmap(imageBitmap);
         }
 
