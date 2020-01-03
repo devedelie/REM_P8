@@ -14,12 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,10 +31,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
-import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
-import com.openclassrooms.realestatemanager.views.AddImageGridAdapter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +96,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.bottom_sheet_add_property;
+        return R.layout.fragment_add_property;
     }
 
 //    @Override
@@ -162,7 +158,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     // Actions
     //---------------
 
-    @OnClick(R.id.x_button)
+    @OnClick(R.id.x_button_)
     public void onClickXButton(){
         alertDialogXButton();
     }
