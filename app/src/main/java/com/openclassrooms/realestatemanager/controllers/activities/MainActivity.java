@@ -8,8 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
-import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
@@ -34,7 +31,6 @@ import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.ContentValues.TAG;
 import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_ADD_TAG;
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (itemId){
             case 0:
 //                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
-//                replaceFragments();
+                replaceAddPropertyFragment();
                 break;
             case 1:
 //                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
@@ -186,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CurrentPropertyDataRepository.getInstance().setCurrentProperty(currentProperty);
 
         // Check if detail fragment is visible(Tablet)
-        if (detailFragment != null && detailFragment.isVisible()) {
+        if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible())) {
             // Tablet display
             Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
             // Update DetailFragment
@@ -216,17 +212,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    private void replaceFragments(){
-//
-//        // Add fragment into DetailFragment if the view is Tablet-Mode
-//        if (findViewById(R.id.frame_layout_detail) != null && detailFragment.isVisible()) {
-//            mAddPropertyFragment = new AddPropertyFragment();
-//
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.frame_layout_detail, mAddPropertyFragment);
-//            transaction.addToBackStack(null);
-//
-//            transaction.commit();
-//        }
-//    }
+    private void replaceAddPropertyFragment(){
+
+        // Check if detail fragment is visible(Tablet mode)
+        if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible())) {
+            mAddPropertyFragment = new AddPropertyFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            // Set fragment transaction into ***frame_layout_detail*** (Detail fragment)
+            transaction.replace(R.id.frame_layout_detail, mAddPropertyFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else {
+            // Smartphone mode
+            mAddPropertyFragment = new AddPropertyFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            // Set fragment transaction into ***frame_layout_main*** (Main fragment)
+            transaction.replace(R.id.frame_layout_main, mAddPropertyFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
+    }
 }
