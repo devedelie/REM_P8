@@ -22,4 +22,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected abstract int getFragmentLayout();
+
+    protected abstract int setTitle();
 }
