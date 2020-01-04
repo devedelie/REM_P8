@@ -63,8 +63,13 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
         // Set details
         this.mOnPropertyClick = callback;
         this.mProperty = property;
-        String imageUri = mProperty.getPhotos().get(0);
-        if(imageUri != null) glide.load(imageUri).into(propertyImage);
+        // Add Image
+        if(mProperty.getPhotos() != null){
+            if(mProperty.getPhotos().get(0) != null){
+                String imageUri = mProperty.getPhotos().get(0);
+                if(imageUri != null) glide.load(imageUri).into(propertyImage);
+            }
+        }
         propertyTypeText.setText(property.getType());
         propertyLocationText.setText(property.getLocation());
         propertyPriceText.setText(String.valueOf(Utils.moneyValueFormatter(property.getPropertyPrice())));
