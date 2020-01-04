@@ -150,18 +150,15 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
         agentDropDownMenu.setAdapter(adapter2);
     }
 
-//    private void configurePhotosGridView() {
-//        mImageGridView.setAdapter(new AddImageGridAdapter(getActivity().getApplicationContext()));
-//    }
 
     //---------------
     // Actions
     //---------------
 
-    @OnClick(R.id.x_button_)
-    public void onClickXButton(){
-        alertDialogXButton();
-    }
+//    @OnClick(R.id.x_button_)
+//    public void onClickXButton(){
+//        alertDialogXButton();
+//    }
 
     // old version
 //    @OnClick(R.id.add_property)
