@@ -11,13 +11,14 @@ import java.util.Map;
 /**
  * Created by Eliran Elbaz on 24-Nov-19.
  */
-@Entity(foreignKeys = {
-        @ForeignKey(entity = Type.class,
-        parentColumns = "id", childColumns = "typeId"),
-        @ForeignKey(entity = Image.class,
-        parentColumns = "id", childColumns = "imageId"),
-        @ForeignKey(entity = Poi.class,
-        parentColumns = "id", childColumns = "poiId")})
+//@Entity(foreignKeys = {
+//        @ForeignKey(entity = Type.class,
+//        parentColumns = "id", childColumns = "id"),
+//        @ForeignKey(entity = Image.class,
+//        parentColumns = "id", childColumns = "id"),
+//        @ForeignKey(entity = Poi.class,
+//        parentColumns = "id", childColumns = "id")})
+@Entity
 public class Property {
 
     @PrimaryKey(autoGenerate = true)
@@ -40,14 +41,14 @@ public class Property {
     private double addressLat;
     private double addressLng;
     private int poiId; // [FK]
-    private boolean propertyStatus;
+    private boolean propertyStatus; // true = sold
     private Date entryDate;
     private Date sellDate;
-    private long agentInCharge;
+    private String agentInCharge;
 
     public Property(){}
 
-    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, ArrayList<String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date entryDate, Date sellDate, long agentInCharge) {
+    public Property(String type, String location, ArrayList<String> photos, ArrayList<String> photosDescription, String video, ArrayList<String> pointOfInterest, int propertyPrice, int propertySurface, int propertyRooms, int propertyBedRooms, int propertyBathRooms, String propertyDescription, int imageId, String propertyAddress, double addressLat, double addressLng, int poiId, boolean propertyStatus, Date entryDate, Date sellDate, String agentInCharge) {
         this.type = type;
         this.location = location;
         this.photos = photos;
@@ -159,7 +160,40 @@ public class Property {
 
     public void setSellDate(Date sellDate) { this.sellDate = sellDate; }
 
-    public long getAgentInCharge() { return agentInCharge; }
+    public String getAgentInCharge() { return agentInCharge; }
 
-    public void setAgentInCharge(long agentInCharge) { this.agentInCharge = agentInCharge; }
+    public void setAgentInCharge(String agentInCharge) { this.agentInCharge = agentInCharge; }
+
+
+
+//    @Override
+//    public String toString() {
+//        return "Property{" +
+//                "id=" + id +
+//                ", typeId=" + typeId +
+//                ", type='" + type + '\'' +
+//                ", location='" + location + '\'' +
+//                ", propertyPrice=" + propertyPrice +
+//                ", propertySurface=" + propertySurface +
+//                ", propertyRooms=" + propertyRooms +
+//                ", propertyBedRooms=" + propertyBedRooms +
+//                ", propertyBathRooms=" + propertyBathRooms +
+//                ", photos=" + photos +
+//                ", photosDescription=" + photosDescription +
+//                ", video='" + video + '\'' +
+//                ", pointOfInterest=" + pointOfInterest +
+//                ", propertyDescription='" + propertyDescription + '\'' +
+//                ", imageId=" + imageId +
+//                ", propertyAddress='" + propertyAddress + '\'' +
+//                ", addressLat=" + addressLat +
+//                ", addressLng=" + addressLng +
+//                ", poiId=" + poiId +
+//                ", propertyStatus=" + propertyStatus +
+//                ", entryDate=" + entryDate +
+//                ", sellDate=" + sellDate +
+//                ", agentInCharge=" + agentInCharge +
+//                '}';
+//    }
+
+
 }
