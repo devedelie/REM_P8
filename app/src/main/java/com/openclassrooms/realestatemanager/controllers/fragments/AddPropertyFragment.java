@@ -35,12 +35,14 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
@@ -48,6 +50,7 @@ import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -69,7 +72,22 @@ import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYP
 public class AddPropertyFragment extends BaseFragment {
     @BindView(R.id.top_bar_title) TextView mTopTitle;
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
+    @BindView(R.id.property_description_text) EditText mProperrtyDescription;
+    @BindView(R.id.property_surface_text) EditText mProperrtysurface;
+    @BindView(R.id.property_rooms_text) EditText mProperrtyRooms;
+    @BindView(R.id.property_bedrooms_text) EditText mProperrtyBedrooms;
+    @BindView(R.id.property_bathrooms_text) EditText mProperrtyBathrooms;
+    @BindView(R.id.property_price_text) EditText mProperrtyPrice;
     @BindView(R.id.property_agent_text) AutoCompleteTextView agentDropDownMenu;
+    @BindView(R.id.poi_subway_chip) Chip mChipSubway;
+    @BindView(R.id.poi_gym_chip) Chip mChipGym;
+    @BindView(R.id.poi_supermarket_chip) Chip mChipsupermarket;
+    @BindView(R.id.poi_pool_chip) Chip mChipPool;
+    @BindView(R.id.poi_mall_chip) Chip mChipMall;
+    @BindView(R.id.poi_library_chip) Chip mChipLibrary;
+    @BindView(R.id.poi_bus_chip) Chip mChipBus;
+    @BindView(R.id.poi_public_p_chip) Chip mChipPublicP;
+    @BindView(R.id.poi_private_p_chip) Chip mChipPrivateP;
     @BindView(R.id.property_address_text) EditText mAddressAutocomplete;
     @BindView(R.id.add_images_recyclerView) RecyclerView mImageRecyclerView;
     @BindView(R.id.property_action_button) Button propertyActionButton;
@@ -81,9 +99,13 @@ public class AddPropertyFragment extends BaseFragment {
     private String currentPhotoPath;
     private int AUTOCOMPLETE_REQUEST_CODE = 10;
     private List<Place.Field> mFields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME,Place.Field.LAT_LNG); // Set the fields to specify which types of place data to return after the user has made a selection.
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_GET = 2;
     private ImagesAdapter mImagesAdapter;
-    ArrayList<String> photoUris = new ArrayList<>();
+    private ArrayList<String> photoUris = new ArrayList<>();
+    private ArrayList<String> photoDescriptions = new ArrayList<>();
+    private ArrayList<String> composedAddress = new ArrayList<>();
+    private ArrayList<String> pointOfInterest = new ArrayList<>();
 
 
     public static AddPropertyFragment newInstance(int currentPropertyID) {
@@ -113,7 +135,8 @@ public class AddPropertyFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        this.mPropertyViewModel.getPhotos().observe(this, this::updatePhotos);
+        this.mPropertyViewModel.getPhotoDescriptions().observe(this, this::updatePhotoDescriptions);
     }
 
     // ---------------
@@ -163,6 +186,17 @@ public class AddPropertyFragment extends BaseFragment {
         currentPhotoPath = image.getAbsolutePath();
         Log.d(TAG, "createImageFile: " +currentPhotoPath);
         return image;
+    }
+
+    // Selects a photo in a device location
+    public void selectImage() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
+        }
     }
 
 
@@ -221,6 +255,9 @@ public class AddPropertyFragment extends BaseFragment {
         dispatchTakePictureIntent();
     }
 
+    @OnClick(R.id.select_photo_button)
+    public void onClickSelectPhoto(){ selectImage();}
+
     // old version
 //    @OnClick(R.id.add_property)
 //    public void onClickAddButton(){
@@ -236,12 +273,30 @@ public class AddPropertyFragment extends BaseFragment {
     }
 
     private void createProperty(){
-        String todaysDate = Utils.getTodayDate();
+        // Create POIs array
+        if(mChipSubway.isChecked()) pointOfInterest.add("1");
+        if(mChipGym.isChecked()) pointOfInterest.add("2");
+        if(mChipsupermarket.isChecked()) pointOfInterest.add("3");
+        if(mChipPool.isChecked()) pointOfInterest.add("4");
+        if(mChipMall.isChecked()) pointOfInterest.add("5");
+        if(mChipLibrary.isChecked()) pointOfInterest.add("6");
+        if(mChipBus.isChecked()) pointOfInterest.add("7");
+        if(mChipPublicP.isChecked()) pointOfInterest.add("8");
+        if(mChipPrivateP.isChecked()) pointOfInterest.add("9");
         // Create Property Object
-//        Property property = new Property(typeDropDownMenu.getText().toString(), "sdsf", );
+        Property property = new Property(typeDropDownMenu.getText().toString(), composedAddress.get(4).toString(),
+                photoUris, photoDescriptions, "video", pointOfInterest,
+                Integer.parseInt(mProperrtyPrice.getText().toString()) ,
+                Integer.parseInt(mProperrtysurface.getText().toString()),
+                Integer.parseInt(mProperrtyRooms.getText().toString()),
+                Integer.parseInt(mProperrtyBedrooms.getText().toString()) ,
+                Integer.parseInt(mProperrtyBathrooms.getText().toString()),
+                mProperrtyDescription.getText().toString(), 15,
+                finalAddressString, 40.729210, -73.991770, 20,
+                false, Utils.getDate(),  null,
+                agentDropDownMenu.getText().toString() );
         // Set data into ViewModel
-//        this.mPropertyViewModel.createProperty(property);
-
+        this.mPropertyViewModel.createProperty(property);
 
         // Dismiss the fragment when finished
         getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
@@ -275,10 +330,17 @@ public class AddPropertyFragment extends BaseFragment {
             //If picture saved, add its URI into viewModel
             photoUris.add(currentPhotoPath);
             mPropertyViewModel.setPhotos(photoUris);
+            alertDialogPhotoDescription();
 //            Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
             // Set thumbnail image
 //            imageView.setImageBitmap(imageBitmap);
+        }
+
+        if(requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK){
+            photoUris.add(data.getData().toString());
+            mPropertyViewModel.setPhotos(photoUris);
+            alertDialogPhotoDescription();
         }
 
         // Autocomplete address result
@@ -309,6 +371,20 @@ public class AddPropertyFragment extends BaseFragment {
         propertyActionButton.setText(getString(R.string.add_property_button));
     }
 
+    private void updatePhotos(ArrayList<String> photosUriList) {
+//        photoUris.clear();
+//        photoUris.addAll(photosUriList);
+        mImagesAdapter.setPropertyImagesList(photosUriList, photosUriList);
+    }
+
+    private void updatePhotoDescriptions(ArrayList<String> descriptionsList) {
+
+    }
+
+    // -------------
+    // AlertDialogs
+    // -------------
+
     private void alertDialogXButton(){
         new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
                 .setTitle(getString(R.string.alert_dialog_title))
@@ -334,18 +410,21 @@ public class AddPropertyFragment extends BaseFragment {
         EditText streetName = (EditText) viewInflated.findViewById(R.id.street_name_text);
         EditText zipCode = (EditText) viewInflated.findViewById(R.id.zip_code_text);
         EditText city = (EditText) viewInflated.findViewById(R.id.city_text);
+        EditText district = (EditText) viewInflated.findViewById(R.id.district_text);
         EditText state = (EditText) viewInflated.findViewById(R.id.state_text);
         builder.setView(viewInflated);
         // Set up the buttons
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String fullAddress[] = {number.getText().toString(), streetName.getText().toString(), zipCode.getText().toString(), city.getText().toString(), state.getText().toString() };
+                String fullAddress[] = {number.getText().toString(), streetName.getText().toString(), zipCode.getText().toString(), city.getText().toString(), district.getText().toString(), state.getText().toString() };
+                composedAddress.add(number.getText().toString());composedAddress.add(streetName.getText().toString());composedAddress.add(zipCode.getText().toString());composedAddress.add(city.getText().toString());composedAddress.add(district.getText().toString());composedAddress.add(state.getText().toString());
                 StringBuilder sb = new StringBuilder();
                 for (String string : fullAddress){
                     sb.append(string).append(" ");
                 }
                 finalAddressString = sb.toString().trim();
+                mAddressAutocomplete.setText(finalAddressString);
                 Log.d(TAG, "onClick address: "+ finalAddressString);
                 dialog.dismiss();
             }
@@ -353,6 +432,34 @@ public class AddPropertyFragment extends BaseFragment {
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void alertDialogPhotoDescription(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Enter Description(ex: Living Room...");
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.description_dialog_layout, (ViewGroup) getView(), false);
+        EditText description = (EditText) viewInflated.findViewById(R.id.description_text);
+
+        builder.setView(viewInflated);
+        // Set up the buttons
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG, "onClick: CheckString" + description.getText().toString());
+                photoDescriptions.add(description.getText().toString());
+                mPropertyViewModel.setPhotoDescriptions(photoDescriptions);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                photoDescriptions.add(getString(R.string.empty_description_alert_dialog));
+                mPropertyViewModel.setPhotoDescriptions(photoDescriptions);
                 dialog.cancel();
             }
         });
