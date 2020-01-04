@@ -79,24 +79,39 @@ public class PropertyViewModel extends ViewModel {
     }
 
     public LiveData<ArrayList<String>> getPhotos() {
+        Log.d(TAG, "getPhotos: ");
         return mTakenPhotos;
     }
 
+    private MutableLiveData<ArrayList<String>> mPhotoDescriptions = new MutableLiveData<>();
+
+    public void setPhotoDescriptions(ArrayList<String> descriptions) {
+        this.mPhotoDescriptions.setValue(descriptions);
+        Log.d(TAG, "setDescriptions: " + descriptions);
+    }
+
+    public LiveData<ArrayList<String>> getPhotoDescriptions() {
+        Log.d(TAG, "getPhotoDescriptions: ");
+        return mPhotoDescriptions;
+    }
 
     // -------------
     // For Property
     // -------------
 
+    // Get
     public LiveData<List<Property>> getProperties() {
         return mPropertyDataSource.getProperties();
     }
 
+    // Create
     public void createProperty(Property property) {
         executor.execute(() -> {
             mPropertyDataSource.createProperty(property);
         });
     }
 
+    // Update
     public void updateProperty(Property property) {
         executor.execute(() -> {
             mPropertyDataSource.updateProperty(property);
