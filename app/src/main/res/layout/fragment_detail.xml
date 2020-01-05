@@ -344,7 +344,11 @@
             <ImageView
                 android:id="@+id/map_image"
                 android:layout_width="300dp"
-                android:layout_height="300dp"/>
+                android:layout_height="300dp" />
+                <ImageView
+                    android:id="@+id/over_map_image_no_connection"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"/>
             </FrameLayout>
 
 

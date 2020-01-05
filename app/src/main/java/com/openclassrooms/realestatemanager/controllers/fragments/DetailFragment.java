@@ -143,7 +143,9 @@ public class DetailFragment extends Fragment  {
         // Set images in recyclerView
         mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
         // Set static map
-//        if(Utils.isInternetAvailable(getActivity().getApplicationContext())) Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+        if(Utils.isInternetAvailable(getActivity().getApplicationContext())) {
+            Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+        } else mImageMap.setImageResource(R.drawable.map_offline);
         // Set TextViews
         mLocationText.setText(mProperties.get(id).getLocation());
         mDescription.setText(mProperties.get(id).getPropertyDescription());
