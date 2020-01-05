@@ -143,7 +143,7 @@ public class DetailFragment extends Fragment  {
         // Set images in recyclerView
         mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
         // Set static map
-//        Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+//        if(Utils.isInternetAvailable(getActivity().getApplicationContext())) Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
         // Set TextViews
         mLocationText.setText(mProperties.get(id).getLocation());
         mDescription.setText(mProperties.get(id).getPropertyDescription());
@@ -156,15 +156,17 @@ public class DetailFragment extends Fragment  {
         mPropertyAgent.setText(MainFragment.username.get(0));
 
         if(mProperties.get(id).isPropertyStatus()){
-            mPropertyStatus.setText(getString(R.string.detail_sold) + dateConverter(mProperties.get(id).getSellDate()));
+            mPropertyStatus.setText(getString(R.string.detail_sold, dateConverter(mProperties.get(id).getSellDate())));
         }else {
-            mPropertyStatus.setText(getString(R.string.detail_available) + dateConverter(mProperties.get(id).getEntryDate()));
+            mPropertyStatus.setText(getString(R.string.detail_available, dateConverter(mProperties.get(id).getEntryDate())));
         }
         // Set POIs
+        StringBuilder stringBuilder = new StringBuilder();
         for( int i = 0 ; i < mProperties.get(id).getPointOfInterest().size() ; i++ ){
             int poiNum = Integer.parseInt(mProperties.get(id).getPointOfInterest().get(i));
-            finalPoiString +=  mPois.get(poiNum-1).getPoiName() +", ";
+            stringBuilder.append(mPois.get(poiNum-1).getPoiName() +", ");
         }
+        finalPoiString = stringBuilder.deleteCharAt(stringBuilder.length() -2 ).toString();
         mPOI.setText(finalPoiString);
         finalPoiString = ""; //clear
     }
