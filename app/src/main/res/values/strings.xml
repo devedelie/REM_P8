@@ -31,8 +31,8 @@
     <string name="detail_agent">Agent in charge</string>
     <string name="detail_status">Property status</string>
     <string name="detail_poi">Points of interest</string>
-    <string name="detail_sold">Sold on: &#160;</string>
-    <string name="detail_available">Available since: &#160;</string>
+    <string name="detail_sold">Sold on: %1$s</string>
+    <string name="detail_available">Available since: %1$s</string>
     <string name="title_activity_maps">Map</string>
 
     <!-- Permissions-->
