@@ -50,7 +50,6 @@ import com.openclassrooms.realestatemanager.views.ImagesAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -72,16 +71,16 @@ import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYP
 public class AddPropertyFragment extends BaseFragment {
     @BindView(R.id.top_bar_title) TextView mTopTitle;
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
-    @BindView(R.id.property_description_text) EditText mProperrtyDescription;
-    @BindView(R.id.property_surface_text) EditText mProperrtysurface;
-    @BindView(R.id.property_rooms_text) EditText mProperrtyRooms;
-    @BindView(R.id.property_bedrooms_text) EditText mProperrtyBedrooms;
-    @BindView(R.id.property_bathrooms_text) EditText mProperrtyBathrooms;
-    @BindView(R.id.property_price_text) EditText mProperrtyPrice;
+    @BindView(R.id.property_description_text) EditText mPropertyDescription;
+    @BindView(R.id.property_surface_text) EditText mPropertySurface;
+    @BindView(R.id.property_rooms_text) EditText mPropertyRooms;
+    @BindView(R.id.property_bedrooms_text) EditText mPropertyBedrooms;
+    @BindView(R.id.property_bathrooms_text) EditText mPropertyBathrooms;
+    @BindView(R.id.property_price_text) EditText mPropertyPrice;
     @BindView(R.id.property_agent_text) AutoCompleteTextView agentDropDownMenu;
     @BindView(R.id.poi_subway_chip) Chip mChipSubway;
     @BindView(R.id.poi_gym_chip) Chip mChipGym;
-    @BindView(R.id.poi_supermarket_chip) Chip mChipsupermarket;
+    @BindView(R.id.poi_supermarket_chip) Chip mChipSupermarket;
     @BindView(R.id.poi_pool_chip) Chip mChipPool;
     @BindView(R.id.poi_mall_chip) Chip mChipMall;
     @BindView(R.id.poi_library_chip) Chip mChipLibrary;
@@ -276,7 +275,7 @@ public class AddPropertyFragment extends BaseFragment {
         // Create POIs array
         if(mChipSubway.isChecked()) pointOfInterest.add("1");
         if(mChipGym.isChecked()) pointOfInterest.add("2");
-        if(mChipsupermarket.isChecked()) pointOfInterest.add("3");
+        if(mChipSupermarket.isChecked()) pointOfInterest.add("3");
         if(mChipPool.isChecked()) pointOfInterest.add("4");
         if(mChipMall.isChecked()) pointOfInterest.add("5");
         if(mChipLibrary.isChecked()) pointOfInterest.add("6");
@@ -286,12 +285,12 @@ public class AddPropertyFragment extends BaseFragment {
         // Create Property Object
         Property property = new Property(typeDropDownMenu.getText().toString(), composedAddress.get(4).toString(),
                 photoUris, photoDescriptions, "video", pointOfInterest,
-                Integer.parseInt(mProperrtyPrice.getText().toString()) ,
-                Integer.parseInt(mProperrtysurface.getText().toString()),
-                Integer.parseInt(mProperrtyRooms.getText().toString()),
-                Integer.parseInt(mProperrtyBedrooms.getText().toString()) ,
-                Integer.parseInt(mProperrtyBathrooms.getText().toString()),
-                mProperrtyDescription.getText().toString(), 15,
+                Integer.parseInt(mPropertyPrice.getText().toString()) ,
+                Integer.parseInt(mPropertySurface.getText().toString()),
+                Integer.parseInt(mPropertyRooms.getText().toString()),
+                Integer.parseInt(mPropertyBedrooms.getText().toString()) ,
+                Integer.parseInt(mPropertyBathrooms.getText().toString()),
+                mPropertyDescription.getText().toString(), 15,
                 finalAddressString, 40.729210, -73.991770, 20,
                 false, Utils.getDate(),  null,
                 agentDropDownMenu.getText().toString() );
