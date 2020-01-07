@@ -140,7 +140,7 @@ public class AddPropertyBottomSheet extends BaseBottomSheet {
     }
 
     @Override
-    protected int setTitle() { return R.string.add_property_bottom_sheet_title; }
+    protected int setTitle() { return R.string.add_property_fragment_title; }
 
     private void configureDropDownMenu() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
