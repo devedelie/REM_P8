@@ -52,7 +52,8 @@
         </activity>
         <activity
             android:name=".controllers.activities.DetailActivity"
-            android:screenOrientation="sensor">
+            android:screenOrientation="sensor"
+            android:theme="@style/REMTheme.Home">
 
         </activity>
         <activity
@@ -61,9 +62,9 @@
             android:theme="@style/REMTheme.Home">
 
         </activity>
-        <activity
-            android:name=".controllers.fragments.MainFragment"
-            android:theme="@style/REMTheme.Detail" />
+<!--        <activity-->
+<!--            android:name=".controllers.fragments.MainFragment"-->
+<!--            android:theme="@style/REMTheme.Detail" />-->
     </application>
 
 </manifest>
