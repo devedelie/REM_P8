@@ -32,6 +32,6 @@ public interface PropertyDao {
     @Update
     int updateProperty(Property property);
 
-    @Query("DELETE FROM Property WHERE id = :itemId")
-    int deleteProperty(long itemId);
+//    @Query("DELETE FROM Property WHERE id = :itemId")
+//    int deleteProperty(long itemId);
 }

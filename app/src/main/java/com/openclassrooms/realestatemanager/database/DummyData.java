@@ -62,7 +62,7 @@ public class DummyData {
         Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
         contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
         contentValues.put("sellDate","");
-        contentValues.put("agentInCharge", 1);
+        contentValues.put("agentInCharge", "Eliran Elbaz");
 
         return contentValues;
     }
@@ -98,7 +98,7 @@ public class DummyData {
         Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
         contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
         contentValues.put("sellDate", "");
-        contentValues.put("agentInCharge", 1);
+        contentValues.put("agentInCharge", "Eliran Elbaz");
 
         return contentValues;
     }
@@ -136,7 +136,7 @@ public class DummyData {
         contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
         Date sellDate = new GregorianCalendar(2019, Calendar.DECEMBER, 24).getTime();
         contentValues.put("sellDate", Converters.dateToTimestamp(sellDate) );
-        contentValues.put("agentInCharge", 1);
+        contentValues.put("agentInCharge", "Eliran Elbaz");
 
         return contentValues;
     }
@@ -173,7 +173,7 @@ public class DummyData {
         Date creationDate = new GregorianCalendar(2019, Calendar.JULY, 11).getTime();
         contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
         contentValues.put("sellDate", "" );
-        contentValues.put("agentInCharge", 1);
+        contentValues.put("agentInCharge", "Eliran Elbaz");
 
         return contentValues;
     }
