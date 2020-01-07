@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,11 +20,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +51,7 @@ import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
@@ -90,6 +99,8 @@ public class AddPropertyFragment extends BaseFragment {
     @BindView(R.id.property_address_text) EditText mAddressAutocomplete;
     @BindView(R.id.add_images_recyclerView) RecyclerView mImageRecyclerView;
     @BindView(R.id.property_action_button) Button propertyActionButton;
+    @BindView(R.id.sold_rl) RelativeLayout soldRelativeLayout;
+    @BindView(R.id.property_sold_button) Button propertySoldButton;
     @BindView(R.id.take_photo_button) ImageView addPhotoButton;
     @BindView(R.id.select_photo_button) ImageView selectPhotoButton;
     // For Data
@@ -105,6 +116,12 @@ public class AddPropertyFragment extends BaseFragment {
     private ArrayList<String> photoDescriptions = new ArrayList<>();
     private ArrayList<String> composedAddress = new ArrayList<>();
     private ArrayList<String> pointOfInterest = new ArrayList<>();
+    private boolean isAddProperty;
+    private int currentId=1;
+    private long currentPropertyId;
+    private String propertyLocationForEdit;
+    private boolean isSold;
+
 
 
     public static AddPropertyFragment newInstance(int currentPropertyID) {
@@ -121,8 +138,13 @@ public class AddPropertyFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View result = inflater.inflate(getFragmentLayout(), container, false);
         ButterKnife.bind(this, result);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            isAddProperty = bundle.getBoolean("isAddProperty", true);
+        }
 
 //        currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
+
         configureDropDownMenu();
         configureAddressViewType();
         configurePhotoRecyclerView();
@@ -134,9 +156,13 @@ public class AddPropertyFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.mPropertyViewModel.getProperties().observe(this, this::updateUiWithDetailsToEdit);
+        CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateCurrentPropertyId);
         this.mPropertyViewModel.getPhotos().observe(this, this::updatePhotos);
         this.mPropertyViewModel.getPhotoDescriptions().observe(this, this::updatePhotoDescriptions);
     }
+
+    private void updateCurrentPropertyId(long id) { this.currentId = (int) id; }
 
     // ---------------
     // Configuration
@@ -225,7 +251,10 @@ public class AddPropertyFragment extends BaseFragment {
     }
 
     @Override
-    protected int setTitle() { return R.string.add_property_bottom_sheet_title; }
+    protected int setTitle() {
+        if(isAddProperty) { return R.string.add_property_fragment_title; }
+        else{ return R.string.edit_property_fragment_title; }
+    }
 
     private void configureDropDownMenu() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
@@ -249,6 +278,9 @@ public class AddPropertyFragment extends BaseFragment {
         alertDialogXButton();
     }
 
+    @OnClick(R.id.property_cancel_button)
+    public void onClickCancelButton(){ alertDialogXButton(); }
+
     @OnClick(R.id.take_photo_button)
     public void onClickTakePhoto(){
         dispatchTakePictureIntent();
@@ -256,6 +288,16 @@ public class AddPropertyFragment extends BaseFragment {
 
     @OnClick(R.id.select_photo_button)
     public void onClickSelectPhoto(){ selectImage();}
+
+    @OnClick(R.id.property_action_button)
+    public void onClickActionButton(){ createPropertyObject(false, null); }
+
+    @OnClick(R.id.property_sold_button)
+    public void onClickSoldButton(){
+        if(isSold){createPropertyObject(false, Utils.getDate()); }
+        else{createPropertyObject(true, Utils.getDate()); }
+    }
+
 
     // old version
 //    @OnClick(R.id.add_property)
@@ -266,12 +308,12 @@ public class AddPropertyFragment extends BaseFragment {
 //        this.createItem();
 //    }
 
-    @OnClick(R.id.property_action_button)
-    public void onClickActionButton(){
-        createProperty();
-    }
 
-    private void createProperty(){
+
+    private void createPropertyObject(boolean isSold, Date sellDate){
+        String location;
+        if(isAddProperty) { location =  composedAddress.get(4); }
+        else{ location = propertyLocationForEdit; }
         // Create POIs array
         if(mChipSubway.isChecked()) pointOfInterest.add("1");
         if(mChipGym.isChecked()) pointOfInterest.add("2");
@@ -283,20 +325,31 @@ public class AddPropertyFragment extends BaseFragment {
         if(mChipPublicP.isChecked()) pointOfInterest.add("8");
         if(mChipPrivateP.isChecked()) pointOfInterest.add("9");
         // Create Property Object
-        Property property = new Property(typeDropDownMenu.getText().toString(), composedAddress.get(4).toString(),
+        Property property = new Property(typeDropDownMenu.getText().toString(), location,
                 photoUris, photoDescriptions, "video", pointOfInterest,
-                Integer.parseInt(mPropertyPrice.getText().toString()) ,
+                Integer.parseInt(mPropertyPrice.getText().toString().replaceAll("[\\s+$,]","")) ,
                 Integer.parseInt(mPropertySurface.getText().toString()),
                 Integer.parseInt(mPropertyRooms.getText().toString()),
                 Integer.parseInt(mPropertyBedrooms.getText().toString()) ,
                 Integer.parseInt(mPropertyBathrooms.getText().toString()),
                 mPropertyDescription.getText().toString(), 15,
                 finalAddressString, 40.729210, -73.991770, 20,
-                false, Utils.getDate(),  null,
+                isSold, Utils.getDate(),  sellDate,
                 agentDropDownMenu.getText().toString() );
-        // Set data into ViewModel
-        this.mPropertyViewModel.createProperty(property);
+        // Execute the operation
+        this.executeOperation(property);
+    }
 
+    private void executeOperation(Property property){
+        // Set data into ViewModel
+        if(isAddProperty){ // Create a new Property
+            this.mPropertyViewModel.createProperty(property);
+            Toast.makeText(getActivity(), "A new property is successfully added to your list", Toast.LENGTH_LONG).show();
+        }else{ // Update current Property
+            property.setId(currentPropertyId);
+            this.mPropertyViewModel.updateProperty(property);
+            Toast.makeText(getActivity(), "Successfully updated your entry", Toast.LENGTH_LONG).show();
+        }
         // Dismiss the fragment when finished
         getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
     }
@@ -361,9 +414,9 @@ public class AddPropertyFragment extends BaseFragment {
         }
     }
 
-    // -------------
-    // UI
-    // -------------
+    // -----------------
+    // Add Property - UI
+    // -----------------
 
     private void setUiElements() {
         mTopTitle.setText(setTitle());
@@ -379,6 +432,57 @@ public class AddPropertyFragment extends BaseFragment {
     private void updatePhotoDescriptions(ArrayList<String> descriptionsList) {
 
     }
+
+    // ------------------
+    // Edit Property - UI
+    // ------------------
+
+    private void updateUiWithDetailsToEdit(List<Property> propertyList) {
+        int id = currentId - 1;
+        if(!isAddProperty){ // EditProperty configuration
+            currentPropertyId = propertyList.get(id).getId();
+            // Status
+            isSold = propertyList.get(id).isPropertyStatus();
+            if(isSold){ propertySoldButton.setText(R.string.back_on_sale_button_text); }
+            else{ propertySoldButton.setText(R.string.sold_button_text); }
+            Log.d(TAG, "updateUiWithDetailsToEdit: " + isSold);
+            // Text Views
+            propertyLocationForEdit = propertyList.get(id).getLocation();
+            typeDropDownMenu.setText(propertyList.get(id).getType());
+            mPropertyDescription.setText(propertyList.get(id).getPropertyDescription());
+            mPropertySurface.setText(String.valueOf(propertyList.get(id).getPropertySurface()));
+            mPropertyRooms.setText(String.valueOf(propertyList.get(id).getPropertyRooms()));
+            mPropertyBedrooms.setText(String.valueOf(propertyList.get(id).getPropertyBedRooms()));
+            mPropertyBathrooms.setText(String.valueOf(propertyList.get(id).getPropertyBathRooms()));
+            mAddressAutocomplete.setText(propertyList.get(id).getPropertyAddress());
+            mPropertyPrice.setText((Utils.moneyValueFormatter(propertyList.get(id).getPropertyPrice())));
+            agentDropDownMenu.setText(propertyList.get(id).getAgentInCharge());
+            extractPoisFromObject(propertyList.get(id).getPointOfInterest()); // Extract POIs object
+            soldRelativeLayout.setVisibility(View.VISIBLE);// Mark Property as SOLD
+            // Photos & descriptions
+            photoUris.clear();
+            photoUris.addAll(propertyList.get(id).getPhotos());
+            photoDescriptions.clear();
+            photoDescriptions.addAll(propertyList.get(id).getPhotosDescription());
+            mImagesAdapter.setPropertyImagesList(propertyList.get(id).getPhotos(), propertyList.get(id).getPhotosDescription());
+        }
+    }
+
+    private void extractPoisFromObject(ArrayList<String> poi){
+        for(int i = 0 ; i < poi.size(); i++ ){
+            if(poi.get(i).equals("1")) mChipSubway.setChecked(true);
+            if(poi.get(i).equals("2")) mChipGym.setChecked(true);
+            if(poi.get(i).equals("3")) mChipSupermarket.setChecked(true);
+            if(poi.get(i).equals("4")) mChipPool.setChecked(true);
+            if(poi.get(i).equals("5")) mChipMall.setChecked(true);
+            if(poi.get(i).equals("6")) mChipLibrary.setChecked(true);
+            if(poi.get(i).equals("7")) mChipBus.setChecked(true);
+            if(poi.get(i).equals("8")) mChipPublicP.setChecked(true);
+            if(poi.get(i).equals("9")) mChipPrivateP.setChecked(true);
+        }
+    }
+
+
 
     // -------------
     // AlertDialogs
@@ -464,6 +568,5 @@ public class AddPropertyFragment extends BaseFragment {
         });
         builder.show();
     }
-
 
 }
