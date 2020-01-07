@@ -290,19 +290,59 @@
                         android:layout_marginBottom="15dp" />
                 </LinearLayout>
 
+                <!-- Sold Button(visible only on Edit-Mode-->
+                <RelativeLayout
+                    android:id="@+id/sold_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/property_sold_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Change property status: "
+                        android:layout_marginEnd="@dimen/text_box_margin_start_end">
+                    </TextView>
+                    <Button
+                        android:id="@+id/property_sold_button"
+                        android:layout_below="@id/property_sold_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SOLD!"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:background="@color/button_sold"
+                        android:backgroundTint="@color/button_sold"
+                        android:elevation="8dp"
+                        android:drawableLeft="@drawable/ic_circle_outline_black_24dp"/>
+
+                </RelativeLayout>
+
                 <!-- Action Button-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center_vertical|center_horizontal">
+                    <Button
+                        android:id="@+id/property_cancel_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="55dp"
+                        android:background="@color/background_gray"
+                        android:elevation="8dp"/>
                     <Button
                         android:id="@+id/property_action_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Button"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="55dp"
                         android:background="@color/background_gray"
                         android:elevation="8dp"/>
 

@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/chip_margin_start"
-                    android:text="Subway" />
+                    android:text="Subway"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/poi_gym_chip"

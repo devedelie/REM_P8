@@ -19,7 +19,8 @@
     <color name="text_divider">#BDBDBD</color>
 
     <!-- BUTTON -->
-    <color name="button_favorite">#FF5722</color>
+    <color name="button_sold">#AA5B43</color>
+    <color name="button_back_on_sale">#6EAA43</color>
 
     <!-- Icon color-->
     <color name="detail_fragment_icon_color">#00BCD4</color>
