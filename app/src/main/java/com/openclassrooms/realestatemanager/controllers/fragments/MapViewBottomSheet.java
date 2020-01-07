@@ -49,6 +49,7 @@ public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // A Try&Catch to void re-initiating the View, after the first load of the map
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null)
