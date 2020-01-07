@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Declare main fragment
     private MainFragment mainFragment;
     // Declare detail fragment
-    public static DetailFragment detailFragment;
+    public DetailFragment detailFragment;
     public AddPropertyFragment mAddPropertyFragment;
 
     @Override
@@ -122,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureAndShowDetailFragment(){
-        detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail);
+//        detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail);
 
-        // We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+        //  Display DetailFragment in MainActivity, on Tablet mode only (If found frame_layout_detail)
         if (detailFragment == null && findViewById(R.id.frame_layout_detail) != null) {
             detailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction()
@@ -161,10 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (itemId){
             case 0:
 //                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
-                replaceAddPropertyFragment();
+                addPropertyFragmentTransaction(true);
                 break;
             case 1:
 //                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
+                addPropertyFragmentTransaction(false);
                 break;
             case 2:
 //                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
@@ -212,25 +213,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void replaceAddPropertyFragment(){
-
-        // Check if detail fragment is visible(Tablet mode)
-        if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible())) {
-            mAddPropertyFragment = new AddPropertyFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            // Set fragment transaction into ***frame_layout_detail*** (Detail fragment)
-            transaction.replace(R.id.frame_layout_detail, mAddPropertyFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }else {
-            // Smartphone mode
-            mAddPropertyFragment = new AddPropertyFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            // Set fragment transaction into ***frame_layout_main*** (Main fragment)
-            transaction.replace(R.id.frame_layout_main, mAddPropertyFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+    private void addPropertyFragmentTransaction(boolean isAddProperty){
+        if (detailFragment != null && (detailFragment.isVisible()  )) { // Check if detail fragment is visible(Tablet mode)
+            inflateFragment(R.id.frame_layout_detail, isAddProperty);
+        }else if( mAddPropertyFragment != null && mAddPropertyFragment.isVisible()) { // AddPropertyFragment is already visible - Do nothing
+        }else{ // Smartphone mode
+            inflateFragment(R.id.frame_layout_main, isAddProperty);
         }
-
     }
+
+    private void inflateFragment(int frameID, boolean isAddProperty){
+        mAddPropertyFragment = new AddPropertyFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isAddProperty", isAddProperty);
+        mAddPropertyFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(frameID, mAddPropertyFragment); // Set fragment transaction into ***frame_layout_main*** (Main fragment)
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }

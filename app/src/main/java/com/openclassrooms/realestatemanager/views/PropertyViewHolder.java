@@ -54,7 +54,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
         // Set background color for selected item
         Resources res = itemView.getResources();
         Log.d(TAG, "updateWithProperty: data   " + property.getId() + "   " + CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue());
-        if(property.getId() == CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue() && MainActivity.detailFragment != null){
+        if(property.getId() == CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue() ){ // && MainActivity.detailFragment != null
             mCardView.setCardBackgroundColor(res.getColorStateList(R.color.colorPrimarySuperLight));
         }else {
             mCardView.setCardBackgroundColor(res.getColorStateList(R.color.text_secondary_white));
