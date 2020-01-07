@@ -20,9 +20,7 @@ public class PropertyDataRepository {
 
     // --- GET ---
 
-    public LiveData<List<Property>> getProperties(){
-        return this.mPropertyDao.getProperties();
-    }
+    public LiveData<List<Property>> getProperties(){ return this.mPropertyDao.getProperties(); }
 
     // --- CREATE ---
 
