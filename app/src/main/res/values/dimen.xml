@@ -18,8 +18,9 @@
     <dimen name="detail_fragment_text_title">18sp</dimen>
     <dimen name="detail_fragment_text_body">16sp</dimen>
 
-    <!-- BottomSheet Details-->
+    <!-- ADD/EDIT Fragment-->
     <dimen name="text_box_margin_start_end">15dp</dimen>
+    <dimen name="buttons_space">55dp</dimen>
     <!-- Chips-->
     <dimen name="chip_margin_start">10dp</dimen>
 
