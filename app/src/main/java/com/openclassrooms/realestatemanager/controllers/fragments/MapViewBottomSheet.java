@@ -9,16 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +46,10 @@ import static com.openclassrooms.realestatemanager.models.Constants.MINIMUM_ZOOM
 public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     @BindView(R.id.top_bar_map_title) TextView mTopTitle;
     private GoogleMap mMap;
-    private static final float DEFAULT_ZOOM = 15f ;
+    private static final float DEFAULT_ZOOM = 11f ;
     private static View view;
+    private PropertyViewModel mPropertyViewModel;
+    private List<Property> mProperties = new ArrayList<>();
 
     public static MapViewBottomSheet newInstance(int ID) {
         MapViewBottomSheet mapViewBottomSheet = new MapViewBottomSheet();
@@ -63,16 +77,28 @@ public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCal
         }
 
         ButterKnife.bind(this, view); //Configure Butterknife
+        configureViewModel();
         // Initialise map_view_fragment
         setUIElements();
         if(Utils.isInternetAvailable(getActivity().getApplicationContext()))this.initMap();
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.mPropertyViewModel.getProperties().observe(this, this::updateMarkers);
+    }
+
     // Initialise Google Map
     private void initMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private void configureViewModel() {
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
+        this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
     }
 
 
@@ -122,7 +148,30 @@ public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCal
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        return false;
+        CurrentPropertyDataRepository.getInstance().setCurrentProperty((long)marker.getTag());
+        dismiss();
+       return true;
+    }
+
+    //-------------------
+    // UI
+    //------------------
+
+    private void updateMarkers(List<Property> propertyList) {
+        this.mProperties.clear();
+        this.mProperties.addAll(propertyList);
+        setMarkers();
+    }
+
+    private void setMarkers() {
+        for(int i = 0 ; i < mProperties.size() ; i++){
+            LatLng latLng = new LatLng(mProperties.get(i).getAddressLat(), mProperties.get(i).getAddressLng());
+            createMarker(latLng, i);
+        }
+    }
+
+    private void createMarker(LatLng latLng, int index) {
+        mMap.addMarker(new MarkerOptions().position(latLng)).setTag(mProperties.get(index).getId());
     }
 
 
