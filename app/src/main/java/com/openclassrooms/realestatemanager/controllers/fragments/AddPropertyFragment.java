@@ -168,10 +168,59 @@ public class AddPropertyFragment extends BaseFragment {
     // Configuration
     // ---------------
 
+    private void configureDropDownMenu() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
+        typeDropDownMenu.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), R.layout.agent_drop_down_layout, MainFragment.username );
+        agentDropDownMenu.setAdapter(adapter2);
+    }
+
+    private void configureAddressViewType() {
+        mAddressAutocomplete.setClickable(true);
+        mAddressAutocomplete.setFocusable(false);
+        mAddressAutocomplete.setInputType(InputType.TYPE_NULL);
+        mAddressAutocomplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Utils.isInternetAvailable(getActivity())){
+                    // If Internet is active - then invoke Google Address-Autocomplete
+                    launchAutocompleteSearchBar();
+                }else {
+                    // If Internet is inactive - invoke address dialog box
+                    alertDialogAddressButton();
+                }
+            }
+        });
+    }
+
+    private void configurePhotoRecyclerView() {
+        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
+        this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
+        this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
+
+    }
+
     private void configurePropertyViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
         this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
     }
+
+
+    @Override
+    protected int setTitle() {
+        if(isAddProperty) { return R.string.add_property_fragment_title; }
+        else{ return R.string.edit_property_fragment_title; }
+    }
+
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_add_property;
+    }
+
+    // -----------------
+    // Take/Add Pictures
+    // -----------------
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -222,51 +271,6 @@ public class AddPropertyFragment extends BaseFragment {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_GET);
         }
-    }
-
-
-    private void configurePhotoRecyclerView() {
-        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
-        this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
-        this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
-
-    }
-
-    private void configureAddressViewType() {
-        mAddressAutocomplete.setClickable(true);
-        mAddressAutocomplete.setFocusable(false);
-        mAddressAutocomplete.setInputType(InputType.TYPE_NULL);
-        mAddressAutocomplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Utils.isInternetAvailable(getActivity())){
-                    // If Internet is active - then invoke Google Address-Autocomplete
-                    launchAutocompleteSearchBar();
-                }else {
-                    // If Internet is inactive - invoke address dialog box
-                    alertDialogAddressButton();
-                }
-            }
-        });
-    }
-
-    @Override
-    protected int setTitle() {
-        if(isAddProperty) { return R.string.add_property_fragment_title; }
-        else{ return R.string.edit_property_fragment_title; }
-    }
-
-    private void configureDropDownMenu() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
-        typeDropDownMenu.setAdapter(adapter);
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), R.layout.agent_drop_down_layout, MainFragment.username );
-        agentDropDownMenu.setAdapter(adapter2);
-    }
-
-    @Override
-    protected int getFragmentLayout() {
-        return R.layout.fragment_add_property;
     }
 
     //---------------
@@ -455,6 +459,7 @@ public class AddPropertyFragment extends BaseFragment {
             mPropertyBedrooms.setText(String.valueOf(propertyList.get(id).getPropertyBedRooms()));
             mPropertyBathrooms.setText(String.valueOf(propertyList.get(id).getPropertyBathRooms()));
             mAddressAutocomplete.setText(propertyList.get(id).getPropertyAddress());
+            finalAddressString = propertyList.get(id).getPropertyAddress();
             mPropertyPrice.setText((Utils.moneyValueFormatter(propertyList.get(id).getPropertyPrice())));
             agentDropDownMenu.setText(propertyList.get(id).getAgentInCharge());
             extractPoisFromObject(propertyList.get(id).getPointOfInterest()); // Extract POIs object
@@ -481,7 +486,6 @@ public class AddPropertyFragment extends BaseFragment {
             if(poi.get(i).equals("9")) mChipPrivateP.setChecked(true);
         }
     }
-
 
 
     // -------------

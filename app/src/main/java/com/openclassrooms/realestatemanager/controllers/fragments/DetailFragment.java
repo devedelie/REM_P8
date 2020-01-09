@@ -180,11 +180,14 @@ public class DetailFragment extends Fragment  {
     }
 
     private String fabricateURL(int id){
+        String url="";
         // Get & Trim property LatLng -> Then create a url for the API
-        String latLng = (mProperties.get(id).getAddressLat() + "," + mProperties.get(id).getAddressLng());
-        String address = mProperties.get(id).getPropertyAddress().replaceAll("[#%@!&*]","");
-        String url = (IMAGE_URL_PART1 + address + IMAGE_URL_PART2 + latLng + IMAGE_URL_PART3 + BuildConfig.GOOGLE_API_KEY);
-        Log.d(TAG, "fabricateURL: "+ url);
+        try{
+            String latLng = (mProperties.get(id).getAddressLat() + "," + mProperties.get(id).getAddressLng());
+            String address = mProperties.get(id).getPropertyAddress().replaceAll("[#%@!&*]","");
+            url = (IMAGE_URL_PART1 + address + IMAGE_URL_PART2 + latLng + IMAGE_URL_PART3 + BuildConfig.GOOGLE_API_KEY);
+            Log.d(TAG, "fabricateURL: "+ url);
+        }catch (Exception e){ }
         return url;
     }
 
