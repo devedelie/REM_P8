@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controllers.fragments.DetailFragment"
+    android:background="@color/background_bright"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Property image recyclerView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_detail_images_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:padding="@dimen/recyclerView_padding">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/detail_property_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/text_margin_start"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_title"/>
+
+            <!-- Property Description -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_title_description"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/text_margin_start"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_title"/>
+            <TextView
+                android:id="@+id/detail_fragment_property_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:layout_marginStart="@dimen/text_margin_start"
+                android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                android:layout_marginEnd="@dimen/text_margin_end"
+                android:textSize="@dimen/detail_fragment_text_body"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/details_below_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <!-- Description text -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1">
+
+                <!-- Property Surface-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_settings_overscan_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_title_surface"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_surface_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_title_surface"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Property #Rooms-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_home_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_title_n_of_rooms"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_n_of_rooms_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_title_n_of_rooms"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Property #BedRooms-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_airline_seat_individual_suite_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_title_n_of_bedrooms"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_n_of_bedrooms_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_title_n_of_bedrooms"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Property #BathRooms-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_hot_tub_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_title_n_of_bathrooms"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_n_of_bathrooms_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_title_n_of_bathrooms"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- POI-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_poi"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_poi"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_poi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_poi"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Property Price-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_attach_money_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_price"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_price"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Agent-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_account"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_agent"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_agent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_agent"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Status-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_status"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_status"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_status"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+
+                </LinearLayout>
+
+                <!-- Bottom space-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/right_side_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp">
+
+                <!-- Property Location-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/icon_width_and_height"
+                            android:layout_height="@dimen/icon_width_and_height"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:src="@drawable/ic_pin_drop_black_48dp"
+                            android:tint="@color/text_secondary_dark"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/detail_location"
+                            android:textStyle="bold"
+                            android:layout_marginStart="@dimen/text_margin_start"
+                            android:layout_marginTop="@dimen/text_padding_for_icon_top"
+                            android:layout_marginEnd="@dimen/text_margin_end"
+                            android:textSize="@dimen/detail_fragment_text_title"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/property_location_and_address_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_location"
+                        android:layout_marginStart="@dimen/text_margin_start_with_icon"
+                        android:layout_marginTop="@dimen/text_space_between_title_and_content"
+                        android:layout_marginEnd="@dimen/text_margin_end"
+                        android:textSize="@dimen/detail_fragment_text_body"/>
+                </LinearLayout>
+
+                <!--Map view -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shadow_frame"
+                    tools:context=".controllers.fragments.DetailFragment">
+                    <ImageView
+                        android:id="@+id/map_image"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+                    <ImageView
+                        android:id="@+id/over_map_image_no_connection"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"/>
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
