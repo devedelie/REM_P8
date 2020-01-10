@@ -1,11 +1,6 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
-
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,26 +21,18 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.openclassrooms.realestatemanager.BuildConfig;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -60,7 +47,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -68,12 +54,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static com.android.volley.VolleyLog.TAG;
 import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYPE;
-
 /**
  * Created by Eliran Elbaz on 02-Jan-20.
  */
@@ -106,9 +93,9 @@ public class AddPropertyFragment extends BaseFragment {
     // For Data
     private PropertyViewModel mPropertyViewModel;
     private String finalAddressString;
+    private double addressLat;
+    private double addressLng;
     private String currentPhotoPath;
-    private int AUTOCOMPLETE_REQUEST_CODE = 10;
-    private List<Place.Field> mFields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME,Place.Field.LAT_LNG); // Set the fields to specify which types of place data to return after the user has made a selection.
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_GET = 2;
     private ImagesAdapter mImagesAdapter;
@@ -144,7 +131,6 @@ public class AddPropertyFragment extends BaseFragment {
         }
 
 //        currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
-
         configureDropDownMenu();
         configureAddressViewType();
         configurePhotoRecyclerView();
@@ -183,13 +169,7 @@ public class AddPropertyFragment extends BaseFragment {
         mAddressAutocomplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Utils.isInternetAvailable(getActivity())){
-                    // If Internet is active - then invoke Google Address-Autocomplete
-                    launchAutocompleteSearchBar();
-                }else {
-                    // If Internet is inactive - invoke address dialog box
-                    alertDialogAddressButton();
-                }
+                alertDialogAddressButton();
             }
         });
     }
@@ -198,7 +178,6 @@ public class AddPropertyFragment extends BaseFragment {
         this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
         this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
         this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
-
     }
 
     private void configurePropertyViewModel() {
@@ -294,12 +273,12 @@ public class AddPropertyFragment extends BaseFragment {
     public void onClickSelectPhoto(){ selectImage();}
 
     @OnClick(R.id.property_action_button)
-    public void onClickActionButton(){ createPropertyObject(false, null); }
+    public void onClickActionButton(){ setLatLng(false, null); }
 
     @OnClick(R.id.property_sold_button)
     public void onClickSoldButton(){
-        if(isSold){createPropertyObject(false, Utils.getDate()); }
-        else{createPropertyObject(true, Utils.getDate()); }
+        if(isSold){setLatLng(false, Utils.getDate()); }
+        else{setLatLng(true, Utils.getDate()); }
     }
 
 
@@ -313,11 +292,19 @@ public class AddPropertyFragment extends BaseFragment {
 //    }
 
 
+    private void setLatLng(boolean isSold, Date sellDate){
+        // Set LatLng for ADD/EDIT (if does not exist, run httpRequest)
+        if(addressLat == 0.0d && addressLng == 0.0d ){
+            getCoordinates(isSold, sellDate);
+        } else {
+            createPropertyObject(isSold, sellDate);
+        }
+    }
 
     private void createPropertyObject(boolean isSold, Date sellDate){
-        String location;
-        if(isAddProperty) { location =  composedAddress.get(4); }
-        else{ location = propertyLocationForEdit; }
+        String district;
+        if(isAddProperty) { district =  composedAddress.get(4); }
+        else{ district = propertyLocationForEdit; }
         // Create POIs array
         if(mChipSubway.isChecked()) pointOfInterest.add("1");
         if(mChipGym.isChecked()) pointOfInterest.add("2");
@@ -329,7 +316,7 @@ public class AddPropertyFragment extends BaseFragment {
         if(mChipPublicP.isChecked()) pointOfInterest.add("8");
         if(mChipPrivateP.isChecked()) pointOfInterest.add("9");
         // Create Property Object
-        Property property = new Property(typeDropDownMenu.getText().toString(), location,
+        Property property = new Property(typeDropDownMenu.getText().toString(), district,
                 photoUris, photoDescriptions, "video", pointOfInterest,
                 Integer.parseInt(mPropertyPrice.getText().toString().replaceAll("[\\s+$,]","")) ,
                 Integer.parseInt(mPropertySurface.getText().toString()),
@@ -337,7 +324,7 @@ public class AddPropertyFragment extends BaseFragment {
                 Integer.parseInt(mPropertyBedrooms.getText().toString()) ,
                 Integer.parseInt(mPropertyBathrooms.getText().toString()),
                 mPropertyDescription.getText().toString(), 15,
-                finalAddressString, 40.729210, -73.991770, 20,
+                finalAddressString, addressLat, addressLng, 20,
                 isSold, Utils.getDate(),  sellDate,
                 agentDropDownMenu.getText().toString() );
         // Execute the operation
@@ -358,25 +345,6 @@ public class AddPropertyFragment extends BaseFragment {
         getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
     }
 
-    private void launchAutocompleteSearchBar(){
-        if (!Places.isInitialized()) {
-            Places.initialize(getActivity().getApplicationContext(), BuildConfig.GOOGLE_API_KEY, Locale.US);
-        }
-//        // Bias results to Paris region (use 'bounds' variable in below filter)
-//        RectangularBounds bounds = RectangularBounds.newInstance(
-//                new LatLng(48.832304, 2.239726),
-//                new LatLng(48.900962, 2.42124));
-
-        // Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, mFields)
-                .setTypeFilter(TypeFilter.ADDRESS)
-                .setCountry("Us")
-                .build(getActivity());
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }
-
-    // onActivityResult for Search Auto-Complete
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -387,34 +355,12 @@ public class AddPropertyFragment extends BaseFragment {
             photoUris.add(currentPhotoPath);
             mPropertyViewModel.setPhotos(photoUris);
             alertDialogPhotoDescription();
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            // Set thumbnail image
-//            imageView.setImageBitmap(imageBitmap);
         }
 
         if(requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK){
             photoUris.add(data.getData().toString());
             mPropertyViewModel.setPhotos(photoUris);
             alertDialogPhotoDescription();
-        }
-
-        // Autocomplete address result
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                //Manage the action to be taken
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                mAddressAutocomplete.setText(place.getAddress());
-                finalAddressString = place.getAddress();
-                LatLng propertyLatLng = place.getLatLng();
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(ContentValues.TAG, "onActivityResult Error: " + status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
         }
     }
 
@@ -470,6 +416,11 @@ public class AddPropertyFragment extends BaseFragment {
             photoDescriptions.clear();
             photoDescriptions.addAll(propertyList.get(id).getPhotosDescription());
             mImagesAdapter.setPropertyImagesList(propertyList.get(id).getPhotos(), propertyList.get(id).getPhotosDescription());
+            // LatLng
+            try {
+                addressLat = propertyList.get(id).getAddressLat();
+                addressLng = propertyList.get(id).getAddressLng();
+            }catch (Exception e){ }
         }
     }
 
@@ -486,7 +437,6 @@ public class AddPropertyFragment extends BaseFragment {
             if(poi.get(i).equals("9")) mChipPrivateP.setChecked(true);
         }
     }
-
 
     // -------------
     // AlertDialogs
@@ -571,6 +521,41 @@ public class AddPropertyFragment extends BaseFragment {
             }
         });
         builder.show();
+    }
+
+    //--------------------------------
+    // HTTP Request (MapBox.com GeoCoding)
+    //--------------------------------
+    private void getCoordinates(boolean isSold, Date sellDate){
+        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                .accessToken("pk.eyJ1IjoiZGV2ZWRlbGllIiwiYSI6ImNrNThkbjF0bTBhZmozbW9hdWNncXJjeTAifQ.7-s8G5qiro1t0mmRbLQ13Q")
+                .query(finalAddressString)
+                .build();
+
+        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                List<CarmenFeature> results = response.body().features();
+                if (results.size() > 0) {
+                    // Log the first results Point.
+                    Point firstResultPoint = results.get(0).center();
+                    Log.d(TAG, "onResponse: " + firstResultPoint.toString());
+                    addressLat = firstResultPoint.latitude();
+                    addressLng = firstResultPoint.longitude();
+                    createPropertyObject(isSold, sellDate);
+                } else {
+                    // WHEN no result were found, set a central location.
+                    addressLat = 40.694510; addressLng = -73.955750;
+                    createPropertyObject(isSold, sellDate);
+                }
+            }
+            @Override
+            public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+                throwable.printStackTrace();
+                addressLat = 40.694510; addressLng = -73.955750;
+                createPropertyObject(isSold, sellDate);
+            }
+        });
     }
 
 }
