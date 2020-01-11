@@ -11,6 +11,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         buildConfigField("String", "GOOGLE_API_KEY", GOOGLE_API_KEY)
+        buildConfigField("String", "MAPBOX_API_KEY", MAPBOX_API_KEY)
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

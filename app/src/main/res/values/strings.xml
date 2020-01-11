@@ -56,4 +56,8 @@
     <string name="alert_dialog_message">Are you sure you want to cancel? Your recent changes will be lost!</string>
 
     <string name="empty_description_alert_dialog">N/A</string>
+
+    <!-- Map Fragment -->
+    <string name="alert_no_internet_dialog_title">No Network</string>
+    <string name="alert_no_internet_dialog_message">Internet connection is necessary for the Map to function!</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.InflateException;
@@ -20,7 +21,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -80,7 +83,7 @@ public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCal
         configureViewModel();
         // Initialise map_view_fragment
         setUIElements();
-        if(Utils.isInternetAvailable(getActivity().getApplicationContext()))this.initMap();
+        if(Utils.isInternetAvailable(getActivity().getApplicationContext())) this.initMap();
         return view;
     }
 
@@ -173,6 +176,5 @@ public class MapViewBottomSheet extends BaseBottomSheet implements OnMapReadyCal
     private void createMarker(LatLng latLng, int index) {
         mMap.addMarker(new MarkerOptions().position(latLng)).setTag(mProperties.get(index).getId());
     }
-
 
 }
