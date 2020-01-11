@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
@@ -26,6 +28,7 @@ import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MapViewBottomSheet;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
@@ -143,7 +146,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "Test onNavigationItemSelected: "+ order);
         switch (order){
             case 0:
-                MapViewBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "mapView");
+                if(Utils.isInternetAvailable(this)){
+                    MapViewBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "mapView");
+                }else { alertDialogNoInternet(); }
                 break;
             case 1:
                 break;
@@ -231,6 +236,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.replace(frameID, mAddPropertyFragment); // Set fragment transaction into ***frame_layout_main*** (Main fragment)
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    // -------------
+    // AlertDialog
+    // -------------
+    private void alertDialogNoInternet(){
+        new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                .setTitle(getString(R.string.alert_no_internet_dialog_title))
+                .setMessage(getString(R.string.alert_no_internet_dialog_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Action
+                    }
+                })
+                .setIcon(R.drawable.ic_dialog_alert_dark)
+                .show();
     }
 
 }
