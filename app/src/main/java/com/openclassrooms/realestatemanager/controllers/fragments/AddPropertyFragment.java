@@ -33,6 +33,7 @@ import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.geojson.Point;
+import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -528,7 +529,7 @@ public class AddPropertyFragment extends BaseFragment {
     //--------------------------------
     private void getCoordinates(boolean isSold, Date sellDate){
         MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-                .accessToken("pk.eyJ1IjoiZGV2ZWRlbGllIiwiYSI6ImNrNThkbjF0bTBhZmozbW9hdWNncXJjeTAifQ.7-s8G5qiro1t0mmRbLQ13Q")
+                .accessToken(BuildConfig.MAPBOX_API_KEY)
                 .query(finalAddressString)
                 .build();
 
