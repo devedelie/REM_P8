@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
@@ -40,6 +41,7 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.repositories.PropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
@@ -65,7 +67,7 @@ import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYP
 /**
  * Created by Eliran Elbaz on 02-Jan-20.
  */
-public class AddPropertyFragment extends BaseFragment {
+public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.OnPhotoClick {
     @BindView(R.id.top_bar_title) TextView mTopTitle;
     @BindView(R.id.property_type_autocomplete) AutoCompleteTextView typeDropDownMenu;
     @BindView(R.id.property_description_text) EditText mPropertyDescription;
@@ -176,7 +178,7 @@ public class AddPropertyFragment extends BaseFragment {
     }
 
     private void configurePhotoRecyclerView() {
-        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
+        this.mImagesAdapter = new ImagesAdapter( Glide.with(this), this);
         this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
         this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
     }
@@ -185,7 +187,6 @@ public class AddPropertyFragment extends BaseFragment {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity().getApplicationContext());
         this.mPropertyViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(PropertyViewModel.class);
     }
-
 
     @Override
     protected int setTitle() {
@@ -259,11 +260,11 @@ public class AddPropertyFragment extends BaseFragment {
 
     @OnClick(R.id.x_button)
     public void onClickXButton(){
-        alertDialogXButton();
-    }
+        alertDialogXButton(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
 
     @OnClick(R.id.property_cancel_button)
-    public void onClickCancelButton(){ alertDialogXButton(); }
+    public void onClickCancelButton(){
+        alertDialogXButton(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
 
     @OnClick(R.id.take_photo_button)
     public void onClickTakePhoto(){
@@ -282,6 +283,9 @@ public class AddPropertyFragment extends BaseFragment {
         else{setLatLng(true, Utils.getDate()); }
     }
 
+    @Override
+    public void onPhotoClick(int position, View view) {
+        alertDialogXButton(getString(R.string.alert_delet_image_title), null,"deleteImage", position); }
 
     // old version
 //    @OnClick(R.id.add_property)
@@ -340,7 +344,7 @@ public class AddPropertyFragment extends BaseFragment {
         }else{ // Update current Property
             property.setId(currentPropertyId);
             this.mPropertyViewModel.updateProperty(property);
-            Toast.makeText(getActivity(), "Successfully updated your entry", Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(), "Successfully updated your entry", Snackbar.LENGTH_LONG).show();
         }
         // Dismiss the fragment when finished
         getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
@@ -354,13 +358,11 @@ public class AddPropertyFragment extends BaseFragment {
             Log.d(TAG, "onActivityResult: picture 1234XX");
             //If picture saved, add its URI into viewModel
             photoUris.add(currentPhotoPath);
-            mPropertyViewModel.setPhotos(photoUris);
             alertDialogPhotoDescription();
         }
 
         if(requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK){
             photoUris.add(data.getData().toString());
-            mPropertyViewModel.setPhotos(photoUris);
             alertDialogPhotoDescription();
         }
     }
@@ -375,13 +377,11 @@ public class AddPropertyFragment extends BaseFragment {
     }
 
     private void updatePhotos(ArrayList<String> photosUriList) {
-//        photoUris.clear();
-//        photoUris.addAll(photosUriList);
-        mImagesAdapter.setPropertyImagesList(photosUriList, photosUriList);
+        mImagesAdapter.setPropertyImagesList(photosUriList);
     }
 
     private void updatePhotoDescriptions(ArrayList<String> descriptionsList) {
-
+        mImagesAdapter.setPropertyDescriptionList(descriptionsList);
     }
 
     // ------------------
@@ -416,7 +416,8 @@ public class AddPropertyFragment extends BaseFragment {
             photoUris.addAll(propertyList.get(id).getPhotos());
             photoDescriptions.clear();
             photoDescriptions.addAll(propertyList.get(id).getPhotosDescription());
-            mImagesAdapter.setPropertyImagesList(propertyList.get(id).getPhotos(), propertyList.get(id).getPhotosDescription());
+            mImagesAdapter.setPropertyImagesList(propertyList.get(id).getPhotos());
+            mImagesAdapter.setPropertyDescriptionList(propertyList.get(id).getPhotosDescription());
             // LatLng
             try {
                 addressLat = propertyList.get(id).getAddressLat();
@@ -443,14 +444,19 @@ public class AddPropertyFragment extends BaseFragment {
     // AlertDialogs
     // -------------
 
-    private void alertDialogXButton(){
+    private void alertDialogXButton(String title, String message, String tag, int position){
         new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
-                .setTitle(getString(R.string.alert_dialog_title))
-                .setMessage(getString(R.string.alert_dialog_message))
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with canceling the entry
-                        getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
+                        if(tag == "closeFragment")getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
+                        if(tag == "deleteImage") {
+                            mPropertyViewModel.getPhotos().getValue().remove(position);
+                            mPropertyViewModel.getPhotoDescriptions().getValue().remove(position);
+                            mImagesAdapter.setPropertyImagesList(mPropertyViewModel.getPhotos().getValue());
+                        }
                     }
                 })
                 // A null listener allows the button to dismiss the dialog and take no further action.
@@ -508,6 +514,7 @@ public class AddPropertyFragment extends BaseFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.d(TAG, "onClick: CheckString" + description.getText().toString());
+                mPropertyViewModel.setPhotos(photoUris);
                 photoDescriptions.add(description.getText().toString());
                 mPropertyViewModel.setPhotoDescriptions(photoDescriptions);
                 dialog.dismiss();
@@ -516,6 +523,7 @@ public class AddPropertyFragment extends BaseFragment {
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                mPropertyViewModel.setPhotos(photoUris);
                 photoDescriptions.add(getString(R.string.empty_description_alert_dialog));
                 mPropertyViewModel.setPhotoDescriptions(photoDescriptions);
                 dialog.cancel();
@@ -559,4 +567,10 @@ public class AddPropertyFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        photoUris.clear();
+        photoDescriptions.clear();
+    }
 }

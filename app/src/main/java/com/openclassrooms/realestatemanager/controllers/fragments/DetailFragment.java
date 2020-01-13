@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
 
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,14 +16,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyLog;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.BuildConfig;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Image;
 import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.User;
@@ -43,7 +50,7 @@ import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PA
 import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART2;
 import static com.openclassrooms.realestatemanager.models.Constants.IMAGE_URL_PART3;
 
-public class DetailFragment extends Fragment  {
+public class DetailFragment extends Fragment implements ImagesAdapter.OnPhotoClick  {
     @BindView(R.id.fragment_detail_images_recyclerView) RecyclerView mImageRecyclerView;
     @BindView(R.id.detail_property_location) TextView mLocationText;
     @BindView(R.id.detail_fragment_property_description) TextView mDescription;
@@ -85,7 +92,7 @@ public class DetailFragment extends Fragment  {
     }
 
     private void initImageRecyclerView() {
-        this.mImagesAdapter = new ImagesAdapter( Glide.with(this));
+        this.mImagesAdapter = new ImagesAdapter( Glide.with(this), this);
         this.mImageRecyclerView.setAdapter(this.mImagesAdapter);
         this.mImageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
     }
@@ -110,6 +117,11 @@ public class DetailFragment extends Fragment  {
     //  Get all properties
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::setPropertyViews);
+    }
+
+    @Override
+    public void onPhotoClick(int position, View view) {
+        alertDialogPhotoGallery(position);
     }
 
     //----------
@@ -141,7 +153,8 @@ public class DetailFragment extends Fragment  {
         // Set the property ID in the list #-1 (ArrayList)
         int id = currentId - 1;
         // Set images in recyclerView
-        mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos(), mProperties.get(id).getPhotosDescription());
+        mImagesAdapter.setPropertyImagesList(mProperties.get(id).getPhotos());
+        mImagesAdapter.setPropertyDescriptionList( mProperties.get(id).getPhotosDescription());
         // Set static map
         if(Utils.isInternetAvailable(getActivity().getApplicationContext())) {
             Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
@@ -196,6 +209,28 @@ public class DetailFragment extends Fragment  {
         return formatter.format(date);
     }
 
+    // --------------
+    // Dialog
+    // --------------
+
+    // AlertDialog to manage address-view while the device is offline (Instead of Autocomplete API)
+    private void alertDialogPhotoGallery(int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Property Photos");
+        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.image_dialog, (ViewGroup) getView(), false);
+        ImageView imageView = (ImageView) viewInflated.findViewById(R.id.full_size_photo);
+        builder.setView(viewInflated);
+        Uri imageUri = Uri.parse(mProperties.get(currentId-1).getPhotos().get(position));
+        imageView.setImageURI(null);
+        imageView.setImageURI(imageUri);
+        // Set up the buttons
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+    }
 }
 
 

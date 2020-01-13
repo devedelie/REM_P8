@@ -54,6 +54,8 @@
 
     <string name="alert_dialog_title">Cancel entry</string>
     <string name="alert_dialog_message">Are you sure you want to cancel? Your recent changes will be lost!</string>
+    <string name="alert_delet_image_title">Delete Image ?</string>
+
 
     <string name="empty_description_alert_dialog">N/A</string>
 

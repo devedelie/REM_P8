@@ -24,17 +24,27 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
     // Declaring a Glide object
     private RequestManager mGlide;
 
-    public void setPropertyImagesList(List<String> imagesUriList, List<String> photoDescription){
+    public interface OnPhotoClick{
+        void onPhotoClick(int position,View view);
+    }
+    private final OnPhotoClick mCallback_OnPhotoClick;
+
+    // CONSTRUCTOR
+    public ImagesAdapter( RequestManager glide, OnPhotoClick callback_OnPhotoClick) {
+        mGlide = glide;
+        mCallback_OnPhotoClick = callback_OnPhotoClick;
+    }
+
+    public void setPropertyImagesList(List<String> imagesUriList){
         this.mPhotos.clear();
         this.mPhotos.addAll(imagesUriList);
-        this.mPhotosDescription.clear();
-        this.mPhotosDescription.addAll(photoDescription);
         notifyDataSetChanged();
     }
 
-    // CONSTRUCTOR
-    public ImagesAdapter( RequestManager glide) {
-        mGlide = glide;
+    public void setPropertyDescriptionList( List<String> photoDescription){
+        this.mPhotosDescription.clear();
+        this.mPhotosDescription.addAll(photoDescription);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -48,7 +58,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ImagesViewHolder holder, int position) {
-        holder.updatePropertyImages(mPhotos.get(position), mPhotosDescription.get(position), mGlide);
+        holder.updatePropertyImages(mPhotos.get(position), mPhotosDescription.get(position), mGlide, mCallback_OnPhotoClick);
     }
 
     @Override
