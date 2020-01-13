@@ -28,6 +28,7 @@ import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MapViewBottomSheet;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.repositories.SearchPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
@@ -174,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 2:
 //                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
+                SearchPropertyDataRepository.getInstance().setProperties(MainFragment.mProperties);
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
         }
 
