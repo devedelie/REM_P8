@@ -37,7 +37,7 @@ public class MainFragment extends Fragment  {
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
     private PropertyAdapter adapter;
     private static int USER_ID = 1;
-    private List<Property> mProperties;
+    public static List<Property> mProperties;
     private PropertyViewModel mPropertyViewModel;
     // Declare OnPropertyClick Interface
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
@@ -123,6 +123,7 @@ public class MainFragment extends Fragment  {
     // Update the list of properties
     private void updatePropertiesList(List<Property> properties){
         Log.d(TAG, "updatePropertiesList: DB" + properties);
+        mProperties.addAll(properties);
         this.adapter.updateData(properties);
     }
 
