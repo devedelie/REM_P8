@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
  */
 public class SearchActivity extends AppCompatActivity{
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.searchTest) TextView text;
     private ArrayList<Property> mProperties = new ArrayList<>();
 
     @Override
@@ -63,12 +62,10 @@ public class SearchActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if ( id == android.R.id.home ) {
             finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -76,6 +73,6 @@ public class SearchActivity extends AppCompatActivity{
     // UI
     //------------
     private void updateUI() {
-        text.setText(mProperties.get(1).getPropertyAddress());
+
     }
 }
