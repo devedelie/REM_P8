@@ -26,11 +26,12 @@ public interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createProperty(Property property);
 
-//    @Insert
-//    long insertProperty(Property property);
-
     @Update
     int updateProperty(Property property);
+
+
+    //    @Insert
+//    long insertProperty(Property property);
 
 //    @Query("DELETE FROM Property WHERE id = :itemId")
 //    int deleteProperty(long itemId);

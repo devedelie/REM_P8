@@ -20,6 +20,14 @@
             android:layout_marginTop="2dp"
             android:layout_marginStart="2dp"
             android:scaleType="fitXY" />
+        <!-- Delete button -->
+        <ImageView
+            android:id="@+id/delete_image_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:visibility="invisible"
+            android:src="@drawable/ic_sold"/>
         <!-- Alpha Bar-->
         <ImageView
             android:layout_width="140dp"
