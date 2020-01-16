@@ -49,6 +49,7 @@
     <string name="search_property_button">Search</string>
     <string name="add_property_fragment_title">Add New Property</string>
     <string name="edit_property_fragment_title">Edit Property</string>
+    <string name="search_property_fragment_title">Search Properties</string>
     <string name="search_property_bottom_sheet_title">Search Property</string>
     <string name="map_bottom_sheet_title">Map View</string>
 

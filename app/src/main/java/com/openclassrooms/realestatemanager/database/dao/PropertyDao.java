@@ -5,7 +5,9 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.models.Property;
 
@@ -23,11 +25,16 @@ public interface PropertyDao {
     @Query("SELECT * FROM property")
     LiveData<List<Property>> getProperties();
 
+    // Get a RawQuery
+    @RawQuery(observedEntities = Property.class)
+    LiveData<List<Property>> getSearchResults(SupportSQLiteQuery query);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createProperty(Property property);
 
     @Update
     int updateProperty(Property property);
+
 
 
     //    @Insert
