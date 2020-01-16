@@ -9,13 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        <!--Import of toolbar-->
-        <include
-            layout="@layout/toolbar"
+        <TextView
+            android:id="@+id/search_top_bar_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/text_box_margin_start_end"
+            android:layout_marginBottom="@dimen/text_box_margin_start_end"
+            android:layout_weight="0.9">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/search_x_button"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/text_secondary_dark"
+            android:src="@drawable/ic_close_black_48dp"
+            android:layout_weight="0.1"/>
 
     </LinearLayout>
 
@@ -46,20 +64,20 @@
                 android:focusable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- City -->
+        <!-- Location -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_property_city"
+            android:id="@+id/search_property_location"
             android:layout_marginTop="@dimen/margin_top"
             style="@style/TextFieldTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/text_box_margin_start_end"
             android:layout_marginEnd="@dimen/text_box_margin_start_end"
-            android:hint="City"
+            android:hint="Location / City"
             app:helperText="*Required"
             app:helperTextEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search_property_city_text"
+                android:id="@+id/search_property_location_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -217,9 +235,11 @@
                             android:id="@+id/search_property_min_date_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusable="false"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_photos_text"
-                            android:inputType="date" />
+                            android:inputType="date"
+                            android:clickable="false"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!--End Left Container -->
@@ -367,6 +387,7 @@
                             android:id="@+id/search_property_max_date_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusable="false"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_photos_text"
                             android:inputType="date" />
@@ -408,7 +429,7 @@
                 android:gravity="center"
                 android:layout_gravity="center_vertical|center_horizontal">
                 <Button
-                    android:id="@+id/property_action_button"
+                    android:id="@+id/search_property_action_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Search"

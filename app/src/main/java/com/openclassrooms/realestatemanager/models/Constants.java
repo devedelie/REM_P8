@@ -10,6 +10,9 @@ public class Constants {
     public static final String BOTTOM_SHEET_ADD_TAG = "AddProperty";
     public static final String BOTTOM_SHEET_EDIT_TAG = "EditProperty";
     public static final String BOTTOM_SHEET_SEARCH_TAG = "SearchProperty";
+    public static final String SEARCH_DATE_FLAG_MIN = "minDate";
+    public static final String SEARCH_DATE_FLAG_MAX = "maxDate";
+    public static final String SEARCH_BASE_QUERY_STRING = "SELECT * FROM Property WHERE 1=1";
     public static final List<String> PROPERTY_TYPE = Arrays.asList("Studio", "Apartment", "Penthouse Apartment", "Loft", "House", "Duplex", "Flat", "Private Villa", "Mansion", "Farm House");
     public static final List<String> POI_LIST = Arrays.asList("Subway", "GYM", "Supermarket", "Swimming Pool", "Shopping mall", "Library", "Public Bus station", "Public Parking", "Private Parking");
     public static final String LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";

@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyFra
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MapViewBottomSheet;
+import com.openclassrooms.realestatemanager.controllers.fragments.SearchFragment;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 import com.openclassrooms.realestatemanager.repositories.SearchPropertyDataRepository;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Declare detail fragment
     public DetailFragment detailFragment;
     public AddPropertyFragment mAddPropertyFragment;
+    public SearchFragment mSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,9 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 2:
 //                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
-                SearchPropertyDataRepository.getInstance().setProperties(MainFragment.mProperties);
-                Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
+                searchFragmentTransaction();
                 break;
         }
 
@@ -222,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //------------------------------
+    // ADD/EDIT Fragment Transaction
+    //------------------------------
     private void addPropertyFragmentTransaction(boolean isAddProperty){
         if (detailFragment != null && (detailFragment.isVisible()  )) { // Check if detail fragment is visible(Tablet mode)
             inflateFragment(R.id.frame_layout_detail, isAddProperty);
@@ -238,6 +241,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAddPropertyFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(frameID, mAddPropertyFragment); // Set fragment transaction into ***frame_layout_main*** (Main fragment)
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    //------------------------------
+    // Search Fragment Transaction
+    //------------------------------
+    private void searchFragmentTransaction(){
+        if (detailFragment != null && (detailFragment.isVisible()  )) { // Check if detail fragment is visible(Tablet mode)
+            inflateSearchFragment(R.id.frame_layout_detail);
+        }else if( mSearchFragment != null && mSearchFragment.isVisible()) { // AddPropertyFragment is already visible - Do nothing
+        }else{ // Smartphone mode
+            inflateSearchFragment(R.id.frame_layout_main);
+        }
+    }
+
+    private void inflateSearchFragment(int frameID){
+        mSearchFragment = new SearchFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(frameID, mSearchFragment); // Set fragment transaction into ***frame_layout_main*** (Main fragment)
         transaction.addToBackStack(null);
         transaction.commit();
     }
