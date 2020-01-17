@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.database.dao;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -28,6 +30,10 @@ public interface PropertyDao {
     // Get a RawQuery
     @RawQuery(observedEntities = Property.class)
     LiveData<List<Property>> getSearchResults(SupportSQLiteQuery query);
+
+    // ContentProvider
+    @Query("SELECT * FROM Property WHERE agentInCharge = :userName")
+    Cursor getPropertyWithCursor(long userName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createProperty(Property property);
