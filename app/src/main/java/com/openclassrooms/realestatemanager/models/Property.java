@@ -1,8 +1,12 @@
 package com.openclassrooms.realestatemanager.models;
 
+import android.content.ContentValues;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import com.openclassrooms.realestatemanager.utils.Converters;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -165,6 +169,29 @@ public class Property {
     public void setAgentInCharge(String agentInCharge) { this.agentInCharge = agentInCharge; }
 
 
+    // --- UTILS ---
+    public static Property fromContentValues(ContentValues values) {
+        final Property property = new Property();
+        if (values.containsKey("type")) property.setType(values.getAsString("type"));
+        if (values.containsKey("location")) property.setLocation(values.getAsString("location"));
+        if (values.containsKey("photos")) property.setPhotos(Converters.fromString(values.getAsString("photos")));
+        if (values.containsKey("pointOfInterest")) property.setPointOfInterest(Converters.fromString(values.getAsString("pointOfInterest")));
+        if (values.containsKey("photosDescription")) property.setPhotosDescription(Converters.fromString(values.getAsString("photosDescription")));
+        if (values.containsKey("propertyPrice")) property.setPropertyPrice(values.getAsInteger("propertyPrice"));
+        if (values.containsKey("propertySurface")) property.setPropertySurface(values.getAsInteger("propertySurface"));
+        if (values.containsKey("propertyRooms")) property.setPropertyRooms(values.getAsInteger("propertyRooms"));
+        if (values.containsKey("propertyBedRooms")) property.setPropertyBedRooms(values.getAsInteger("propertyBedRooms"));
+        if (values.containsKey("propertyBathRooms")) property.setPropertyBathRooms(values.getAsInteger("propertyBathRooms"));
+        if (values.containsKey("propertyDescription")) property.setPropertyDescription(values.getAsString("propertyDescription"));
+        if (values.containsKey("propertyAddress")) property.setPropertyAddress(values.getAsString("propertyAddress"));
+        if (values.containsKey("agentInCharge")) property.setAgentInCharge(values.getAsString("agentInCharge"));
+        if (values.containsKey("entryDate")) property.setEntryDate(Converters.fromTimestamp(values.getAsLong("entryDate")));
+        if (values.containsKey("sellDate")) property.setSellDate(Converters.fromTimestamp(values.getAsLong("sellDate")));
+        if (values.containsKey("propertyStatus")) property.setPropertyStatus(values.getAsBoolean("propertyStatus"));
+        if (values.containsKey("addressLat")) property.setAddressLat(values.getAsDouble("addressLat"));
+        if (values.containsKey("addressLng")) property.setAddressLat(values.getAsDouble("addressLng"));
+        return property;
+    }
 
 //    @Override
 //    public String toString() {

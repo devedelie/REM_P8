@@ -36,16 +36,16 @@ public interface PropertyDao {
     Cursor getPropertyWithCursor(long userName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void createProperty(Property property);
+    long createProperty(Property property);
 
     @Update
     int updateProperty(Property property);
 
+    @Query("DELETE FROM Property WHERE id = :id")
+    int deleteProperty(long id);
 
 
     //    @Insert
 //    long insertProperty(Property property);
 
-//    @Query("DELETE FROM Property WHERE id = :itemId")
-//    int deleteProperty(long itemId);
 }
