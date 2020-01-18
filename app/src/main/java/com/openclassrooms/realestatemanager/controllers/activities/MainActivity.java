@@ -25,11 +25,9 @@ import com.openclassrooms.realestatemanager.controllers.base.BaseBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
-import com.openclassrooms.realestatemanager.controllers.fragments.MapViewBottomSheet;
 import com.openclassrooms.realestatemanager.controllers.fragments.SearchFragment;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
-import com.openclassrooms.realestatemanager.repositories.SearchPropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
@@ -150,7 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (order){
             case 0:
                 if(Utils.isInternetAvailable(this)){
-                    MapViewBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "mapView");
+                    Intent intent = new Intent(this, MapActivity.class);
+                    startActivity(intent);
                 }else { alertDialogNoInternet(); }
                 break;
             case 1:
@@ -168,19 +167,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = item.getOrder();
         switch (itemId){
             case 0:
-//                AddPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "addProperty");
                 addPropertyFragmentTransaction(true);
                 break;
             case 1:
-//                EditPropertyBottomSheet.newInstance(currentProperty).show(getSupportFragmentManager(), "editProperty");
                 addPropertyFragmentTransaction(false);
                 break;
             case 2:
-//                SearchPropertyBottomSheet.newInstance().show(getSupportFragmentManager(), "searchProperty");
                 searchFragmentTransaction();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

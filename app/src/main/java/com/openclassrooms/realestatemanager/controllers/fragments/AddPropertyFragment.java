@@ -41,7 +41,6 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
-import com.openclassrooms.realestatemanager.repositories.PropertyDataRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.ImagesAdapter;
@@ -260,11 +259,11 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
 
     @OnClick(R.id.x_button)
     public void onClickXButton(){
-        alertDialogXButton(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
+        alertDialogAction(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
 
     @OnClick(R.id.property_cancel_button)
     public void onClickCancelButton(){
-        alertDialogXButton(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
+        alertDialogAction(getString(R.string.alert_dialog_title), getString(R.string.alert_dialog_message),"closeFragment", -1); }
 
     @OnClick(R.id.take_photo_button)
     public void onClickTakePhoto(){
@@ -285,7 +284,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
 
     @Override
     public void onPhotoClick(int position, View view) {
-        alertDialogXButton(getString(R.string.alert_delet_image_title), null,"deleteImage", position); }
+        alertDialogAction(getString(R.string.alert_delet_image_title), null,"deleteImage", position); }
 
     // old version
 //    @OnClick(R.id.add_property)
@@ -444,7 +443,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     // AlertDialogs
     // -------------
 
-    private void alertDialogXButton(String title, String message, String tag, int position){
+    private void alertDialogAction(String title, String message, String tag, int position){
         new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
                 .setTitle(title)
                 .setMessage(message)

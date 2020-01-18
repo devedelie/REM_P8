@@ -157,7 +157,7 @@ public class DetailFragment extends Fragment implements ImagesAdapter.OnPhotoCli
         mImagesAdapter.setPropertyDescriptionList( mProperties.get(id).getPhotosDescription());
         // Set static map
         if(Utils.isInternetAvailable(getActivity().getApplicationContext())) {
-            Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
+//            Glide.with(getActivity().getApplicationContext()).load(fabricateURL(id)).into(mImageMap);
         } else mImageMap.setImageResource(R.drawable.map_offline);
         // Set TextViews
         mLocationText.setText(mProperties.get(id).getLocation());
