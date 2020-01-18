@@ -35,7 +35,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainFragment extends Fragment  {
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
-    private PropertyAdapter adapter;
+    public static PropertyAdapter adapter;
     private static int USER_ID = 1;
     public static List<Property> mProperties;
     private PropertyViewModel mPropertyViewModel;
