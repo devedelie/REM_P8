@@ -15,18 +15,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.google.android.material.chip.Chip;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -78,6 +84,7 @@ public class SearchFragment extends BaseFragment {
     private DatePickerDialog mMaxEntryDatePickerDialog;
 //    private ArrayList<Property> mProperties = new ArrayList<>();
     private String mDate, dateBoxId, queryString;
+    SimpleSQLiteQuery simpleSQLiteQuery;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +104,7 @@ public class SearchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         // Get properties
     }
+
 
 
     // ---------------
@@ -169,29 +177,55 @@ public class SearchFragment extends BaseFragment {
         queryString = SEARCH_BASE_QUERY_STRING;
         // Type
         if(!typeDropDownMenu.getText().toString().isEmpty()){
-            queryString += " AND Type = " + typeDropDownMenu.getText();
-        }
+            queryString += " AND type = " + typeDropDownMenu.getText().toString();}
         // Location
         if(!mLocation.getText().toString().isEmpty()){
-            queryString += " AND Location = " + mLocation.getText();
-        }
+            queryString += " AND location = " + mLocation.getText(); }
         // Surface
-        if(!maxSurface.getText().toString().isEmpty()){
-            queryString += " AND Surface BETWEEN " + minSurface.getText().toString() + " AND " + maxSurface.getText().toString();
-        }
+        if(Integer.parseInt(maxSurface.getText().toString())>0){
+            queryString += " AND propertySurface BETWEEN " + minSurface.getText().toString() + " AND " + maxSurface.getText().toString(); }
         // Rooms
-        if(!maxRooms.getText().toString().isEmpty()){
-            queryString += " AND propertyRooms BETWEEN " + minRooms.getText().toString() + " AND " + maxRooms.getText().toString();
-        }
+        if(Integer.parseInt(maxRooms.getText().toString())>0){
+            queryString += " AND propertyRooms BETWEEN " + minRooms.getText().toString() + " AND " + maxRooms.getText().toString(); }
         // Bedrooms
-        if(!maxBedrooms.getText().toString().isEmpty()){
-            queryString += " AND propertyBedRooms BETWEEN " + minBedrooms.getText().toString() + " AND " + maxBedrooms.getText().toString();
-        }
+        if(Integer.parseInt(maxBedrooms.getText().toString())>0){
+            queryString += " AND propertyBedRooms BETWEEN " + minBedrooms.getText().toString() + " AND " + maxBedrooms.getText().toString(); }
         // Bathrooms
-        if(!maxBathrooms.getText().toString().isEmpty()){
-            queryString += " AND propertyBathRooms BETWEEN " + minBathrooms.getText().toString() + " AND " + maxBathrooms.getText().toString();
-        }
-        Log.d(TAG, "createSearchQuery: " + queryString);
+        if(Integer.parseInt(maxBathrooms.getText().toString())>0){
+            queryString += " AND propertyBathRooms BETWEEN " + minBathrooms.getText().toString() + " AND " + maxBathrooms.getText().toString(); }
+        // Price
+        if(Integer.parseInt(maxPrice.getText().toString()) > 0){
+            queryString += " AND propertyPrice BETWEEN " + minPrice.getText().toString() + " AND " + maxPrice.getText().toString(); }
+        // Photos
+        if(Integer.parseInt(maxPhotos.getText().toString()) > 0){
+            queryString += " AND "; }
+        // Dates
+//        if(maxEntryDate.getText().toString() != null){
+//           queryString += " AND entryDate BETWEEN " + minEntryDate.getText().toString() + " AND " + maxEntryDate.getText().toString();
+//        }
+        // POI
+        ArrayList<Boolean> chips = new ArrayList<>();
+        if(mChipSubway.isChecked()) chips.add(mChipSubway.isChecked()); else chips.add(false);
+        if(mChipGym.isChecked()) chips.add(mChipGym.isChecked()); else chips.add(false);
+        if(mChipSupermarket.isChecked()) chips.add(mChipSupermarket.isChecked()); else chips.add(false);
+        if(mChipPool.isChecked()) chips.add(mChipPool.isChecked()); else chips.add(false);
+        if(mChipMall.isChecked()) chips.add(mChipMall.isChecked()); else chips.add(false);
+        if(mChipLibrary.isChecked()) chips.add(mChipLibrary.isChecked()); else chips.add(false);
+        if(mChipBus.isChecked()) chips.add(mChipBus.isChecked()); else chips.add(false);
+        if(mChipPublicP.isChecked()) chips.add(mChipPublicP.isChecked()); else chips.add(false);
+        if(mChipPrivateP.isChecked()) chips.add(mChipPrivateP.isChecked()); else chips.add(false);
+
+        Log.d(TAG, "createSearchQuery: " + queryString + " pois: " + chips);
+        simpleSQLiteQuery = new SimpleSQLiteQuery(queryString);
+        LiveData<List<Property>> properties = mPropertyViewModel.getSearchedProperties(simpleSQLiteQuery);
+        properties.observeForever(new Observer<List<Property>>() {
+            @Override
+            public void onChanged(List<Property> propertyList) {
+                properties.removeObserver(this);
+                Log.d(TAG, "createSearchQuery: " + propertyList.size());
+            }
+        });
+
 
     }
 

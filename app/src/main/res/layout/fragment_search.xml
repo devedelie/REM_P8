@@ -117,7 +117,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_surface"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Rooms -->
@@ -137,7 +138,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_rooms_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Bedrooms -->
@@ -157,7 +159,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_bedrooms_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Bathrooms -->
@@ -177,7 +180,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_bathrooms_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Price -->
@@ -197,7 +201,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_price_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Photos -->
@@ -217,7 +222,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusRight="@id/search_property_max_photos_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Min Dates -->
@@ -269,7 +275,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/search_property_max_surface_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- MaxRooms -->
@@ -289,7 +296,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/property_bathrooms"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Max Bedrooms -->
@@ -309,7 +317,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/search_property_min_bathrooms_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Max Bathrooms -->
@@ -329,7 +338,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/search_property_min_price_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Max Price -->
@@ -349,7 +359,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/search_property_min_photos_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Max Photos -->
@@ -369,7 +380,8 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/search_property_max_bedrooms_text"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Max Dates -->

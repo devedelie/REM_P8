@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.models.Poi;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -104,6 +105,10 @@ public class PropertyViewModel extends ViewModel {
         return mPropertyDataSource.getProperties();
     }
 
+    public LiveData<List<Property>> getSearchedProperties(SupportSQLiteQuery query){
+        return mPropertyDataSource.getSearchedProperties(query);
+    }
+
     // Create
     public void createProperty(Property property) {
         executor.execute(() -> {
@@ -132,5 +137,11 @@ public class PropertyViewModel extends ViewModel {
 //        Log.d(TAG, "LiveDataTest getResult: " + mCurrentPropertyId);
 //        return mCurrentPropertyId;
 //    }
+
+    //------------
+    // Search
+    //------------
+
+
 
 }
