@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.controllers.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,11 +22,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.base.BaseFragment;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.utils.Converters;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 
 import java.text.SimpleDateFormat;
@@ -85,6 +88,8 @@ public class SearchFragment extends BaseFragment {
 //    private ArrayList<Property> mProperties = new ArrayList<>();
     private String mDate, dateBoxId, queryString;
     SimpleSQLiteQuery simpleSQLiteQuery;
+    private Date minSearchEntryDate;
+    private Date maxSearchEntryDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -163,10 +168,18 @@ public class SearchFragment extends BaseFragment {
                 month +=1;
                 mDate = (dayOfMonth < 10 ? ("0" + dayOfMonth) : (dayOfMonth)) + "/" + (month < 10 ? ("0" + (month)) : (month)) + "/" + year;
 
-                if(dateBoxId == SEARCH_DATE_FLAG_MIN )
-                minEntryDate.setText(mDate);
-                else if(dateBoxId == SEARCH_DATE_FLAG_MAX){
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                if(dateBoxId == SEARCH_DATE_FLAG_MIN ){
+                    minEntryDate.setText(mDate);
+                    try{
+                        minSearchEntryDate = format.parse(mDate);
+                    }catch (Exception e){ e.printStackTrace();
+                    }
+                }else if(dateBoxId == SEARCH_DATE_FLAG_MAX){
                     maxEntryDate.setText(mDate);
+                    try{
+                        maxSearchEntryDate = format.parse(mDate);
+                    }catch (Exception e){ e.printStackTrace(); }
                 }
             }
         };
@@ -200,9 +213,8 @@ public class SearchFragment extends BaseFragment {
         if(Integer.parseInt(maxPhotos.getText().toString()) > 0){
             queryString += " AND "; }
         // Dates
-//        if(maxEntryDate.getText().toString() != null){
-//           queryString += " AND entryDate BETWEEN " + minEntryDate.getText().toString() + " AND " + maxEntryDate.getText().toString();
-//        }
+        if(minSearchEntryDate != null){ queryString += " AND entryDate >= " + Converters.dateToTimestamp(minSearchEntryDate); }
+        if(maxSearchEntryDate != null){ queryString +=  " AND entryDate <= " + Converters.dateToTimestamp(maxSearchEntryDate); }
         // POI
         ArrayList<Boolean> chips = new ArrayList<>();
         if(mChipSubway.isChecked()) chips.add(mChipSubway.isChecked()); else chips.add(false);
@@ -223,6 +235,7 @@ public class SearchFragment extends BaseFragment {
             public void onChanged(List<Property> propertyList) {
                 properties.removeObserver(this);
                 Log.d(TAG, "createSearchQuery: " + propertyList.size());
+                MainFragment.adapter.updateData(propertyList);
             }
         });
 
@@ -243,6 +256,10 @@ public class SearchFragment extends BaseFragment {
     @OnClick(R.id.search_property_action_button)
     public void onClickSearchButton(){ createSearchQuery(); }
 
+    @OnClick(R.id.search_x_button)
+    public void onClickXButton(){
+        alertDialogAction(getString(R.string.alert_dialog_title), null,"closeFragment"); }
+
 
 
     //------------
@@ -251,4 +268,23 @@ public class SearchFragment extends BaseFragment {
     private void setUiElements() { mTopTitle.setText(setTitle()); }
 
 
+    // -------------
+    // AlertDialogs
+    // -------------
+
+    private void alertDialogAction(String title, String message, String tag){
+        new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with canceling the entry
+                        if(tag == "closeFragment")getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
+                    }
+                })
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(R.drawable.ic_dialog_alert_dark)
+                .show();
+    }
 }
