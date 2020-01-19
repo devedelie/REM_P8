@@ -71,4 +71,8 @@
     <!-- SnackBars -->
     <string name="add_property_success">Successfully updated your entry</string>
     <string name="search_property_fail">We couldn\'t find any results. Please try different search criteria</string>
+
+
+    <!-- Debug original Java files -->
+    <string name="premier_bien">Le premier bien immobilier enregistré vaut</string>
 </resources>
