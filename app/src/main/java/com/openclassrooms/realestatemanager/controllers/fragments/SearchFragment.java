@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.search.Search;
 import com.openclassrooms.realestatemanager.repositories.SearchDataRepository;
+import com.openclassrooms.realestatemanager.utils.Converters;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 
 import java.text.SimpleDateFormat;
@@ -186,54 +187,30 @@ public class SearchFragment extends BaseFragment {
     private void createSearchQuery() {
         queryString = SEARCH_BASE_QUERY_STRING;
         // Type
-        if(!typeDropDownMenu.getText().toString().isEmpty()){
-            queryString += " AND type = ?";
-            args.add(typeDropDownMenu.getText().toString());
-        }
+        if(!typeDropDownMenu.getText().toString().isEmpty()){ queryString += " AND type = ?";args.add(typeDropDownMenu.getText().toString()); }
         // Location
-        if(!mLocation.getText().toString().isEmpty()){
-            queryString += " AND location = ?";
-            args.add(mLocation.getText());
-        }
+        if(!mLocation.getText().toString().isEmpty()){ queryString += " AND location = ?";args.add(mLocation.getText()); }
         // Surface
-        if(Integer.parseInt(maxSurface.getText().toString())>0){
-            queryString += " AND propertySurface BETWEEN ? AND ?";
-            args.add(minSurface.getText().toString());
-            args.add(maxSurface.getText().toString());
-        }
+        if(Integer.parseInt(minSurface.getText().toString()) >= 0){ queryString += " AND propertySurface >= ?";  args.add(minSurface.getText().toString());}
+        if(Integer.parseInt(maxSurface.getText().toString()) > 0){ queryString += " AND propertySurface <= ?";args.add(maxSurface.getText().toString()); }
         // Rooms
-        if(Integer.parseInt(maxRooms.getText().toString())>0){
-            queryString += " AND propertyRooms BETWEEN ? AND ?";
-            args.add(minRooms.getText().toString());
-            args.add(maxRooms.getText().toString());
-    }
+        if(Integer.parseInt(minRooms.getText().toString()) >= 0){ queryString += " AND propertyRooms >= ?"; args.add(minRooms.getText().toString());}
+        if(Integer.parseInt(maxRooms.getText().toString()) > 0){ queryString += " AND propertyRooms BETWEEN ? AND ?";args.add(maxRooms.getText().toString()); }
         // Bedrooms
-        if(Integer.parseInt(maxBedrooms.getText().toString())>0){
-            queryString += " AND propertyBedRooms BETWEEN ? AND ?";
-            args.add(minBedrooms.getText().toString());
-            args.add(maxBedrooms.getText().toString());
-        }
+        if(Integer.parseInt(minBedrooms.getText().toString()) >= 0){ queryString += " AND propertyBedRooms >= ?";  args.add(minBedrooms.getText().toString());}
+        if(Integer.parseInt(maxBedrooms.getText().toString()) > 0){ queryString += " AND propertyBedRooms <= ?";args.add(maxBedrooms.getText().toString()); }
         // Bathrooms
-        if(Integer.parseInt(maxBathrooms.getText().toString())>0){
-            queryString += " AND propertyBathRooms BETWEEN ? AND ?";
-            args.add(minBathrooms.getText().toString());
-            args.add(maxBathrooms.getText().toString());
-        }
+        if(Integer.parseInt(minBathrooms.getText().toString()) >= 0){ queryString += " AND propertyBathRooms >= ?"; args.add(minBathrooms.getText().toString());}
+        if(Integer.parseInt(maxBathrooms.getText().toString()) > 0){ queryString += " AND propertyBathRooms <= ?";args.add(maxBathrooms.getText().toString()); }
         // Price
-        if(Integer.parseInt(maxPrice.getText().toString()) > 0){
-            queryString += " AND propertyPrice BETWEEN ? AND ?";
-            args.add(minPrice.getText().toString());
-            args.add(maxPrice.getText().toString());
-        }
+        if(Integer.parseInt(minPrice.getText().toString()) >= 0){ queryString += " AND propertyPrice >= ?"; args.add(minPrice.getText().toString());}
+        if(Integer.parseInt(maxPrice.getText().toString()) > 0){ queryString += " AND propertyPrice <= ?";args.add(maxPrice.getText().toString()); }
         // Photos
-        if(Integer.parseInt(maxPhotos.getText().toString()) > 0){
-            queryString += " AND photos BETWEEN ? AND ?";
-            args.add(minPhotos.getText().toString());
-            args.add(maxPhotos.getText().toString());
-        }
-//        // Dates
-//        if(minSearchEntryDate != null) queryString += " AND entryDate >= ?"; args.add(Converters.dateToTimestamp(minSearchEntryDate));
-//        if(maxSearchEntryDate != null) queryString += " AND entryDate <= ?"; args.add(Converters.dateToTimestamp(maxSearchEntryDate));
+        if(Integer.parseInt(minPhotos.getText().toString()) >= 0){ queryString += " AND photos >= ?"; args.add(minPhotos.getText().toString());}
+        if(Integer.parseInt(maxPhotos.getText().toString()) > 0){ queryString += " AND photos <= ?";args.add(maxPhotos.getText().toString()); }
+        // Dates
+        if(minSearchEntryDate != null){ queryString += " AND entryDate >= ?"; args.add(Converters.dateToTimestamp(minSearchEntryDate));}
+        if(maxSearchEntryDate != null){ queryString += " AND entryDate <= ?"; args.add(Converters.dateToTimestamp(maxSearchEntryDate));}
         // POI
         if(mChipSubway.isChecked()) chips.add("1");
         if(mChipGym.isChecked()) chips.add("2");
