@@ -2,9 +2,12 @@ package com.openclassrooms.realestatemanager.controllers.fragments;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,13 +18,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.activities.MainActivity;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.User;
+import com.openclassrooms.realestatemanager.models.search.Search;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
+import com.openclassrooms.realestatemanager.repositories.SearchDataRepository;
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel;
 import com.openclassrooms.realestatemanager.views.PropertyAdapter;
 
@@ -42,6 +48,7 @@ public class MainFragment extends Fragment  {
     // Declare OnPropertyClick Interface
     private PropertyAdapter.OnPropertyClick mOnPropertyClick;
     public static List<String> username;
+    SimpleSQLiteQuery simpleSQLiteQuery;
 
 
     @Override
@@ -90,6 +97,26 @@ public class MainFragment extends Fragment  {
     //  Get all properties
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updatePropertiesList);
+        SearchDataRepository.getInstance().getSearchData().observe(this, this::getSearchResults);
+    }
+
+    // Get properties from Search-Query
+    private void getSearchResults(Search search){
+        // Make a query
+        simpleSQLiteQuery = new SimpleSQLiteQuery(search.getQueryString(), search.getArgs().toArray());
+        LiveData<List<Property>> properties = mPropertyViewModel.getSearchedProperties(simpleSQLiteQuery);
+        properties.observeForever(new Observer<List<Property>>() {
+            @Override
+            public void onChanged(List<Property> propertyList) {
+                properties.removeObserver(this);
+                Log.d(TAG, "getSearchResults onChanged: " + propertyList.size());
+                if(propertyList.isEmpty() || propertyList == null){ // Display "No results" message
+                    Snackbar.make(getView(), getString(R.string.search_property_fail), Snackbar.LENGTH_LONG).show();
+                }else{ // Update results
+                    adapter.updateData(propertyList);
+                }
+            }
+        });
     }
 
     // Get current user
