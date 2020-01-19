@@ -343,7 +343,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
         }else{ // Update current Property
             property.setId(currentPropertyId);
             this.mPropertyViewModel.updateProperty(property);
-            Snackbar.make(getView(), "Successfully updated your entry", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.add_property_success), Snackbar.LENGTH_LONG).show();
         }
         // Dismiss the fragment when finished
         getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.

@@ -67,4 +67,8 @@
     <string name="popup_title_permission_gps_access">This application requires to enabled GPS, do you want to enable it?</string>
     <string name="popup_title_permission_gps_enable_btn">Enable</string>
     <string name="map_loading_text">Waiting for your current location</string>
+
+    <!-- SnackBars -->
+    <string name="add_property_success">Successfully updated your entry</string>
+    <string name="search_property_fail">We couldn\'t find any results. Please try different search criteria</string>
 </resources>
