@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.drawer_main_activity) NavigationView navigationView;
     public static int currentProperty = 1;
     private PropertyViewModel mPropertyViewModel;
-    private static int USER_ID = 1;
     // Declare main fragment
     private MainFragment mainFragment;
     // Declare detail fragment
@@ -76,16 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu and add it to the Toolbar
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu); // Inflate the menu and add it to the Toolbar
         return true;
     }
 
-
-    private void configureToolbar(){
-        // Sets the Toolbar
-        setSupportActionBar(toolbar);
-    }
+    private void configureToolbar(){ setSupportActionBar(toolbar); }
 
     //  Configuring ViewModel
     private void configureViewModel(){

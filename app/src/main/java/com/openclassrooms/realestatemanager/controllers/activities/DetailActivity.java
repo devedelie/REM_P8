@@ -9,6 +9,8 @@ import android.view.MenuItem;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
+import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
+import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +37,12 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        // Set title on SmartPhone mode
+        int i = CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue() != null ? CurrentPropertyDataRepository.getInstance().getCurrentProperty().getValue().intValue() : -1;
+        if(i == -1){
+            ((AppCompatActivity)this).getSupportActionBar().setTitle(getApplicationInfo().loadLabel(getPackageManager()).toString()); // Set app name
+        }else
+            ((AppCompatActivity)this).getSupportActionBar().setTitle(MainFragment.mProperties.get(i-1).getType()); // Set title (property type)
     }
 
     //------------
