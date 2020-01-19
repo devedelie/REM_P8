@@ -28,10 +28,7 @@ public class Utils {
         return (int) Math.round(dollars * 0.9);
     }
 
-    // New Convert method
-    public static int convertEuroToDollar(int euro){
-        return (int) Math.round(euro * 1.11);
-    }
+    public static int convertEuroToDollar(int euro){ return (int) Math.round(euro * 1.11); }  // New converter method *******
 
     /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
@@ -39,7 +36,7 @@ public class Utils {
      * @return
      */
     public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());  // Date format fix ********
         return dateFormat.format(new Date());
     }
 
@@ -57,7 +54,7 @@ public class Utils {
     public static Boolean isInternetAvailable(final Context context){
 //        WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 //        return wifi.isWifiEnabled();
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));  // New network verification ********
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
