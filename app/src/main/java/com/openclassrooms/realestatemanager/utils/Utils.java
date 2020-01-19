@@ -28,6 +28,7 @@ public class Utils {
         return (int) Math.round(dollars * 0.9);
     }
 
+    // New Convert method
     public static int convertEuroToDollar(int euro){
         return (int) Math.round(euro * 1.11);
     }

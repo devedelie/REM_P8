@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class UtilsUnitTest {
     @Test
     public void dollarToEuroConvert_isCorrect() throws Exception {
         assertEquals(900, Utils.convertDollarToEuro(1000));
