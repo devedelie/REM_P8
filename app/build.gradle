@@ -96,4 +96,7 @@ dependencies {
     //MultiDex support 64K commands
     implementation "androidx.multidex:multidex:2.0.1"
 
+    // Collections compare
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
 }

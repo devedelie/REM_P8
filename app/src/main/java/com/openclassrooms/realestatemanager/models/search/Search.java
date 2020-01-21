@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.models.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,11 +11,11 @@ public class Search {
     private List<Object> args ;
     private int minPhotos;
     private int maxPhotos;
-    private List<String> chips;
+    private ArrayList<String> chips;
 
     public Search(){}
 
-    public Search(String queryString, List<Object> args, int minPhotos, int maxPhotos, List<String> chips) {
+    public Search(String queryString, List<Object> args, int minPhotos, int maxPhotos, ArrayList<String> chips) {
         this.queryString = queryString;
         this.args = args;
         this.minPhotos = minPhotos;
@@ -38,7 +39,7 @@ public class Search {
 
     public void setMaxPhotos(int maxPhotos) { this.maxPhotos = maxPhotos; }
 
-    public List<String> getChips() { return chips; }
+    public ArrayList<String> getChips() { return chips; }
 
-    public void setChips(List<String> chips) { this.chips = chips; }
+    public void setChips(ArrayList<String> chips) { this.chips = chips; }
 }

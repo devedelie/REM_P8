@@ -186,28 +186,26 @@ public class SearchFragment extends BaseFragment {
 
     private void createSearchQuery() {
         queryString = SEARCH_BASE_QUERY_STRING;
+        args.clear();
         // Type
         if(!typeDropDownMenu.getText().toString().isEmpty()){ queryString += " AND type = ?";args.add(typeDropDownMenu.getText().toString()); }
         // Location
         if(!mLocation.getText().toString().isEmpty()){ queryString += " AND location = ?";args.add(mLocation.getText()); }
         // Surface
-        if(Integer.parseInt(minSurface.getText().toString()) >= 0){ queryString += " AND propertySurface >= ?";  args.add(minSurface.getText().toString());}
+        if(Integer.parseInt(minSurface.getText().toString()) >= 0){ queryString += " AND propertySurface >= ?";args.add(minSurface.getText().toString()); }
         if(Integer.parseInt(maxSurface.getText().toString()) > 0){ queryString += " AND propertySurface <= ?";args.add(maxSurface.getText().toString()); }
         // Rooms
-        if(Integer.parseInt(minRooms.getText().toString()) >= 0){ queryString += " AND propertyRooms >= ?"; args.add(minRooms.getText().toString());}
-        if(Integer.parseInt(maxRooms.getText().toString()) > 0){ queryString += " AND propertyRooms BETWEEN ? AND ?";args.add(maxRooms.getText().toString()); }
+        if(Integer.parseInt(minRooms.getText().toString()) >= 0){ queryString += " AND propertyRooms >= ?";args.add(minRooms.getText().toString()); }
+        if(Integer.parseInt(maxRooms.getText().toString()) > 0){ queryString += " AND propertyRooms <= ?";args.add(maxRooms.getText().toString()); }
         // Bedrooms
-        if(Integer.parseInt(minBedrooms.getText().toString()) >= 0){ queryString += " AND propertyBedRooms >= ?";  args.add(minBedrooms.getText().toString());}
+        if(Integer.parseInt(minBedrooms.getText().toString()) >= 0){ queryString += " AND propertyBedRooms >= ?";args.add(minBedrooms.getText().toString()); }
         if(Integer.parseInt(maxBedrooms.getText().toString()) > 0){ queryString += " AND propertyBedRooms <= ?";args.add(maxBedrooms.getText().toString()); }
         // Bathrooms
-        if(Integer.parseInt(minBathrooms.getText().toString()) >= 0){ queryString += " AND propertyBathRooms >= ?"; args.add(minBathrooms.getText().toString());}
+        if(Integer.parseInt(minBathrooms.getText().toString()) >= 0){ queryString += " AND propertyBathRooms >= ?";args.add(minBathrooms.getText().toString()); }
         if(Integer.parseInt(maxBathrooms.getText().toString()) > 0){ queryString += " AND propertyBathRooms <= ?";args.add(maxBathrooms.getText().toString()); }
         // Price
-        if(Integer.parseInt(minPrice.getText().toString()) >= 0){ queryString += " AND propertyPrice >= ?"; args.add(minPrice.getText().toString());}
+        if(Integer.parseInt(minPrice.getText().toString()) >= 0){ queryString += " AND propertyPrice >= ?";args.add(minPrice.getText().toString()); }
         if(Integer.parseInt(maxPrice.getText().toString()) > 0){ queryString += " AND propertyPrice <= ?";args.add(maxPrice.getText().toString()); }
-        // Photos
-        if(Integer.parseInt(minPhotos.getText().toString()) >= 0){ queryString += " AND photos >= ?"; args.add(minPhotos.getText().toString());}
-        if(Integer.parseInt(maxPhotos.getText().toString()) > 0){ queryString += " AND photos <= ?";args.add(maxPhotos.getText().toString()); }
         // Dates
         if(minSearchEntryDate != null){ queryString += " AND entryDate >= ?"; args.add(Converters.dateToTimestamp(minSearchEntryDate));}
         if(maxSearchEntryDate != null){ queryString += " AND entryDate <= ?"; args.add(Converters.dateToTimestamp(maxSearchEntryDate));}
@@ -221,12 +219,8 @@ public class SearchFragment extends BaseFragment {
         if(mChipBus.isChecked()) chips.add("7");
         if(mChipPublicP.isChecked()) chips.add("8");
         if(mChipPrivateP.isChecked()) chips.add("9");
-        // Iterate and verify chips values into queryString
-        for(int i = 0 ; i < chips.size(); i++){
-//           queryString += " AND pointOfInterest WHERE \"" + chips.get(i) + "\" = ANY(?::pointOfInterest[])";
-//           queryString += " WHERE \"" + chips.get(i) + "\" IN (pointOfInterest)";
-        }
 
+        Log.d(TAG, "createSearchQuery: args size: " + args.size() );
         createSearchObject();
     }
 
@@ -234,14 +228,14 @@ public class SearchFragment extends BaseFragment {
         // Debug Log
         Log.d(TAG, "createSearchQuery: query " + queryString );
         for(int i = 0 ; i < args.size() ; i++){
-            Log.d(TAG, "createSearchQuery: args " + args.get(i) );
+            Log.d(TAG, "createSearchQuery: args " + args.get(i) + "  size: "+args.size() + " i=" + i );
         }
 
         // Create Search Object
         mSearch.setQueryString(queryString);
         mSearch.setArgs(args);
-        mSearch.setMinPhotos(Integer.parseInt(minPhotos.getText().toString()));
-        mSearch.setMaxPhotos(Integer.parseInt(maxPhotos.getText().toString()));
+        if(Integer.parseInt(minPhotos.getText().toString()) >= 0) mSearch.setMinPhotos(Integer.parseInt(minPhotos.getText().toString()));
+        if(Integer.parseInt(maxPhotos.getText().toString()) > 0) mSearch.setMaxPhotos(Integer.parseInt(maxPhotos.getText().toString()));
         mSearch.setChips(chips);
 
         // Set Search object into LiveData
