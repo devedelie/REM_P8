@@ -3,11 +3,14 @@ package com.openclassrooms.realestatemanager.controllers.activities;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.controllers.fragments.AddPropertyFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.DetailFragment;
 import com.openclassrooms.realestatemanager.controllers.fragments.MainFragment;
 import com.openclassrooms.realestatemanager.repositories.CurrentPropertyDataRepository;
@@ -19,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     // Declare detail fragment
     private DetailFragment detailFragment;
+    public AddPropertyFragment mAddPropertyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,15 @@ public class DetailActivity extends AppCompatActivity {
             ((AppCompatActivity)this).getSupportActionBar().setTitle(MainFragment.mProperties.get(i-1).getType()); // Set title (property type)
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu); // Inflate the menu and add it to the Toolbar
+        menu.findItem(R.id.menu_edit_icon).setVisible(true);
+        menu.findItem(R.id.menu_add_icon).setVisible(false);
+        menu.findItem(R.id.menu_search_icon).setVisible(false);
+        return true;
+    }
+
     //------------
     // ACTIONS
     //------------
@@ -62,6 +75,8 @@ public class DetailActivity extends AppCompatActivity {
         if ( id == android.R.id.home ) {
             finish();
             return true;
+        }else if (item.getOrder() == 1){
+            inflateFragment(R.id.frame_layout_detail,false);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -69,6 +84,18 @@ public class DetailActivity extends AppCompatActivity {
     // --------------
     // FRAGMENTS
     // --------------
+
+    // Inflate EDIT fragment
+    private void inflateFragment(int frameID, boolean isAddProperty){
+        mAddPropertyFragment = new AddPropertyFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isAddProperty", isAddProperty);
+        mAddPropertyFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(frameID, mAddPropertyFragment); // Set fragment transaction into ***frame_layout_detail***
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     private void configureAndShowDetailFragment(){
         // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container

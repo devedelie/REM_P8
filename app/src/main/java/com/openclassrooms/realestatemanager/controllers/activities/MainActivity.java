@@ -73,13 +73,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Configurations
     //-------------------
 
+    private void configureToolbar(){
+        setSupportActionBar(toolbar);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_main, menu); // Inflate the menu and add it to the Toolbar
+        if(detailFragment == null){ // SmartPhone mode
+            menu.findItem(R.id.menu_edit_icon).setVisible(false);
+        }
         return true;
     }
-
-    private void configureToolbar(){ setSupportActionBar(toolbar); }
 
     //  Configuring ViewModel
     private void configureViewModel(){
