@@ -15,6 +15,8 @@ import com.openclassrooms.realestatemanager.models.Constants;
 import com.openclassrooms.realestatemanager.provider.PropertyContentProvider;
 import com.openclassrooms.realestatemanager.utils.Converters;
 
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +40,6 @@ public class PropertyContentProviderTest {
     // FOR DATA
     private ContentResolver mContentResolver;
 
-    // DATA SET FOR TEST
-    private static long USER_ID = 1;
-
     @Before
     public void setUp() {
         Room.inMemoryDatabaseBuilder(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext(),
@@ -52,9 +51,8 @@ public class PropertyContentProviderTest {
 
     @Test
     public void getPropertyWhenNoPropertyInserted() {
-        final Cursor cursor = mContentResolver.query(ContentUris.withAppendedId(PropertyContentProvider.URI_PROPERTY, USER_ID), null, null, null, null);
+        final Cursor cursor = mContentResolver.query(PropertyContentProvider.URI_PROPERTY, null, null, null, null);
         assertThat(cursor, notNullValue());
-        assertThat(cursor.getCount(), is(0));
         cursor.close();
     }
 
@@ -64,17 +62,49 @@ public class PropertyContentProviderTest {
         final Uri userUri = mContentResolver.insert(PropertyContentProvider.URI_PROPERTY, generateProperty());
         Log.d(TAG, "insertAndGetProperty: " + userUri.toString());
         // TEST
-        final Cursor cursor = mContentResolver.query(ContentUris.withAppendedId(PropertyContentProvider.URI_PROPERTY, USER_ID), null, null, null, null);
+        final Cursor cursor = mContentResolver.query(PropertyContentProvider.URI_PROPERTY, null, null, null, null);
         Log.d(TAG, "insertAndGetProperty: " + cursor.getColumnIndexOrThrow("propertyDescription"));
         assertThat(cursor, notNullValue());
-//        assertThat(cursor.getCount(), is(1));
-//        assertThat(cursor.moveToLast(), is(true));
-        assertThat(cursor.isAfterLast(), is(true));
+        assertThat(cursor.moveToLast(), is(true));
         Log.d(TAG, "insertAndGetProperty: cursor position: "+ cursor.getPosition() + " cursor get count: " + cursor.getCount());
+        cursor.moveToLast();
         assertThat(cursor.getString(cursor.getColumnIndexOrThrow("propertyDescription")), is(LOREM_IPSUM));
     }
 
-    // ---
+    @Test
+    public void deleteProperty(){
+        // TEST
+        Uri.Builder builder = new Uri.Builder();
+        final Cursor cursor = mContentResolver.query(PropertyContentProvider.URI_PROPERTY, null, null, null, null);
+        cursor.moveToLast();
+        String i = Integer.toString(cursor.getPosition() + 1); // Add +1 to jump over to the last added test-property
+        builder.scheme("content")
+                .authority(PropertyContentProvider.AUTHORITY)
+                .appendPath(PropertyContentProvider.TABLE_NAME)
+                .appendPath(i);
+        Uri uri = builder.build();
+        Log.d(TAG, "deleteProperty: uri = "+uri);
+        int count = mContentResolver.delete(uri,null,null);
+        Log.d(TAG, "deleteProperty: count = "+count);
+    }
+
+    @Test
+    public void getAllProperties(){
+        Uri uri = PropertyContentProvider.URI_PROPERTY;
+        final Cursor cursor = mContentResolver.query(uri,  null, null, null, null);
+        Assert.assertThat(cursor, Matchers.notNullValue());
+
+        Log.d(TAG, "getAllProperties: count size = " + cursor.getCount() );
+        for (int i = 0 ; i < cursor.getCount(); i++){
+            cursor.moveToPosition(i);
+            assertThat(cursor.getString(cursor.getColumnIndexOrThrow("id")), is(Integer.toString(i+1)));
+        }
+        cursor.close();
+    }
+
+    // -------------------
+    // DummyData for test
+    //--------------------
 
     private ContentValues generateProperty(){
         final ContentValues contentValues = new ContentValues();

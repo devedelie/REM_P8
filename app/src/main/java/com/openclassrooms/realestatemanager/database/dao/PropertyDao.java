@@ -32,8 +32,8 @@ public interface PropertyDao {
     LiveData<List<Property>> getSearchResults(SupportSQLiteQuery query);
 
     // ContentProvider
-    @Query("SELECT * FROM Property WHERE agentInCharge = :userName")
-    Cursor getPropertyWithCursor(long userName);
+    @Query("SELECT * FROM Property")
+    Cursor getPropertyWithCursor();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long createProperty(Property property);

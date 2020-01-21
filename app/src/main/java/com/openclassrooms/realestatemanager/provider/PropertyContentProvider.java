@@ -34,8 +34,7 @@ public class PropertyContentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         if (getContext() != null){
-            long userId = ContentUris.parseId(uri);
-            final Cursor cursor = RealEstateManagerDatabase.getInstance(getContext()).mPropertyDao().getPropertyWithCursor(userId);
+            final Cursor cursor = RealEstateManagerDatabase.getInstance(getContext()).mPropertyDao().getPropertyWithCursor();
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
             return cursor;
         }
