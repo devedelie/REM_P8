@@ -26,4 +26,6 @@
     <!-- Chips-->
     <dimen name="chip_margin_start">10dp</dimen>
 
+    <dimen name="seekBars_margin_all_directions">25dp</dimen>
+
 </resources>

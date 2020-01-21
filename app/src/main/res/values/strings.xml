@@ -75,4 +75,11 @@
 
     <!-- Debug original Java files -->
     <string name="premier_bien">Le premier bien immobilier enregistré vaut</string>
+
+    <!-- Mortgage -->
+    <string name="loan_value_seekBar">Loan Value (Dollars): %1$s</string>
+    <string name="loan_duration_seekBar">Duration (years): %1$s</string>
+    <string name="loan_interest_rate">Interest rate (%): %1$s</string>
+
+
 </resources>

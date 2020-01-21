@@ -152,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }else { alertDialogNoInternet(); }
                 break;
             case 1:
+                Intent intent = new Intent(this, MortgageSimulatorActivity.class);
+                startActivity(intent);
                 break;
             case 2:
                 break;

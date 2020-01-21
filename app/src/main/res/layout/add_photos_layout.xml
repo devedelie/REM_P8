@@ -86,25 +86,6 @@
 
     </LinearLayout>
 
-<!--        &lt;!&ndash; GridView layout&ndash;&gt;-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-<!--            <GridView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:id="@+id/add_images_grid_view"-->
-<!--                android:layout_marginStart="@dimen/text_box_margin_start_end"-->
-<!--                android:layout_marginEnd="@dimen/text_box_margin_start_end"-->
-<!--                android:padding="@dimen/recyclerView_padding"-->
-<!--                android:numColumns="auto_fit"-->
-<!--                android:columnWidth="150dp"-->
-<!--                android:stretchMode="spacingWidthUniform"-->
-<!--                android:horizontalSpacing="3dp"-->
-<!--                android:verticalSpacing="3dp">-->
-<!--            </GridView>-->
-<!--        </LinearLayout>-->
-
         <!-- image recyclerView layout-->
         <LinearLayout
             android:layout_width="match_parent"

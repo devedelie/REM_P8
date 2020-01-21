@@ -65,6 +65,12 @@
             android:theme="@style/REMTheme.Home">
         </activity>
 
+        <activity
+            android:name=".controllers.activities.MortgageSimulatorActivity"
+            android:screenOrientation="sensor"
+            android:theme="@style/REMTheme.Home">
+        </activity>
+
         <provider
             android:name=".provider.PropertyContentProvider"
             android:authorities="com.openclassrooms.realestatemanager.provider"

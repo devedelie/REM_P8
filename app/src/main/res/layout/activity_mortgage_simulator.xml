@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controllers.activities.MortgageSimulatorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rem_logo_dark_cut">
+
+        </ImageView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/loan_seek_bar_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_box_margin_start_end"
+            android:layout_marginStart="@dimen/text_box_margin_start_end"
+            android:layout_marginEnd="@dimen/text_box_margin_start_end"
+            android:layout_marginBottom="@dimen/text_box_margin_start_end"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/loan_value_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_box_margin_start_end"
+                    android:layout_marginTop="@dimen/text_box_margin_start_end"
+                    android:text="@string/loan_value_seekBar"/>
+
+
+                <SeekBar
+                    android:id="@+id/loan_value_seekBar"
+                    style="@style/Widget.AppCompat.SeekBar"
+                    android:max="600000"
+                    android:progress="100000"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginTop="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginEnd="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginStart="@dimen/seekBars_margin_all_directions"/>
+
+                <TextView
+                    android:id="@+id/loan_duration_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_box_margin_start_end"
+                    android:layout_marginTop="@dimen/text_box_margin_start_end"
+                    android:text="@string/loan_duration_seekBar"/>
+
+                <SeekBar
+                    android:id="@+id/loan_duration_seekBar"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="30"
+                    android:progress="10"
+                    android:layout_marginBottom="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginTop="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginEnd="@dimen/seekBars_margin_all_directions"
+                    android:layout_marginStart="@dimen/seekBars_margin_all_directions"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loan_interest_rate"
+                    android:layout_marginStart="@dimen/text_box_margin_start_end"
+                    android:layout_marginTop="@dimen/text_box_margin_start_end"
+                    android:layout_marginBottom="@dimen/text_box_margin_start_end"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/loan_result_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_marginBottom="@dimen/seekBars_margin_all_directions"
+            android:layout_marginTop="@dimen/seekBars_margin_all_directions"
+            android:layout_marginEnd="@dimen/seekBars_margin_all_directions"
+            android:layout_marginStart="@dimen/seekBars_margin_all_directions">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly rate: 1000 "
+                    android:layout_gravity="bottom"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$/month"
+                    android:layout_gravity="bottom"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
