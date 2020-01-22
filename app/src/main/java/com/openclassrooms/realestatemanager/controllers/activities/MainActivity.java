@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putBoolean("isAddProperty", isAddProperty);
         mAddPropertyFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(frameID, mAddPropertyFragment); // Set fragment transaction into ***frame_layout_main*** (Main fragment)
+        transaction.replace(frameID, mAddPropertyFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -105,7 +105,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     private ArrayList<String> photoDescriptions = new ArrayList<>();
     private ArrayList<String> composedAddress = new ArrayList<>();
     private ArrayList<String> pointOfInterest = new ArrayList<>();
-    private boolean isAddProperty;
+    private boolean isAddProperty = false;
     private int currentId=1;
     private long currentPropertyId;
     private String propertyLocationForEdit;
@@ -113,14 +113,14 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
 
 
 
-    public static AddPropertyFragment newInstance(int currentPropertyID) {
-        AddPropertyFragment addPropertyFragment = new AddPropertyFragment();
-        Bundle bundle = new Bundle();
-//        bundle.putInt(CURRENT_PROPERTY_ID, currentPropertyID);
-        addPropertyFragment.setArguments(bundle);
-        Log.d(TAG, "newInstance: reached" );
-        return addPropertyFragment;
-    }
+//    public static AddPropertyFragment newInstance(int currentPropertyID) {
+//        AddPropertyFragment addPropertyFragment = new AddPropertyFragment();
+//        Bundle bundle = new Bundle();
+////        bundle.putInt(CURRENT_PROPERTY_ID, currentPropertyID);
+//        addPropertyFragment.setArguments(bundle);
+//        Log.d(TAG, "newInstance: reached" );
+//        return addPropertyFragment;
+//    }
 
     @Nullable
     @Override
@@ -132,7 +132,6 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
             isAddProperty = bundle.getBoolean("isAddProperty", true);
         }
 
-//        currentPropertyID = getArguments().getInt(CURRENT_PROPERTY_ID);
         configureDropDownMenu();
         configureAddressViewType();
         configurePhotoRecyclerView();
@@ -223,7 +222,6 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
                 Log.d(TAG, "dispatchTakePictureIntent: photoUri 1234XX" + photoURI);
             }
         }
-
     }
 
     private File createImageFile() throws IOException {
@@ -415,8 +413,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
             photoUris.addAll(propertyList.get(id).getPhotos());
             photoDescriptions.clear();
             photoDescriptions.addAll(propertyList.get(id).getPhotosDescription());
-            mImagesAdapter.setPropertyImagesList(propertyList.get(id).getPhotos());
-            mImagesAdapter.setPropertyDescriptionList(propertyList.get(id).getPhotosDescription());
+            mImagesAdapter.setPropertyImagesAndDescriptions(photoUris, photoDescriptions);
             // LatLng
             try {
                 addressLat = propertyList.get(id).getAddressLat();

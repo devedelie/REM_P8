@@ -47,6 +47,14 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setPropertyImagesAndDescriptions( List<String> photosUriList, List<String> photosDescription){
+        this.mPhotos.clear();
+        this.mPhotos.addAll(photosUriList);
+        this.mPhotosDescription.clear();
+        this.mPhotosDescription.addAll(photosDescription);
+        notifyDataSetChanged();
+    }
+
     @Override
     public ImagesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();

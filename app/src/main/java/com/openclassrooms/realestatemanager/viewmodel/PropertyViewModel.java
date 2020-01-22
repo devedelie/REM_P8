@@ -122,26 +122,6 @@ public class PropertyViewModel extends ViewModel {
             mPropertyDataSource.updateProperty(property);
         });
     }
-
-//    //------------
-//    // Current ID
-//    //------------
-//    private MutableLiveData<Integer> mCurrentPropertyId = new MutableLiveData<>();
-//
-//    public void setCurrentPropertyId(Integer id){
-//        mCurrentPropertyId.setValue(id);
-//        Log.d(TAG, "LiveDataTest setResult: "+ id);
-//    }
-//
-//    public LiveData<Integer> getCurrentPropertyId(){
-//        Log.d(TAG, "LiveDataTest getResult: " + mCurrentPropertyId);
-//        return mCurrentPropertyId;
-//    }
-
-    //------------
-    // Search
-    //------------
-
-
+    
 
 }

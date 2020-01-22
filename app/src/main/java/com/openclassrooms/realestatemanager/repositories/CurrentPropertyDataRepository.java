@@ -32,4 +32,5 @@ public class CurrentPropertyDataRepository {
     public void setCurrentProperty(long currentProperty) {
         mCurrentProperty.setValue(currentProperty);
     }
+
 }
