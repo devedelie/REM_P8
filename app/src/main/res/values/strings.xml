@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
     <string name="register_message">Le premier bien immobilier enregistré vaut </string>
+    <string name="username_placeholder">Eliran Elbaz</string>
+    <string name="email_placeholder">eelbaz012@gmail.com</string>
 
     <!--Used in navigation drawer-->
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>

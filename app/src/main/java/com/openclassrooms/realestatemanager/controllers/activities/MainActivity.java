@@ -92,9 +92,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         // Configure NavigationView & set item selection listener
-//        View headerView = this.navigationView.getHeaderView(0);
-//        TextView userName = headerView.findViewById(R.id.navigation_header_name);
-//        TextView userEmail = headerView.findViewById(R.id.navigation_header_email);
+        View headerView = this.navigationView.getHeaderView(0);
+        TextView userName = headerView.findViewById(R.id.navigation_header_name);
+        userName.setText(getString(R.string.username_placeholder));
+        TextView userEmail = headerView.findViewById(R.id.navigation_header_email);
+        userEmail.setText(getString(R.string.email_placeholder));
 
         // Set listener
         navigationView.setNavigationItemSelectedListener(this);
