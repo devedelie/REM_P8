@@ -26,6 +26,9 @@
     <!-- Chips-->
     <dimen name="chip_margin_start">10dp</dimen>
 
+    <!-- Mortgage Simulator-->
     <dimen name="seekBars_margin_all_directions">25dp</dimen>
+    <dimen name="seekbar_text_size">18sp</dimen>
+
 
 </resources>

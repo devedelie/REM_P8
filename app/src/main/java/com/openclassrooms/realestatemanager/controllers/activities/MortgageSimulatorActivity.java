@@ -156,5 +156,5 @@ public class MortgageSimulatorActivity extends AppCompatActivity{
 
 
     }
-    
+
 }

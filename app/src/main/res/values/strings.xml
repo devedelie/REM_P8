@@ -80,8 +80,9 @@
     <string name="loan_value_seekBar">Loan Value (Dollars): %1$s</string>
     <string name="loan_duration_seekBar">Duration (years): %1$s</string>
     <string name="loan_interest_rate">Interest rate: %1$s%%</string>
-    <string name="monthly_rate">Monthly rate: %1$s</string>
-    <string name="dollars_month">$/month</string>
+    <string name="your_monthly_rate_text">Your monthly rate:</string>
+    <string name="monthly_rate">%1$s</string>
+    <string name="dollar_month">$/month</string>
 
 
 </resources>
