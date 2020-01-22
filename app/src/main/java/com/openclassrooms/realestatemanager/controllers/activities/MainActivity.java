@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.drawer_main_activity) NavigationView navigationView;
     public static int currentProperty = 1;
-    private PropertyViewModel mPropertyViewModel;
     // Declare main fragment
     private MainFragment mainFragment;
     // Declare detail fragment
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureToolbar();
         this.configureDrawerLayoutAndNavigationView();
-        this.configureViewModel();
         // Configure and show home fragment
         this.configureAndShowMainFragment();
         // Configure and show detail fragment
@@ -86,13 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //  Configuring ViewModel
-    private void configureViewModel(){
-//        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-//        this.mPropertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
-//        this.mPropertyViewModel.init(USER_ID);
-    }
-
     // Navigation drawer config
     protected void configureDrawerLayoutAndNavigationView(){
         // Configure drawer layout
@@ -101,10 +92,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         // Configure NavigationView & set item selection listener
-        View headerView = this.navigationView.getHeaderView(0);
-        TextView userName = headerView.findViewById(R.id.navigation_header_name);
-        TextView userEmail = headerView.findViewById(R.id.navigation_header_email);
-
+//        View headerView = this.navigationView.getHeaderView(0);
+//        TextView userName = headerView.findViewById(R.id.navigation_header_name);
+//        TextView userEmail = headerView.findViewById(R.id.navigation_header_email);
 
         // Set listener
         navigationView.setNavigationItemSelectedListener(this);
@@ -125,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureAndShowDetailFragment(){
-//        detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail);
-
         //  Display DetailFragment in MainActivity, on Tablet mode only (If found frame_layout_detail)
         if (detailFragment == null && findViewById(R.id.frame_layout_detail) != null) {
             detailFragment = new DetailFragment();
