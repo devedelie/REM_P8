@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_STATUS;
 import static com.openclassrooms.realestatemanager.models.Constants.PROPERTY_TYPE;
 import static com.openclassrooms.realestatemanager.models.Constants.SEARCH_BASE_QUERY_STRING;
 import static com.openclassrooms.realestatemanager.models.Constants.SEARCH_DATE_FLAG_MAX;
@@ -76,6 +77,7 @@ public class SearchFragment extends BaseFragment {
     @BindView(R.id.poi_bus_chip) Chip mChipBus;
     @BindView(R.id.poi_public_p_chip) Chip mChipPublicP;
     @BindView(R.id.poi_private_p_chip) Chip mChipPrivateP;
+    @BindView(R.id.search_property_status_autocomplete) AutoCompleteTextView statusDropDownMenu;
     // For Data
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     private PropertyViewModel mPropertyViewModel;
@@ -115,8 +117,10 @@ public class SearchFragment extends BaseFragment {
     // ---------------
 
     private void configureDropDownMenu() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
-        typeDropDownMenu.setAdapter(adapter);
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_TYPE );
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), R.layout.type_drop_down_layout, PROPERTY_STATUS );
+        typeDropDownMenu.setAdapter(typeAdapter);
+        statusDropDownMenu.setAdapter(statusAdapter);
     }
 
 //    private void updatePropertiesVariable(List<Property> propertyList) {
@@ -219,6 +223,11 @@ public class SearchFragment extends BaseFragment {
         if(mChipBus.isChecked()) chips.add("7");
         if(mChipPublicP.isChecked()) chips.add("8");
         if(mChipPrivateP.isChecked()) chips.add("9");
+        // Status
+        if(!statusDropDownMenu.getText().toString().isEmpty()){
+            if(statusDropDownMenu.getText().toString().equals("Available only")){ queryString += " AND propertyStatus = ?"; args.add(false);}
+            if(statusDropDownMenu.getText().toString().equals("Sold only")){ queryString += " AND propertyStatus = ?"; args.add(true);}
+        }
 
         Log.d(TAG, "createSearchQuery: args size: " + args.size() );
         createSearchObject();

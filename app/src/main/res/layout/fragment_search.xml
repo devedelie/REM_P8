@@ -55,7 +55,6 @@
             android:layout_marginStart="@dimen/text_box_margin_start_end"
             android:layout_marginEnd="@dimen/text_box_margin_start_end"
             android:hint="Type of property"
-            app:helperText="*Required"
             app:helperTextEnabled="true">
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/search_property_type_autocomplete"
@@ -75,7 +74,6 @@
             android:layout_marginStart="@dimen/text_box_margin_start_end"
             android:layout_marginEnd="@dimen/text_box_margin_start_end"
             android:hint="Location / City"
-            app:helperText="*Required"
             app:helperTextEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_property_location_text"
@@ -429,6 +427,23 @@
                     android:layout_marginEnd="@dimen/text_box_margin_start_end"
                     android:layout_marginBottom="15dp"/>
             </LinearLayout>
+
+        <!--Property Status-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_property_status_dropdown"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/text_box_margin_start_end"
+                android:layout_marginEnd="@dimen/text_box_margin_start_end"
+                android:hint="Property status"
+                app:helperTextEnabled="true">
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/search_property_status_autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 
