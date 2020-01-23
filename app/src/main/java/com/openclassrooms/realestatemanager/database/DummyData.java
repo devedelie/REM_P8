@@ -177,4 +177,82 @@ public class DummyData {
 
         return contentValues;
     }
+
+    static ContentValues propertyFive(){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("id", 5);
+        contentValues.put("typeId", 2);
+        contentValues.put("type", Constants.PROPERTY_TYPE.get(2));
+        contentValues.put("location", "Manhattan");
+        contentValues.put("pointOfInterest", "[\"3\",\"4\",\"5\",\"6\"]");
+        contentValues.put("propertyPrice", 4500000);
+        contentValues.put("propertySurface", 190);
+        contentValues.put("propertyRooms", 5);
+        contentValues.put("propertyBedRooms", 3);
+        contentValues.put("propertyBathRooms", 2);
+        contentValues.put("propertyDescription", LOREM_IPSUM);
+        contentValues.put("imageId", 4);
+        contentValues.put("photos", "[" +
+                "\"/storage/emulated/0/Download/5-1.jpg\"," +
+                "\"/storage/emulated/0/Download/5-2.jpg\"," +
+                "\"/storage/emulated/0/Download/5-3.jpg\"," +
+                "\"/storage/emulated/0/Download/5-4.jpg\"," +
+                "\"/storage/emulated/0/Download/5-5.jpg\"," +
+                "\"/storage/emulated/0/Download/5-6.jpg\"," +
+                "\"/storage/emulated/0/Download/5-7.jpg\"," +
+                "\"/storage/emulated/0/Download/5-8.jpg\" ]");
+        contentValues.put("photosDescription","[\"Living room\",\"Living room\",\"Outside\",\"Living room\",\"Living room\",\"Kitchen\",\"Dining room\",\"Lobby\"]");
+        contentValues.put("propertyAddress", "934 5th Ave, New York, NY 10021, United States");
+        contentValues.put("addressLat", 40.773970 );
+        contentValues.put("addressLng", -73.965450 );
+        contentValues.put("PoiId", 1);
+        contentValues.put("propertyStatus", false);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2020, Calendar.JANUARY, 11).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        contentValues.put("sellDate", "" );
+        contentValues.put("agentInCharge", "Eliran Elbaz");
+
+        return contentValues;
+    }
+
+    static ContentValues propertySix(){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("id", 6);
+        contentValues.put("typeId", 2);
+        contentValues.put("type", Constants.PROPERTY_TYPE.get(5));
+        contentValues.put("location", "Manhattan");
+        contentValues.put("pointOfInterest", "[\"3\",\"4\",\"5\",\"6\"]");
+        contentValues.put("propertyPrice", 3600000);
+        contentValues.put("propertySurface", 150);
+        contentValues.put("propertyRooms", 4);
+        contentValues.put("propertyBedRooms", 2);
+        contentValues.put("propertyBathRooms", 2);
+        contentValues.put("propertyDescription", LOREM_IPSUM);
+        contentValues.put("imageId", 4);
+        contentValues.put("photos", "[" +
+                "\"/storage/emulated/0/Download/6-1.jpg\"," +
+                "\"/storage/emulated/0/Download/6-2.jpg\"," +
+                "\"/storage/emulated/0/Download/6-3.jpg\"," +
+                "\"/storage/emulated/0/Download/6-4.jpg\"," +
+                "\"/storage/emulated/0/Download/6-5.jpg\"," +
+                "\"/storage/emulated/0/Download/6-6.jpg\"," +
+                "\"/storage/emulated/0/Download/6-7.jpg\"," +
+                "\"/storage/emulated/0/Download/6-8.jpg\" ]");
+        contentValues.put("photosDescription","[\"Living room\",\"Kitchen\",\"Dining room\",\"Bedroom\",\"Bathroom\",\"Kids room\",\"Open space\",\"Terrace\"]");
+        contentValues.put("propertyAddress", "987 1st Avenue, New York, NY 10022, United States");
+        contentValues.put("addressLat", 40.756610 );
+        contentValues.put("addressLng", -73.964390 );
+        contentValues.put("PoiId", 1);
+        contentValues.put("propertyStatus", false);
+        //----- Date
+        Date creationDate = new GregorianCalendar(2020, Calendar.JANUARY, 18).getTime();
+        contentValues.put("entryDate", Converters.dateToTimestamp(creationDate));
+        contentValues.put("sellDate", "" );
+        contentValues.put("agentInCharge", "Eliran Elbaz");
+
+        return contentValues;
+    }
 }
