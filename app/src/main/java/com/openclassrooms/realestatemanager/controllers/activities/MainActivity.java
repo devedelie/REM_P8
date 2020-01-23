@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Search Fragment Transaction
     //------------------------------
     private void searchFragmentTransaction(){
-        if (detailFragment != null && (detailFragment.isVisible()  )) { // Check if detail fragment is visible(Tablet mode)
+        if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible() )) { // Check if detail fragment is visible(Tablet mode)
             inflateSearchFragment(R.id.frame_layout_detail);
         }else if( mSearchFragment != null && mSearchFragment.isVisible()) { // AddPropertyFragment is already visible - Do nothing
         }else{ // Smartphone mode
