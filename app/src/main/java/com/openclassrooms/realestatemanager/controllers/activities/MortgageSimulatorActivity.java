@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.repositories.MortgageDataRepository;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +68,7 @@ public class MortgageSimulatorActivity extends AppCompatActivity{
         mLoanDurationSeekBar.setProgress(15); // 10 default progress value
 
         // Set Title values
-        mLoanValueText.setText(getString(R.string.loan_value_seekBar, String.valueOf(mLoanValueSeekBar.getProgress())));
+        mLoanValueText.setText(getString(R.string.loan_value_seekBar, Utils.moneyValueFormatter(mLoanValueSeekBar.getProgress())));
         mLoanDurationText.setText(getString(R.string.loan_duration_seekBar, String.valueOf(mLoanDurationSeekBar.getProgress())));
 
         // Value seek bar change listener
@@ -78,7 +79,7 @@ public class MortgageSimulatorActivity extends AppCompatActivity{
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progress = progress / 10000;
                 progress = progress * 10000;
-                mLoanValueText.setText(getString(R.string.loan_value_seekBar, String.valueOf(progress)));
+                mLoanValueText.setText(getString(R.string.loan_value_seekBar, Utils.moneyValueFormatter(progress)));
                 MortgageDataRepository.getInstance().setCurrentLoanValue(progress);
             }
 
@@ -151,7 +152,7 @@ public class MortgageSimulatorActivity extends AppCompatActivity{
          if(currentLoanInterest >= 1){
             Log.d(TAG, "calculateMonthlyRate: Calculate values " + currentLoanInterest + "  " + currentLoanDuration * 12 + "  "  + currentLoanValue);
             currentMonthlyLoanValue.setValue(   ( (currentLoanInterest * currentLoanValue ) / (currentLoanDuration) ) / 12   );
-            mLoanMonthlyRateText.setText(String.valueOf((int)(double)currentMonthlyLoanValue.getValue()));
+            mLoanMonthlyRateText.setText(Utils.moneyValueFormatter(currentMonthlyLoanValue.getValue()));
         }
 
 
