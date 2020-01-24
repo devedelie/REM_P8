@@ -407,7 +407,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
             mPropertyPrice.setText((Utils.moneyValueFormatter(propertyList.get(id).getPropertyPrice())));
             agentDropDownMenu.setText(propertyList.get(id).getAgentInCharge());
             extractPoisFromObject(propertyList.get(id).getPointOfInterest()); // Extract POIs object
-            soldRelativeLayout.setVisibility(View.VISIBLE);// Mark Property as SOLD
+            soldRelativeLayout.setVisibility(View.VISIBLE);// LayoutView to mark Property as SOLD/AVAILABLE on Edit mode
             // Photos & descriptions
             photoUris.clear();
             photoUris.addAll(propertyList.get(id).getPhotos());
