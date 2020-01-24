@@ -414,11 +414,15 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
             photoDescriptions.clear();
             photoDescriptions.addAll(propertyList.get(id).getPhotosDescription());
             mImagesAdapter.setPropertyImagesAndDescriptions(photoUris, photoDescriptions);
+            // Set photos & descriptions in ViewModel
+            mPropertyViewModel.setPhotoDescriptions(propertyList.get(id).getPhotosDescription());
+            mPropertyViewModel.setPhotos(propertyList.get(id).getPhotos());
             // LatLng
             try {
                 addressLat = propertyList.get(id).getAddressLat();
                 addressLng = propertyList.get(id).getAddressLng();
             }catch (Exception e){ }
+
         }
     }
 
@@ -567,6 +571,8 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     public void onDestroy() {
         super.onDestroy();
         photoUris.clear();
+        mPropertyViewModel.setPhotos(photoUris);
         photoDescriptions.clear();
+        mPropertyViewModel.setPhotoDescriptions(photoDescriptions);
     }
 }
