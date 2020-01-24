@@ -143,8 +143,8 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.mPropertyViewModel.getProperties().observe(this, this::updateUiWithDetailsToEdit);
         CurrentPropertyDataRepository.getInstance().getCurrentProperty().observe(this, this::updateCurrentPropertyId);
+        this.mPropertyViewModel.getProperties().observe(this, this::updateUiWithDetailsToEdit);
         this.mPropertyViewModel.getPhotos().observe(this, this::updatePhotos);
         this.mPropertyViewModel.getPhotoDescriptions().observe(this, this::updatePhotoDescriptions);
     }
@@ -386,7 +386,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     // ------------------
 
     private void updateUiWithDetailsToEdit(List<Property> propertyList) {
-        int id = currentId - 1;
+        int id = currentId - 1; // Property Id #1 ~ List position 0
         if(!isAddProperty){ // EditProperty configuration
             currentPropertyId = propertyList.get(id).getId();
             // Status
