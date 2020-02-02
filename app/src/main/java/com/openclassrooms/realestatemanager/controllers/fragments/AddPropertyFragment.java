@@ -440,6 +440,15 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
         }
     }
 
+    private void deleteImage(int position){
+        mPropertyViewModel.getPhotos().getValue().remove(position); // Remove URI
+        mPropertyViewModel.getPhotoDescriptions().getValue().remove(position); // Remove Description
+        mImagesAdapter.setPropertyImagesList(mPropertyViewModel.getPhotos().getValue()); // Update UI with adapter
+        photoUris.clear();  photoDescriptions.clear(); // Clear variables
+        photoUris.addAll(mPropertyViewModel.getPhotos().getValue()); // Update variable with new URI list
+        photoDescriptions.addAll(mPropertyViewModel.getPhotoDescriptions().getValue()); // Update variable with new Descriptions list
+    }
+
     // -------------
     // AlertDialogs
     // -------------
@@ -453,9 +462,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
                         // Continue with canceling the entry
                         if(tag == "closeFragment")getActivity().onBackPressed(); //calls the onBackPressed method in parent activity.
                         if(tag == "deleteImage") {
-                            mPropertyViewModel.getPhotos().getValue().remove(position);
-                            mPropertyViewModel.getPhotoDescriptions().getValue().remove(position);
-                            mImagesAdapter.setPropertyImagesList(mPropertyViewModel.getPhotos().getValue());
+                            deleteImage(position);
                         }
                     }
                 })
