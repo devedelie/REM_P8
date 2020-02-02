@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.activities.SplashScreen"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDarkSplash">
 
     <ImageView
         android:id="@+id/app_logo"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_rem_logo"/>
+        android:src="@drawable/ic_rem_logo_dark"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

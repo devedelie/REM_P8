@@ -5,6 +5,7 @@
     <color name="colorPrimaryLight">#CFD8DC</color>
     <color name="colorPrimarySuperLight">#A498BDCE</color>
     <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorPrimaryDarkSplash">#29343A</color>
     <color name="colorAccent">#00BCD4</color>
 
     <!-- BACKGROUND -->
