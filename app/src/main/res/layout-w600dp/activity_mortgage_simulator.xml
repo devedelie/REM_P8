@@ -13,17 +13,19 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_rem_logo_dark_cut"/>
 
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/mortgage_title"
-           android:gravity="center_horizontal"
-           android:textStyle="bold"
-           android:textSize="35sp"/>
+<!--       <TextView-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="wrap_content"-->
+<!--           android:text="@string/mortgage_title"-->
+<!--           android:gravity="start"-->
+<!--           android:layout_marginStart="@dimen/seekBars_margin_all_directions"-->
+<!--           android:textStyle="bold"-->
+<!--           android:textSize="35sp"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"

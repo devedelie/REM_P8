@@ -79,7 +79,7 @@
     <string name="premier_bien">Le premier bien immobilier enregistré vaut</string>
 
     <!-- Mortgage -->
-    <string name="mortgage_title"><u>Mortgage Simulator</u></string>
+    <string name="mortgage_title">Mortgage Simulator</string>
     <string name="loan_value_seekBar">Loan Value (USD): %1$s</string>
     <string name="loan_duration_seekBar">Duration (years): %1$s</string>
     <string name="loan_interest_rate">Interest rate: %1$s%%</string>
