@@ -52,8 +52,11 @@ public class MainFragment extends Fragment  {
     // Filter search results
     private SimpleSQLiteQuery simpleSQLiteQuery;
     private List<Property> mFilteredProperties = new ArrayList<>();
+    private List<Property> mPhotoFilteredProperties = new ArrayList<>();
+    private List<Property> mPoiFilteredProperties = new ArrayList<>();
     private int minPhotos, maxPhotos;
     private List<String> poiFromSearch = new ArrayList<>();
+    private String cityLocationFilter;
 
 
     @Override
@@ -111,7 +114,8 @@ public class MainFragment extends Fragment  {
         maxPhotos = search.getMaxPhotos();
         poiFromSearch.clear();
         poiFromSearch = search.getChips();
-        Log.d(TAG, "getSearchResults: " + search.getMinPhotos() + " " + search.getMaxPhotos());
+        cityLocationFilter = search.getCityLocation();
+        Log.d(TAG, "getSearchResults: "+ cityLocationFilter + "  " +  search.getMinPhotos() + " " + search.getMaxPhotos());
         // Make a query
         simpleSQLiteQuery = new SimpleSQLiteQuery(search.getQueryString(), search.getArgs().toArray());
         LiveData<List<Property>> properties = mPropertyViewModel.getSearchedProperties(simpleSQLiteQuery);
@@ -122,9 +126,8 @@ public class MainFragment extends Fragment  {
                 Log.d(TAG, "getSearchResults onChanged: " + propertyList.size());
                 if(propertyList.isEmpty() || propertyList.size() == 0){ // Display "No results" message
                     Snackbar.make(getView(), getString(R.string.search_property_fail), Snackbar.LENGTH_LONG).show();
-                }else{  // Update results
-                    photoCountFilter(propertyList);
-//                    updatePropertiesList(propertyList);
+                }else{  // Update results with filters
+                    cityLocationFilter(propertyList);
                 }
             }
         });
@@ -145,49 +148,69 @@ public class MainFragment extends Fragment  {
     // PROPERTY FILTERS
     // ----------------
 
-    private void photoCountFilter(List<Property> properties){
+    private void cityLocationFilter(List<Property> properties){
         mFilteredProperties.clear();
-        Log.d(TAG, "photoCountFilter: array size:" + properties.size() + "  min: "+ minPhotos + "  max: " + maxPhotos);
+        if(cityLocationFilter != null){
+            for(int i = 0 ; i < properties.size() ; i++){
+                if(properties.get(i).getLocation().toLowerCase().contains(cityLocationFilter) || properties.get(i).getLocation().contains(cityLocationFilter)){  // Check if the location contains user's entry
+                    mFilteredProperties.add(properties.get(i)); // Add only the matching values
+                }
+            }
+        }else{
+            mFilteredProperties.addAll(properties); // Add all properties for the next filter
+        }
+        photoCountFilter();
+    }
+
+    private void photoCountFilter(){
+        mPhotoFilteredProperties.clear();
+        Log.d(TAG, "photoCountFilter: array size:" + mFilteredProperties.size() + "  min: "+ minPhotos + "  max: " + maxPhotos);
         if(maxPhotos > 0){ // Min & Max values are available
-            for (int i = 0 ; i < properties.size() ; i++){
-                Log.d(TAG, "photoCountFilter: photos Size: " + properties.get(i).getPhotos().size());
-                if(properties.get(i).getPhotos().size() >= minPhotos && properties.get(i).getPhotos().size() <= maxPhotos){
-                    mFilteredProperties.add(properties.get(i));
-                    Log.d(TAG, "photoCountFilter Min+Max: " + properties.get(i));
+            for (int i = 0 ; i < mFilteredProperties.size() ; i++){
+                Log.d(TAG, "photoCountFilter: photos Size: " + mFilteredProperties.get(i).getPhotos().size());
+                if(mFilteredProperties.get(i).getPhotos().size() >= minPhotos && mFilteredProperties.get(i).getPhotos().size() <= maxPhotos){
+                    this.mPhotoFilteredProperties.add(mFilteredProperties.get(i));
+                    Log.d(TAG, "photoCountFilter Min+Max: " + mPhotoFilteredProperties.get(i));
                 }
             }
         }else { // only Min value is available
-            for (int i = 0 ; i < properties.size() ; i++){
-                if(properties.get(i).getPhotos().size() >= minPhotos ){
-                    mFilteredProperties.add(properties.get(i));
-                    Log.d(TAG, "photoCountFilter Min Only: " + properties.get(i));
+            for (int i = 0 ; i < mFilteredProperties.size() ; i++){
+                if(mFilteredProperties.get(i).getPhotos().size() >= minPhotos ){
+                    this.mPhotoFilteredProperties.add(mFilteredProperties.get(i));
+                    Log.d(TAG, "photoCountFilter Min Only: " + mPhotoFilteredProperties.get(i));
                 }
             }
         }
-        poiFilter(mFilteredProperties);
+        poiFilter();
     }
 
-    private void poiFilter(List<Property> photoFilteredProperties){
-        ArrayList<Property> poiFilteredProperties = new ArrayList<>();
-        poiFilteredProperties.clear();
+    private void poiFilter(){
+        mPoiFilteredProperties.clear();
         if(poiFromSearch.size() != 0){ // Apply filter only if any of the chips were selected
-            for(int i = 0 ; i < photoFilteredProperties.size() ; i++){ // property level
+            for(int i = 0 ; i < mPhotoFilteredProperties.size() ; i++){ // property level
                 // org.apache.commons Collections - if NOT containing, then remove from Property-Array
-                Log.d(TAG, "poiFilter: photoFilteredProperties.size():" + photoFilteredProperties.size() + " poiFromSearch values" + poiFromSearch + " photoFilteredProperties.get(i).getPointOfInterest(): "+ photoFilteredProperties.get(i).getPointOfInterest() + "propertyPosition: " + i );
-                if(CollectionUtils.containsAny(photoFilteredProperties.get(i).getPointOfInterest(), poiFromSearch)) {
-                    poiFilteredProperties.add(photoFilteredProperties.get(i));
+                Log.d(TAG, "poiFilter: photoFilteredProperties.size():" + mPhotoFilteredProperties.size() + " poiFromSearch values" + poiFromSearch + " photoFilteredProperties.get(i).getPointOfInterest(): "+ mPhotoFilteredProperties.get(i).getPointOfInterest() + "propertyPosition: " + i );
+                if(CollectionUtils.containsAny(mPhotoFilteredProperties.get(i).getPointOfInterest(), poiFromSearch)) {
+                    mPoiFilteredProperties.add(mPhotoFilteredProperties.get(i));
                 }
             }
-            photoFilteredProperties.clear();
-            photoFilteredProperties.addAll(poiFilteredProperties); // Exchange values to avoid nullPointException while no POI was selected
+            mPhotoFilteredProperties.clear();
+            mPhotoFilteredProperties.addAll(mPoiFilteredProperties); // Exchange values to avoid nullPointException while no POI was selected
         }
 
         // Update UI List
-        updatePropertiesList(photoFilteredProperties);
+        updatePropertiesList(mPhotoFilteredProperties);
         // Programmatically select the first item in RecyclerView
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() { recyclerView.findViewHolderForAdapterPosition(0).itemView.performClick(); }},100);
+        if(!mPhotoFilteredProperties.isEmpty()){ // Do the action only if not empty
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(recyclerView != null){
+                        recyclerView.findViewHolderForAdapterPosition(0).itemView.performClick();
+                    }
+                }},200);
+        }
+
 
 
     }

@@ -193,8 +193,6 @@ public class SearchFragment extends BaseFragment {
         args.clear();
         // Type
         if(!typeDropDownMenu.getText().toString().isEmpty()){ queryString += " AND type = ?";args.add(typeDropDownMenu.getText().toString()); }
-        // Location
-        if(!mLocation.getText().toString().isEmpty()){ queryString += " AND location = ?";args.add(mLocation.getText()); }
         // Surface
         if(Integer.parseInt(minSurface.getText().toString()) >= 0){ queryString += " AND propertySurface >= ?";args.add(minSurface.getText().toString()); }
         if(Integer.parseInt(maxSurface.getText().toString()) > 0){ queryString += " AND propertySurface <= ?";args.add(maxSurface.getText().toString()); }
@@ -245,6 +243,7 @@ public class SearchFragment extends BaseFragment {
         mSearch.setArgs(args);
         if(Integer.parseInt(minPhotos.getText().toString()) >= 0) mSearch.setMinPhotos(Integer.parseInt(minPhotos.getText().toString()));
         if(Integer.parseInt(maxPhotos.getText().toString()) > 0) mSearch.setMaxPhotos(Integer.parseInt(maxPhotos.getText().toString()));
+        if(!mLocation.getText().toString().isEmpty()){ mSearch.setCityLocation(mLocation.getText().toString()); }
         mSearch.setChips(chips);
 
         // Set Search object into LiveData

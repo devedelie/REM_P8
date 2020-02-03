@@ -12,15 +12,17 @@ public class Search {
     private int minPhotos;
     private int maxPhotos;
     private ArrayList<String> chips;
+    private String cityLocation;
 
     public Search(){}
 
-    public Search(String queryString, List<Object> args, int minPhotos, int maxPhotos, ArrayList<String> chips) {
+    public Search(String queryString, List<Object> args, int minPhotos, int maxPhotos, ArrayList<String> chips, String cityLocation) {
         this.queryString = queryString;
         this.args = args;
         this.minPhotos = minPhotos;
         this.maxPhotos = maxPhotos;
         this.chips = chips;
+        this.cityLocation = cityLocation;
     }
 
     public String getQueryString() { return queryString; }
@@ -42,4 +44,8 @@ public class Search {
     public ArrayList<String> getChips() { return chips; }
 
     public void setChips(ArrayList<String> chips) { this.chips = chips; }
+
+    public String getCityLocation() { return cityLocation; }
+
+    public void setCityLocation(String cityLocation) { this.cityLocation = cityLocation; }
 }
