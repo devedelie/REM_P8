@@ -397,6 +397,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
             // Text Views
             propertyLocationForEdit = propertyList.get(id).getLocation();
             typeDropDownMenu.setText(propertyList.get(id).getType());
+            configureDropDownMenu();
             mPropertyDescription.setText(propertyList.get(id).getPropertyDescription());
             mPropertySurface.setText(String.valueOf(propertyList.get(id).getPropertySurface()));
             mPropertyRooms.setText(String.valueOf(propertyList.get(id).getPropertyRooms()));
