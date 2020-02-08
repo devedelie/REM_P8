@@ -57,6 +57,7 @@ public class MainFragment extends Fragment  {
     private int minPhotos, maxPhotos;
     private List<String> poiFromSearch = new ArrayList<>();
     private String cityLocationFilter;
+    private MainFragment mMainFragment;
 
 
     @Override

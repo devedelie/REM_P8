@@ -18,7 +18,7 @@ public class DebugMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        this.textViewMain = findViewById(R.id.debug_activity_second_activity_text_view_main);  // ERROR 1 ***********
+//        this.textViewMain = findViewById(R.id.activity_second_activity_text_view_main);  // ERROR 1 ***********
         this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
         this.textViewQuantity = findViewById(R.id.debug_activity_main_activity_text_view_quantity);
 

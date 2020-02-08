@@ -40,7 +40,7 @@ import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET
 import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_EDIT_TAG;
 import static com.openclassrooms.realestatemanager.models.Constants.BOTTOM_SHEET_SEARCH_TAG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick, BaseBottomSheet.BottomSheetListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PropertyAdapter.OnPropertyClick{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_activity_drawerLayout) DrawerLayout drawerLayout;
@@ -137,13 +137,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (order){
             case 0:
                 if(Utils.isInternetAvailable(this)){
-                    Intent intent = new Intent(this, MapActivity.class);
-                    startActivity(intent);
+                    activitiesIntent(MapActivity.class);
                 }else { alertDialogNoInternet(); }
                 break;
             case 1:
-                Intent intent = new Intent(this, MortgageSimulatorActivity.class);
-                startActivity(intent);
+                activitiesIntent(MortgageSimulatorActivity.class);
                 break;
             case 2:
                 break;
@@ -180,32 +178,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check if detail fragment is visible(Tablet)
         if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible())) {
             // Tablet display
-            Toast.makeText(this, "Tablet " , Toast.LENGTH_SHORT).show();
-            // Update DetailFragment
         }else{
             // Smartphone display
-            Toast.makeText(this, "Smartphone ", Toast.LENGTH_SHORT).show();
-            // Launch DetailActivity
-            Intent intent = new Intent(this, DetailActivity.class);
-            startActivity(intent);
+            activitiesIntent(DetailActivity.class);// Launch DetailActivity
         }
     }
 
-    // Manage the callbacks from bottomSheets
-    @Override
-    public void onClosedBottomSheet(String tag, String data) {
-        // action to manage from bottomSheet
-        switch (tag){
-            case BOTTOM_SHEET_ADD_TAG:
-                Log.d(TAG, "onClosedBottomSheet: ADD");
-                break;
-            case BOTTOM_SHEET_EDIT_TAG:
-                Log.d(TAG, "onClosedBottomSheet: EDIT");
-                break;
-            case BOTTOM_SHEET_SEARCH_TAG:
-                Log.d(TAG, "onClosedBottomSheet: SEARCH");
-                break;
-        }
+    private void activitiesIntent(Class className){
+        Intent intent = new Intent(this, className);
+        startActivity(intent);
     }
 
     //------------------------------
