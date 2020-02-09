@@ -42,7 +42,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainFragment extends Fragment  {
     @BindView(R.id.fragment_main_recyclerView) RecyclerView recyclerView;
-    public static PropertyAdapter adapter;
+    private PropertyAdapter adapter;
     private static int USER_ID = 1;
     public static List<Property> mProperties;
     private PropertyViewModel mPropertyViewModel;
@@ -111,6 +111,7 @@ public class MainFragment extends Fragment  {
 
     // Get properties from Search-Query
     private void getSearchResults(Search search){
+        Log.d(TAG, "getSearchResults: Search");
         minPhotos = search.getMinPhotos();
         maxPhotos = search.getMaxPhotos();
         poiFromSearch.clear();
@@ -199,10 +200,19 @@ public class MainFragment extends Fragment  {
             mPhotoFilteredProperties.addAll(mPoiFilteredProperties); // Exchange values to avoid nullPointException while no POI was selected
         }
 
-        // Update UI List
-        updatePropertiesList(mPhotoFilteredProperties);
+
+        // Update Adapter with search results
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(recyclerView != null){
+                    updatePropertiesList(mPhotoFilteredProperties);
+                }
+            }},150);
+        //end test
+
         // Programmatically select the first item in RecyclerView
-        if(!mPhotoFilteredProperties.isEmpty()){ // Do the action only if not empty
+        if(!mPhotoFilteredProperties.isEmpty() && getActivity().findViewById(R.id.frame_layout_detail) != null){ // Do the action only if filter is not empty && only in tablet mode
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
