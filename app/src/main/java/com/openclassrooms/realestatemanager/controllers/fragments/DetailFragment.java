@@ -176,14 +176,17 @@ public class DetailFragment extends Fragment implements ImagesAdapter.OnPhotoCli
             mPropertyStatus.setText(getString(R.string.detail_available, dateConverter(mProperties.get(id).getEntryDate())));
         }
         // Set POIs
-        StringBuilder stringBuilder = new StringBuilder();
-        for( int i = 0 ; i < mProperties.get(id).getPointOfInterest().size() ; i++ ){
-            int poiNum = Integer.parseInt(mProperties.get(id).getPointOfInterest().get(i));
-            stringBuilder.append(mPois.get(poiNum-1).getPoiName() +", ");
+        if(mProperties.get(id).getPointOfInterest().size() > 0){
+            StringBuilder stringBuilder = new StringBuilder();
+            for( int i = 0 ; i < mProperties.get(id).getPointOfInterest().size() ; i++ ){
+                int poiNum = Integer.parseInt(mProperties.get(id).getPointOfInterest().get(i));
+                stringBuilder.append(mPois.get(poiNum-1).getPoiName() +", ");
+            }
+            finalPoiString = stringBuilder.deleteCharAt(stringBuilder.length() -2 ).toString();
+            mPOI.setText(finalPoiString);
+            finalPoiString = ""; //clear
         }
-        finalPoiString = stringBuilder.deleteCharAt(stringBuilder.length() -2 ).toString();
-        mPOI.setText(finalPoiString);
-        finalPoiString = ""; //clear
+
     }
 
     private void setPois(List<Poi> pois) {

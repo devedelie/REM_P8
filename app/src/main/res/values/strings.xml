@@ -72,6 +72,7 @@
 
     <!-- SnackBars -->
     <string name="add_property_success">Successfully updated your entry</string>
+    <string name="edit_property_success">Successfully updated your entry</string>
     <string name="search_property_fail">We couldn\'t find any results. Please try different search criteria</string>
 
 

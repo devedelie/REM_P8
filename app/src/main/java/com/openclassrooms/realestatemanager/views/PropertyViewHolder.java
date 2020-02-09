@@ -65,7 +65,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder implements View.
         this.mProperty = property;
         // Add Image
         if(mProperty.getPhotos() != null){
-            if(mProperty.getPhotos().get(0) != null){
+            if(mProperty.getPhotos().size() != 0 && mProperty.getPhotos().get(0) != null){
                 String imageUri = mProperty.getPhotos().get(0);
                 if(imageUri != null) glide.load(imageUri).into(propertyImage);
             }

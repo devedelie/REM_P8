@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +95,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     @BindView(R.id.select_photo_button) ImageView selectPhotoButton;
     // For Data
     private PropertyViewModel mPropertyViewModel;
-    private String finalAddressString;
+    private String finalAddressString="new york"; // default value
     private double addressLat;
     private double addressLng;
     private String currentPhotoPath;
@@ -304,9 +305,17 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     }
 
     private void createPropertyObject(boolean isSold, Date sellDate){
+        // Data extraction
         String district;
         if(isAddProperty) { district =  composedAddress.get(4); }
         else{ district = propertyLocationForEdit; }
+        int price=0, surface=0, rooms=0, bedrooms=0, bathrooms=0;
+        if(!TextUtils.isEmpty(mPropertyPrice.getText().toString())) { price = Integer.parseInt(mPropertyPrice.getText().toString().replaceAll("[\\s+$,]",""));}
+        if(!TextUtils.isEmpty(mPropertySurface.getText().toString())) { surface = Integer.parseInt(mPropertySurface.getText().toString()); }
+        if(!TextUtils.isEmpty(mPropertyRooms.getText().toString())) { rooms =Integer.parseInt(mPropertyRooms.getText().toString());}
+        if(!TextUtils.isEmpty(mPropertyBedrooms.getText().toString())) { bedrooms = Integer.parseInt(mPropertyBedrooms.getText().toString());}
+        if(!TextUtils.isEmpty(mPropertyBathrooms.getText().toString())) { bathrooms = Integer.parseInt(mPropertyBathrooms.getText().toString());}
+
         // Create POIs array
         if(mChipSubway.isChecked()) pointOfInterest.add("1");
         if(mChipGym.isChecked()) pointOfInterest.add("2");
@@ -319,16 +328,10 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
         if(mChipPrivateP.isChecked()) pointOfInterest.add("9");
         // Create Property Object
         Property property = new Property(typeDropDownMenu.getText().toString(), district,
-                photoUris, photoDescriptions, "video", pointOfInterest,
-                Integer.parseInt(mPropertyPrice.getText().toString().replaceAll("[\\s+$,]","")) ,
-                Integer.parseInt(mPropertySurface.getText().toString()),
-                Integer.parseInt(mPropertyRooms.getText().toString()),
-                Integer.parseInt(mPropertyBedrooms.getText().toString()) ,
-                Integer.parseInt(mPropertyBathrooms.getText().toString()),
-                mPropertyDescription.getText().toString(), 15,
-                finalAddressString, addressLat, addressLng, 20,
-                isSold, Utils.getDate(),  sellDate,
-                agentDropDownMenu.getText().toString() );
+                photoUris, photoDescriptions, "video", pointOfInterest, price , surface,
+                rooms, bedrooms , bathrooms, mPropertyDescription.getText().toString(),
+                15, finalAddressString, addressLat, addressLng, 20, isSold,
+                Utils.getDate(),  sellDate, agentDropDownMenu.getText().toString() );
         // Execute the operation
         this.executeOperation(property);
     }
@@ -337,7 +340,8 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
         // Set data into ViewModel
         if(isAddProperty){ // Create a new Property
             this.mPropertyViewModel.createProperty(property);
-            Toast.makeText(getActivity(), "A new property is successfully added to your list", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getActivity(), "A new property is successfully added to your list", Toast.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.add_property_success), Snackbar.LENGTH_LONG).show();
         }else{ // Update current Property
             property.setId(currentPropertyId);
             this.mPropertyViewModel.updateProperty(property);
