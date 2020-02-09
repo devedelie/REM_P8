@@ -216,7 +216,7 @@ public class DetailFragment extends Fragment implements ImagesAdapter.OnPhotoCli
     // Dialog
     // --------------
 
-    // AlertDialog to manage address-view while the device is offline (Instead of Autocomplete API)
+    // AlertDialog to display image on bigger size
     private void alertDialogPhotoGallery(int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Property Photos");
