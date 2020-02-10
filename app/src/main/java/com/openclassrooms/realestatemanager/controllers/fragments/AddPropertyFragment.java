@@ -111,17 +111,7 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
     private long currentPropertyId;
     private String propertyLocationForEdit;
     private boolean isSold;
-
-
-
-//    public static AddPropertyFragment newInstance(int currentPropertyID) {
-//        AddPropertyFragment addPropertyFragment = new AddPropertyFragment();
-//        Bundle bundle = new Bundle();
-////        bundle.putInt(CURRENT_PROPERTY_ID, currentPropertyID);
-//        addPropertyFragment.setArguments(bundle);
-//        Log.d(TAG, "newInstance: reached" );
-//        return addPropertyFragment;
-//    }
+    
 
     @Nullable
     @Override
@@ -340,7 +330,6 @@ public class AddPropertyFragment extends BaseFragment implements ImagesAdapter.O
         // Set data into ViewModel
         if(isAddProperty){ // Create a new Property
             this.mPropertyViewModel.createProperty(property);
-//            Toast.makeText(getActivity(), "A new property is successfully added to your list", Toast.LENGTH_LONG).show();
             Snackbar.make(getView(), getString(R.string.add_property_success), Snackbar.LENGTH_LONG).show();
         }else{ // Update current Property
             property.setId(currentPropertyId);
