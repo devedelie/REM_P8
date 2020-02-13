@@ -77,7 +77,7 @@ public class PropertyContentProviderTest {
         Uri.Builder builder = new Uri.Builder();
         final Cursor cursor = mContentResolver.query(PropertyContentProvider.URI_PROPERTY, null, null, null, null);
         cursor.moveToLast();
-        String i = Integer.toString(cursor.getPosition() + 1); // Add +1 to jump over to the last added test-property
+        String i = Integer.toString(cursor.getPosition() + 2); // Add +2 to jump over to the last added test-property
         builder.scheme("content")
                 .authority(PropertyContentProvider.AUTHORITY)
                 .appendPath(PropertyContentProvider.TABLE_NAME)
