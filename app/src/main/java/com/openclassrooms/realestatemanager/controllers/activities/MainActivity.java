@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void configureAndShowMainFragment(){
         // Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
-        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
+//        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
 
         if (mainFragment == null) {
             // Create new main fragment
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void searchFragmentTransaction(){
         if (detailFragment != null && (detailFragment.isVisible() || mAddPropertyFragment.isVisible() )) { // Check if detail fragment is visible(Tablet mode)
             inflateSearchFragment(R.id.frame_layout_detail);
-        }else if( mSearchFragment != null && mSearchFragment.isVisible()) { // AddPropertyFragment is already visible - Do nothing
+        }else if( mSearchFragment != null && mSearchFragment.isVisible()) { // SearchPropertyFragment is already visible - Do nothing
         }else{ // Smartphone mode
             inflateSearchFragment(R.id.frame_layout_main);
         }
