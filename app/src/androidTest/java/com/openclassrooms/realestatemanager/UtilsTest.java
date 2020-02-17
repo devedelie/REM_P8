@@ -24,29 +24,29 @@ import static org.junit.Assert.*;
 public class UtilsTest {
     Context context = ApplicationProvider.getApplicationContext();
 
-    @Test
-    public void isInternetAvailable_whenDisconnected_returnFalse() {
-        setWifiState(false);
-        SystemClock.sleep(5000); // Delay for network state change to take effect
-        assertFalse(Utils.isInternetAvailable(context)); // Assert false when internet is off
-    }
-
-    @Test
-    public void isInternetAvailable_whenConnected_returnTrue() {
-        setWifiState(true);
-        SystemClock.sleep(5000);  // Delay for network state change to take effect
-        assertTrue(Utils.isInternetAvailable(context)); // Assert true
-    }
-
-
-    //----------------------
-    // Helper Methods
-    //----------------------
-
-    private void setWifiState(boolean state) {
-        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifi.setWifiEnabled(state);
-    }
+//    @Test
+//    public void isInternetAvailable_whenDisconnected_returnFalse() {
+//        setWifiState(false);
+//        SystemClock.sleep(5000); // Delay for network state change to take effect
+//        assertFalse(Utils.isInternetAvailable(context)); // Assert false when internet is off
+//    }
+//
+//    @Test
+//    public void isInternetAvailable_whenConnected_returnTrue() {
+//        setWifiState(true);
+//        SystemClock.sleep(5000);  // Delay for network state change to take effect
+//        assertTrue(Utils.isInternetAvailable(context)); // Assert true
+//    }
+//
+//
+//    //----------------------
+//    // Helper Methods
+//    //----------------------
+//
+//    private void setWifiState(boolean state) {
+//        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//        wifi.setWifiEnabled(state);
+//    }
 
 
 
